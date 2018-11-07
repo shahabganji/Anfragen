@@ -46,8 +46,7 @@ namespace Anfragen {
 
             if ( !isValid ) {
                 questionnaire.CurrentQuestion.PrintValidationErrors( );
-                questionnaire.CurrentQuestion.Ask( writer );
-                questionnaire.CurrentQuestion.TakeAnswer( );
+                questionnaire.CurrentQuestion.Ask( writer ).TakeAnswer( );
             }
 
             questionnaire.CurrentQuestion.Finish( );

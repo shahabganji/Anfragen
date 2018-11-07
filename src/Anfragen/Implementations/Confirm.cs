@@ -19,14 +19,16 @@ namespace Anfragen.Implementations {
             this.PossibleAnswers = possibleAnswers;
         }
 
-        public void Ask( IPrinter printer ) {
+        public IQuestion Ask( IPrinter printer ) {
             printer.Print( this.QuestionIcon );
             printer.Print( " " );
             printer.Print( this.Question );
+            return this;
         }
 
-        public void TakeAnswer( ) {
+        public IQuestion TakeAnswer( ) {
             this.Answer = Console.ReadLine( );
+            return this;
         }
 
         public bool ValidateAnswer( Func<IQuestion, bool> validator = null ) {
