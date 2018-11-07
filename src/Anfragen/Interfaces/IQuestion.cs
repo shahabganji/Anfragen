@@ -4,14 +4,19 @@ using System.Linq;
 
 namespace Anfragen.Interfaces {
 
+    public enum QuestionStates {
+        Initilaized, Asked, Answered, Valid, NotValid, Finished
+    }
+
     public interface IQuestion {
+        QuestionStates State { get; }
         string QuestionIcon { get; }
         string Question { get; }
         string Answer { get; }
-        void Ask( IPrinter printer ); // prints the question
-        void TakeAnswer( ); // waits for the user to answer the question
-        bool ValidateAnswer( Func<IQuestion, bool> validator = null ); // if any validator provided calls the custom validation, otherwise calls the default implementation
-        void PrintValidationErrors( ); // Prints the validation errors
+        IQuestion Ask( IPrinter printer ); // prints the question
+        IQuestion TakeAnswer( ); // waits for the user to answer the question
+        IQuestion Validate( Func<IQuestion, bool> validator = null ); // if any validator provided calls the custom validation, otherwise calls the default implementation
+        IQuestion PrintValidationErrors( ); // Prints the validation errors
         void Finish( ); // the finishing touches of the question, for example rendering some extra texts
     }
 

@@ -14,6 +14,8 @@ namespace Anfragen.Implementations {
         public string Answer { get; private set; }
         public IList<string> PossibleAnswers { get; }
 
+        public QuestionStates State { get; private set; } = QuestionStates.Initilaised;
+
         public Confirm( string question, string[ ] possibleAnswers ) {
             this.Question = question;
             this.PossibleAnswers = possibleAnswers;
@@ -23,20 +25,28 @@ namespace Anfragen.Implementations {
             printer.Print( this.QuestionIcon );
             printer.Print( " " );
             printer.Print( this.Question );
+            this.State = QuestionStates.Asked;
             return this;
         }
 
         public IQuestion TakeAnswer( ) {
             this.Answer = Console.ReadLine( );
+            this.State = QuestionStates.Answered;
             return this;
         }
 
-        public bool ValidateAnswer( Func<IQuestion, bool> validator = null ) {
-            return validator != null ? validator( this ) : this.PossibleAnswers.Contains( this.Answer );
+        public IQuestion ValidateAnswer( Func<IQuestion, bool> validator = null ) {
+            var result = validator != null ? validator( this ) : this.PossibleAnswers.Contains( this.Answer );
+
+            this.State = result ? QuestionStates.Valid : QuestionStates.NotValid;
+
+            return this;
+
         }
 
-        public void PrintValidationErrors( ) {
+        public IQuestion PrintValidationErrors( ) {
             Console.WriteLine( "Your answer must be either 'y' or 'n' ." );
+            return this;
         }
 
         public void Finish( ) {

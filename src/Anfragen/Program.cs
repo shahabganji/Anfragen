@@ -25,11 +25,12 @@ namespace Anfragen {
 
             questionnaire.Start( );
 
-            if ( questionnaire.CurrentQuestion.ValidateAnswer( ) == false ) {
+            if ( questionnaire.CurrentQuestion.ValidateAnswer( ).State == QuestionStates.NotValid ) {
                 questionnaire.CurrentQuestion.PrintValidationErrors( );
             }
-
             questionnaire.CurrentQuestion.Finish( );
+
+            // Dynamic question adding to the main branch
             questionnaire.Add( new Confirm(
                                             $"Are you {questionnaire.CurrentQuestion.Answer}? ",
                                             new[ ] { "yes", "no" } ), here: true
@@ -42,13 +43,12 @@ namespace Anfragen {
 
             var isValid = questionnaire.GoToNextStep( ).CurrentQuestion.ValidateAnswer( q => {
                 return q.Answer.Length > 1;
-            } );
+            } ).State;
 
-            if ( !isValid ) {
+            if ( isValid == QuestionStates.NotValid ) {
                 questionnaire.CurrentQuestion.PrintValidationErrors( );
                 questionnaire.CurrentQuestion.Ask( writer ).TakeAnswer( );
             }
-
             questionnaire.CurrentQuestion.Finish( );
 
             questionnaire.End( );

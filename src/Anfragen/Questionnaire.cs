@@ -18,7 +18,6 @@ namespace Anfragen {
 
         private int Count => this._currentBranch != null ? this._currentBranch.Questions.Count( ) : this._questions.Count;
 
-
         public IQuestion PreviousQuestion {
             get {
                 // you are at hte beginning of the list , so no previous questions
@@ -52,8 +51,6 @@ namespace Anfragen {
             }
         }
 
-
-
         public Questionnaire( IPrinter printer ) {
 
             this.printer = printer;
@@ -86,7 +83,6 @@ namespace Anfragen {
 
             return this;
         }
-
 
         public IQuestionnaire GoToBranch( string branchName ) {
 

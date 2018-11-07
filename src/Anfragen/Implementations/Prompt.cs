@@ -10,28 +10,37 @@ namespace Anfragen.Implementations {
             this.Question = prompt;
         }
 
+        public QuestionStates State { get; private set; } = QuestionStates.Initilaised;
+
         public string Answer { get; private set; }
         public string Question { get; }
 
         public string QuestionIcon => "??";
 
-        public void Ask( IPrinter printer ) {
+        public IQuestion Ask( IPrinter printer ) {
             printer.Print( this.QuestionIcon );
             printer.Print( " " );
             printer.Print( this.Question );
+            return this;
         }
 
-        public void TakeAnswer( ) {
+        public IQuestion TakeAnswer( ) {
             this.Answer = Console.ReadLine( );
+            return this;
         }
 
-        public bool ValidateAnswer( Func<IQuestion, bool> validator = null ) {
+        public IQuestion ValidateAnswer( Func<IQuestion, bool> validator = null ) {
 
-            return validator != null ? validator( this ) : true;
+            var result = validator != null ? validator( this ) : true;
+            this.State = result ? QuestionStates.Valid : QuestionStates.NotValid;
+
+            return this;
         }
 
-        public void PrintValidationErrors( ) {
+        public IQuestion PrintValidationErrors( ) {
+
             Console.WriteLine( "There are some validation erros" );
+            return this;
         }
 
         public void Finish( ) {
