@@ -19,7 +19,7 @@ namespace Anfragen.Interfaces {
     public interface IBranch {
         string Name { get; } // the name of the branch
         IEnumerable<IQuestion> Questions { get; }
-        IBranch Add( IQuestion question ); // adds a question ton the end of the list 
+        IBranch Add( IQuestion question, int? position = null ); // adds a question ton the end of the list 
     }
 
     public interface IQuestionnaire {
@@ -27,7 +27,12 @@ namespace Anfragen.Interfaces {
         IEnumerable<IBranch> Branches { get; }
         IEnumerable<IQuestion> Questions { get; } // questions in main branch 
 
+        IQuestion PreviousQuestion { get; }
+        IQuestion CurrentQuestion { get; }
+        IQuestion NextQuestion { get; }
+
         IQuestionnaire Start( ); // prints the first question
+        void End( ); // prints the first question
 
         IQuestionnaire GoToNextStep( ); // forwards to the next step in the current branch
         IQuestionnaire GoToPreviousStep( ); // backwards to the previous step in the current branch, ? what would happen if the previous step is not from the current branch
@@ -36,7 +41,8 @@ namespace Anfragen.Interfaces {
         IQuestionnaire GotToStep( string branchName, int step ); // goes to the specified step of the specified branch
 
 
-        IQuestionnaire Add( IQuestion question, IBranch branch = null ); // adds questions to the main branch unless a branch is provided
+        IQuestionnaire Add( IBranch branch ); // adds questions to the main branch unless a branch is provided
+        IQuestionnaire Add( IQuestion question, IBranch branch = null, bool here = false ); // adds questions to the main branch unless a branch is provided
 
     }
 }

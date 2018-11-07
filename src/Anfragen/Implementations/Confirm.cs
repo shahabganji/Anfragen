@@ -9,14 +9,10 @@ namespace Anfragen.Implementations {
     public class Confirm : IConfirm {
 
         public string Question { get; }
-
-        public IList<string> PossibleAnswers { get; }
-
-        public string Answer { get; private set; }
-
         public string QuestionIcon => "?";
 
-        //object IQuestion.Answer => throw new NotImplementedException( );
+        public string Answer { get; private set; }
+        public IList<string> PossibleAnswers { get; }
 
         public Confirm( string question, string[ ] possibleAnswers ) {
             this.Question = question;
@@ -24,6 +20,8 @@ namespace Anfragen.Implementations {
         }
 
         public void Ask( IPrinter printer ) {
+            printer.Print( this.QuestionIcon );
+            printer.Print( " " );
             printer.Print( this.Question );
         }
 

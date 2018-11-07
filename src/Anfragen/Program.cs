@@ -10,28 +10,49 @@ namespace Anfragen {
         public static void Main( string[ ] args ) {
 
             var writer = new ConsoleWriter( );
-            var questionnaire = new Questionnaire( writer );
+            IQuestionnaire questionnaire = new Questionnaire( writer );
 
             IQuestion ask_name = new Prompt( "What's your name? " );
 
-            IQuestion confrim_health = new Confirm( "Are you okay ?", new[ ] { "1", "2" } );
+            IQuestion confrim_health = new Confirm( "Are you okay? ", new[ ] { "1", "2" } );
+
+            IBranch health_branch = new Branch( "health" );
+            health_branch.Add( confrim_health );
 
             questionnaire.Add( ask_name )
-                         .Add( confrim_health );
+                         .Add( health_branch );
+
 
             questionnaire.Start( );
 
-            if ( !questionnaire.CurrentQuestion.ValidateAnswer( ) ) {
+            if ( questionnaire.CurrentQuestion.ValidateAnswer( ) == false ) {
                 questionnaire.CurrentQuestion.PrintValidationErrors( );
             }
 
-            questionnaire.CurrentQuestion.EndTheQuestion( );
+            questionnaire.CurrentQuestion.Finish( );
             questionnaire.Add( new Confirm(
                                             $"Are you {questionnaire.CurrentQuestion.Answer}? ",
-                                             new[ ] { "yes", "no" } ), true );
+                                            new[ ] { "yes", "no" } ), here: true
+                             );
 
-            questionnaire.Next( );
-            questionnaire.Next( );
+            questionnaire.GoToNextStep( ).CurrentQuestion.Finish( );
+
+
+            questionnaire.GoToBranch( "health" );
+
+            var isValid = questionnaire.GoToNextStep( ).CurrentQuestion.ValidateAnswer( q => {
+                return q.Answer.Length > 1;
+            } );
+
+            if ( !isValid ) {
+                questionnaire.CurrentQuestion.PrintValidationErrors( );
+                questionnaire.CurrentQuestion.Ask( writer );
+                questionnaire.CurrentQuestion.TakeAnswer( );
+            }
+
+            questionnaire.CurrentQuestion.Finish( );
+
+            questionnaire.End( );
 
         }
     }

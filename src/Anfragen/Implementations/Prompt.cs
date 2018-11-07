@@ -13,9 +13,11 @@ namespace Anfragen.Implementations {
         public string Answer { get; private set; }
         public string Question { get; }
 
-        public string QuestionIcon => "?";
+        public string QuestionIcon => "??";
 
         public void Ask( IPrinter printer ) {
+            printer.Print( this.QuestionIcon );
+            printer.Print( " " );
             printer.Print( this.Question );
         }
 
@@ -28,8 +30,15 @@ namespace Anfragen.Implementations {
             return validator != null ? validator( this ) : true;
         }
 
-        public void PrintValidationErrors( ) { }
+        public void PrintValidationErrors( ) {
+            Console.WriteLine( "There are some validation erros" );
+        }
 
-        public void Finish( ) { }
+        public void Finish( ) {
+            var width = Console.WindowWidth;
+            while ( width-- > 0 ) {
+                Console.Write( "-" );
+            }
+        }
     }
 }
