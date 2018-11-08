@@ -18,11 +18,13 @@ namespace Anfragen.Implementations {
         public IQuestion Ask( IPrinter printer ) {
             printer.Print( " " );
             printer.Print( this.Question );
+            this.State = QuestionStates.Asked;
             return this;
         }
 
         public IQuestion TakeAnswer( ) {
             this.Answer = Console.ReadLine( );
+            this.State = QuestionStates.Answered;
             return this;
         }
 
@@ -45,6 +47,7 @@ namespace Anfragen.Implementations {
             while ( width-- > 0 ) {
                 Console.Write( "-" );
             }
+            this.State = QuestionStates.Finished;
         }
     }
 }
