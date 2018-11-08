@@ -43,7 +43,7 @@ namespace Anfragen.Interfaces {
         IQuestionnaire GoToPreviousStep( ); // backwards to the previous step in the current branch, ? what would happen if the previous step is not from the current branch
 
         IQuestionnaire GoToBranch( string branchName ); // oes to first step of the specified branch
-        IQuestionnaire GotToStep( string branchName, int step ); // goes to the specified step of the specified branch
+        IQuestionnaire GotToStep( int step, string branchName = null ); // goes to the specified step of the specified branch
 
 
         IQuestionnaire Add( IBranch branch ); // adds questions to the main branch unless a branch is provided

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Runtime.CompilerServices;
-using Anfragen.Implementations;
+﻿using Anfragen.Implementations;
 using Anfragen.Interfaces;
 
 namespace Anfragen {
@@ -25,7 +23,7 @@ namespace Anfragen {
 
             questionnaire.Start( );
 
-            if ( questionnaire.CurrentQuestion.ValidateAnswer( ).State == QuestionStates.NotValid ) {
+            if ( questionnaire.CurrentQuestion.Validate( ).State == QuestionStates.NotValid ) {
                 questionnaire.CurrentQuestion.PrintValidationErrors( );
             }
             questionnaire.CurrentQuestion.Finish( );
@@ -41,7 +39,7 @@ namespace Anfragen {
 
             questionnaire.GoToBranch( "health" );
 
-            var isValid = questionnaire.GoToNextStep( ).CurrentQuestion.ValidateAnswer( q => {
+            var isValid = questionnaire.GoToNextStep( ).CurrentQuestion.Validate( q => {
                 return q.Answer.Length > 1;
             } ).State;
 

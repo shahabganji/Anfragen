@@ -14,7 +14,7 @@ namespace Anfragen.Implementations {
         public string Answer { get; private set; }
         public IList<string> PossibleAnswers { get; }
 
-        public QuestionStates State { get; private set; } = QuestionStates.Initilaised;
+        public QuestionStates State { get; private set; } = QuestionStates.Initilaized;
 
         public Confirm( string question, string[ ] possibleAnswers ) {
             this.Question = question;
@@ -35,7 +35,7 @@ namespace Anfragen.Implementations {
             return this;
         }
 
-        public IQuestion ValidateAnswer( Func<IQuestion, bool> validator = null ) {
+        public IQuestion Validate( Func<IQuestion, bool> validator = null ) {
             var result = validator != null ? validator( this ) : this.PossibleAnswers.Contains( this.Answer );
 
             this.State = result ? QuestionStates.Valid : QuestionStates.NotValid;
