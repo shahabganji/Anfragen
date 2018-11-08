@@ -9,7 +9,6 @@ namespace Anfragen.Implementations {
     public class Confirm : IConfirm {
 
         public string Question { get; }
-        public string QuestionIcon => "?";
 
         public string Answer { get; private set; }
         public IList<string> PossibleAnswers { get; }
@@ -22,7 +21,6 @@ namespace Anfragen.Implementations {
         }
 
         public IQuestion Ask( IPrinter printer ) {
-            printer.Print( this.QuestionIcon );
             printer.Print( " " );
             printer.Print( this.Question );
             this.State = QuestionStates.Asked;

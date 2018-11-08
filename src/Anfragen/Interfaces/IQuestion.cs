@@ -10,7 +10,6 @@ namespace Anfragen.Interfaces {
 
     public interface IQuestion {
         QuestionStates State { get; }
-        string QuestionIcon { get; }
         string Question { get; }
         string Answer { get; }
         IQuestion Ask( IPrinter printer ); // prints the question
@@ -28,6 +27,8 @@ namespace Anfragen.Interfaces {
     }
 
     public interface IQuestionnaire {
+
+        QuestionnaireSetting Settings { get; set; }
 
         IEnumerable<IBranch> Branches { get; }
         IEnumerable<IQuestion> Questions { get; } // questions in main branch 
@@ -49,5 +50,13 @@ namespace Anfragen.Interfaces {
         IQuestionnaire Add( IBranch branch ); // adds questions to the main branch unless a branch is provided
         IQuestionnaire Add( IQuestion question, IBranch branch = null, bool here = false ); // adds questions to the main branch unless a branch is provided
 
+    }
+
+    public class QuestionnaireSetting {
+
+        public string QuestionIcon { get; set; } = "?";
+        public ConsoleColor QuestionIconColor { get; set; } = ConsoleColor.DarkGreen;
+        public ConsoleColor QuestionColor { get; set; } = ConsoleColor.DarkGray;
+        public ConsoleColor AnswerColor { get; set; } = ConsoleColor.DarkCyan;
     }
 }

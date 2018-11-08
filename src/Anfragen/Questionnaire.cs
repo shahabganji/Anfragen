@@ -63,15 +63,44 @@ namespace Anfragen {
             }
         }
 
+        public QuestionnaireSetting Settings { get; set; }
+
         #endregion
 
-        public Questionnaire( IPrinter printer ) {
+        public Questionnaire( IPrinter printer, QuestionnaireSetting settings = null ) {
 
             this.printer = printer;
+            this.Settings = settings ?? new QuestionnaireSetting( );
 
             this._branches = new List<IBranch>( );
             this._questions = new List<IQuestion>( );
 
+        }
+
+        private void AskQuestionWaitAnswer( ) {
+            var question = this.CurrentQuestion;
+
+            // 1. ask the question, simply buy just printing it
+            Console.ForegroundColor = this.Settings.QuestionIconColor;
+            this.printer.Print( this.Settings.QuestionIcon );
+            Console.ForegroundColor = this.Settings.QuestionColor;
+            question.Ask( this.printer );
+
+            // 2. wait for the user to give answer to the question
+            Console.ForegroundColor = this.Settings.AnswerColor;
+            question.TakeAnswer( );
+
+            Console.ResetColor( );
+        }
+
+        private IBranch FindBranch( string branchName ) {
+            var branch = this._branches.SingleOrDefault( b => b.Name == branchName );
+
+            if ( branch == null ) {
+                throw new InvalidOperationException( $"The branch '{branchName}' does not exists" );
+            }
+
+            return branch;
         }
 
         public IQuestionnaire Start( ) {
@@ -82,13 +111,7 @@ namespace Anfragen {
 
             this.hasStarted = true;
 
-            var question = this.CurrentQuestion;
-
-            // 1. ask the question, simply buy just printing it
-            question.Ask( this.printer );
-
-            // 2. wait for the user to give answer to the question
-            question.TakeAnswer( );
+            this.AskQuestionWaitAnswer( );
 
             return this;
         }
@@ -108,16 +131,6 @@ namespace Anfragen {
             this.branchSwitched = true;
 
             return this;
-        }
-
-        private IBranch FindBranch( string branchName ) {
-            var branch = this._branches.SingleOrDefault( b => b.Name == branchName );
-
-            if ( branch == null ) {
-                throw new InvalidOperationException( $"The branch '{branchName}' does not exists" );
-            }
-
-            return branch;
         }
 
         public IQuestionnaire GoToNextStep( ) {
@@ -141,13 +154,7 @@ namespace Anfragen {
                 throw new InvalidOperationException( "Your at the end of the questionnaire, there is no more questions." );
             }
 
-            var question = this.CurrentQuestion;
-
-            // 1. ask the question, simply buy just printing it
-            question.Ask( this.printer );
-
-            // 2. wait for the user to give answer to the question
-            question.TakeAnswer( );
+            this.AskQuestionWaitAnswer( );
 
             return this;
         }

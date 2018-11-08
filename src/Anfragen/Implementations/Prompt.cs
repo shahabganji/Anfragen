@@ -15,10 +15,7 @@ namespace Anfragen.Implementations {
         public string Answer { get; private set; }
         public string Question { get; }
 
-        public string QuestionIcon => "??";
-
         public IQuestion Ask( IPrinter printer ) {
-            printer.Print( this.QuestionIcon );
             printer.Print( " " );
             printer.Print( this.Question );
             return this;
