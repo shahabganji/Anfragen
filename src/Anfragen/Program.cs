@@ -1,5 +1,7 @@
-﻿using Anfragen.Implementations;
+﻿using System;
+using Anfragen.Implementations;
 using Anfragen.Interfaces;
+using Anfragen.Extensions;
 
 namespace Anfragen {
 
@@ -10,50 +12,50 @@ namespace Anfragen {
             var writer = new ConsoleWriter( );
             IQuestionnaire questionnaire = new Questionnaire( writer );
 
-            IQuestion ask_name = new Prompt( "What's your name? " );
+            IQuestion ask_name = new Prompt( "What's your name?" );
+            IQuestion ask_family = new Prompt( "What's your family?" );
 
-            IQuestion confrim_health = new Confirm( "Are you okay? " );
-
-            IBranch health_branch = new Branch( "health" );
-            health_branch.Add( confrim_health );
-
-            questionnaire.Add( ask_name )
-                         .Add( health_branch );
-
+            questionnaire.Add( ask_name ).Add( ask_family );
 
             questionnaire.Start( );
 
-            if ( questionnaire.CurrentQuestion.Validate( ).State == QuestionStates.NotValid ) {
-                questionnaire.CurrentQuestion.PrintValidationErrors( );
+            QuestionStates states = QuestionStates.NotValid;
+
+            bool add = true;
+
+            // loop until there is a question to ask
+            while ( questionnaire.CanProceed ) {
+
+                while ( states == QuestionStates.NotValid || states == QuestionStates.Answered ) {
+                    states = questionnaire.Validate( ).CurrentQuestion.State;
+                }
+
+                questionnaire.CurrentQuestion.Finish( );
+
+                if ( add ) {
+                    questionnaire.Prompt( new Prompt( "How old are you? " ) );
+                    add = false;
+                }
+
+                questionnaire.GoToNextStep( );
             }
+
+
+            // for the last question
+            states = questionnaire.Validate( ).CurrentQuestion.State;
+            while ( states == QuestionStates.NotValid || states == QuestionStates.Answered ) {
+                states = questionnaire.Validate( ).CurrentQuestion.State;
+            }
+
             questionnaire.CurrentQuestion.Finish( );
-
-            // Dynamic question adding to the main branch
-            questionnaire.Add( new Confirm(
-                                            $"Are you {questionnaire.CurrentQuestion.Answer}? ",
-                                            new[ ] { "yes", "no" } ), here: true
-                             );
-
-            questionnaire.GoToNextStep( ).CurrentQuestion.Finish( );
-
-
-            questionnaire.GoToBranch( "health" );
-
-            var isValid = questionnaire.GoToNextStep( ).CurrentQuestion.Validate( q => {
-                return q.Answer.Length > 1;
-            } ).State;
-
-            if ( isValid == QuestionStates.NotValid ) {
-                questionnaire.CurrentQuestion.PrintValidationErrors( );
-                questionnaire.CurrentQuestion.Ask( writer ).TakeAnswer( );
-            }
-            questionnaire.CurrentQuestion.Finish( );
-
-            foreach ( var q in questionnaire.ProcessedQuestions ) {
-                q.PrintResult( writer );
-            }
 
             questionnaire.End( );
+
+            // Print Processed questions
+            foreach ( var q in questionnaire.ProcessedQuestions ) {
+                writer.Print( $"{q.Question} : {q.Answer}" );
+                writer.AddNewLine( );
+            }
 
         }
     }

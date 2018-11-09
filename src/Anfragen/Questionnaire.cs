@@ -25,6 +25,8 @@ namespace Anfragen {
 
         #region properties : 
 
+        public bool CanProceed { get { return this.NextQuestion != null; } }
+
         public IEnumerable<IBranch> Branches => this._branches;
         public IEnumerable<IQuestion> Questions => this._questions;
 
@@ -117,6 +119,10 @@ namespace Anfragen {
 
         public IQuestionnaire Start( ) {
 
+            if ( this._questions.Count == 0 ) {
+                throw new InvalidOperationException( "There is no questions in this questionnaire, please first add some" );
+            }
+
             if ( this.hasStarted ) {
                 throw new InvalidOperationException( "You cannot start a questionnaire more than once." );
             }
@@ -129,6 +135,10 @@ namespace Anfragen {
         }
 
         public IQuestionnaire GoToBranch( string branchName ) {
+
+            if ( this.CurrentQuestion.State != QuestionStates.Finished ) {
+                throw new InvalidOperationException( "You cannot go to next step, unless you finish the previous question" );
+            }
 
             IBranch branch = FindBranch( branchName );
 
@@ -149,6 +159,10 @@ namespace Anfragen {
 
             if ( !hasStarted ) {
                 throw new InvalidOperationException( "You have not strted the questionnaire yet" );
+            }
+
+            if ( this.CurrentQuestion.State != QuestionStates.Finished ) {
+                throw new InvalidOperationException( "You cannot go to next step, unless you finish the previous question" );
             }
 
             // checks to see whether we have just switched to the new branch, 
@@ -172,6 +186,10 @@ namespace Anfragen {
         }
 
         public IQuestionnaire GotToStep( int step, string branchName = null ) {
+
+            if ( this.CurrentQuestion.State != QuestionStates.Finished ) {
+                throw new InvalidOperationException( "You cannot go to next step, unless you finish the previous question" );
+            }
 
             // check wheather the user wants to swithc to a step in another branch or not
             var branch = branchName != null ? this.FindBranch( branchName ) : null;
@@ -247,5 +265,28 @@ namespace Anfragen {
             return this;
 
         }
+
+        public IQuestionnaire Validate( Func<IQuestion, bool> validator = null ) {
+
+            var result = this.CurrentQuestion.Validate( validator ).State;
+
+            if ( result == QuestionStates.NotValid ) {
+
+                Console.ForegroundColor = this.Settings.ValidationIconColor;
+                this.printer.Print( this.Settings.ValidationIcon + " " );
+
+                Console.ForegroundColor = this.Settings.QuestionColor;
+                this.CurrentQuestion.PrintValidationErrors( );
+
+                Console.ForegroundColor = this.Settings.AnswerColor;
+                this.CurrentQuestion.TakeAnswer( );
+
+                Console.ResetColor( );
+            }
+
+            return this;
+
+        }
+
     }
 }

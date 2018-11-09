@@ -33,6 +33,8 @@ namespace Anfragen.Interfaces {
 
     public interface IQuestionnaire {
 
+        bool CanProceed { get; }
+
         QuestionnaireSetting Settings { get; set; }
 
         IEnumerable<IBranch> Branches { get; }
@@ -57,6 +59,9 @@ namespace Anfragen.Interfaces {
         IQuestionnaire Add( IBranch branch ); // adds questions to the main branch unless a branch is provided
         IQuestionnaire Add( IQuestion question, IBranch branch = null, bool here = false ); // adds questions to the main branch unless a branch is provided
 
+
+        IQuestionnaire Validate( Func<IQuestion, bool> validator = null );
+
     }
 
     public class QuestionnaireSetting {
@@ -66,5 +71,21 @@ namespace Anfragen.Interfaces {
         public ConsoleColor AnswerColor { get; set; } = ConsoleColor.DarkCyan;
         public ConsoleColor QuestionColor { get; set; } = ConsoleColor.DarkGray;
         public ConsoleColor QuestionIconColor { get; set; } = ConsoleColor.DarkGreen;
+
+        public string ValidationIcon { get; set; } = ">>";
+        public ConsoleColor ValidationIconColor { get; set; } = ConsoleColor.DarkRed;
+    }
+
+    public static class ConsoleExtensions {
+
+        public static void ClearConsoleLine( this IQuestion question, int? line ) {
+
+            if ( !line.HasValue ) { line = Console.CursorTop; }
+
+            Console.SetCursorPosition( 0, Console.CursorTop );
+            Console.Write( new string( ' ', Console.WindowWidth ) );
+            Console.SetCursorPosition( 0, line.Value );
+        }
+
     }
 }
