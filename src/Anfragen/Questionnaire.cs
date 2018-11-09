@@ -17,16 +17,19 @@ namespace Anfragen {
         private bool hasStarted = false;
         private bool branchSwitched = false;
 
-        private List<IQuestion> _questions;
         private List<IBranch> _branches;
+        private List<IQuestion> _questions;
+        private List<IQuestion> _processedQuestions;
 
         #endregion
 
         #region properties : 
 
+        public IEnumerable<IBranch> Branches => this._branches;
         public IEnumerable<IQuestion> Questions => this._questions;
 
-        public IEnumerable<IBranch> Branches => this._branches;
+        public IEnumerable<IQuestion> ProcessedQuestions => this._processedQuestions;
+
 
         private int Count => this.currentBranch != null ? this.currentBranch.Questions.Count( ) : this._questions.Count;
 
@@ -74,7 +77,7 @@ namespace Anfragen {
 
             this._branches = new List<IBranch>( );
             this._questions = new List<IQuestion>( );
-
+            this._processedQuestions = new List<IQuestion>( );
         }
 
         private void AskQuestionWaitAnswer( ) {
@@ -86,11 +89,20 @@ namespace Anfragen {
             Console.ForegroundColor = this.Settings.QuestionColor;
             question.Ask( this.printer );
 
+            // prints any hints available
+            if ( question.Hint.Trim( ).Length > 0 ) {
+                Console.ForegroundColor = this.Settings.HintColor;
+                this.printer.Print( $"( {question.Hint} ) " );
+            }
+
             // 2. wait for the user to give answer to the question
             Console.ForegroundColor = this.Settings.AnswerColor;
             question.TakeAnswer( );
 
+            this._processedQuestions.Add( this.CurrentQuestion );
+
             Console.ResetColor( );
+
         }
 
         private IBranch FindBranch( string branchName ) {
@@ -235,7 +247,5 @@ namespace Anfragen {
             return this;
 
         }
-
-
     }
 }

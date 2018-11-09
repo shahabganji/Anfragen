@@ -12,7 +12,7 @@ namespace Anfragen {
 
             IQuestion ask_name = new Prompt( "What's your name? " );
 
-            IQuestion confrim_health = new Confirm( "Are you okay? ", new[ ] { "1", "2" } );
+            IQuestion confrim_health = new Confirm( "Are you okay? " );
 
             IBranch health_branch = new Branch( "health" );
             health_branch.Add( confrim_health );
@@ -48,6 +48,10 @@ namespace Anfragen {
                 questionnaire.CurrentQuestion.Ask( writer ).TakeAnswer( );
             }
             questionnaire.CurrentQuestion.Finish( );
+
+            foreach ( var q in questionnaire.ProcessedQuestions ) {
+                q.PrintResult( writer );
+            }
 
             questionnaire.End( );
 

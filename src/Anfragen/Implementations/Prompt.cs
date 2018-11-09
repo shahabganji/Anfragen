@@ -6,14 +6,21 @@ namespace Anfragen.Implementations {
 
     public class Prompt : IQuestion {
 
-        public Prompt( string prompt ) {
-            this.Question = prompt;
-        }
-
-        public QuestionStates State { get; private set; } = QuestionStates.Initilaized;
+        #region properties
 
         public string Answer { get; private set; }
         public string Question { get; }
+        public string Hint { get; }
+
+        public QuestionStates State { get; private set; } = QuestionStates.Initilaized;
+
+        #endregion
+
+
+        public Prompt( string prompt, string hint = "" ) {
+            this.Question = prompt;
+            this.Hint = hint;
+        }
 
         public IQuestion Ask( IPrinter printer ) {
             printer.Print( " " );
@@ -42,12 +49,20 @@ namespace Anfragen.Implementations {
             return this;
         }
 
-        public void Finish( ) {
+        public void Finish( Action done = null ) {
             var width = Console.WindowWidth;
             while ( width-- > 0 ) {
                 Console.Write( "-" );
             }
+
+            done?.Invoke( );
+
             this.State = QuestionStates.Finished;
+        }
+
+        public void PrintResult( IPrinter printer ) {
+            printer.Print( $"{this.Question} : {this.Answer}" );
+            printer.AddNewLine( );
         }
     }
 }

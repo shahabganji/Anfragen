@@ -11,13 +11,14 @@ namespace Anfragen.Implementations {
         public string Question { get; }
 
         public string Answer { get; private set; }
+        public string Hint { get; private set; } = "Yes/No";
         public IList<string> PossibleAnswers { get; }
 
         public QuestionStates State { get; private set; } = QuestionStates.Initilaized;
 
-        public Confirm( string question, string[ ] possibleAnswers ) {
+        public Confirm( string question, string[ ] possibleAnswers = null ) {
             this.Question = question;
-            this.PossibleAnswers = possibleAnswers;
+            this.PossibleAnswers = possibleAnswers ?? new[ ] { "Yes", "No" };
         }
 
         public IQuestion Ask( IPrinter printer ) {
@@ -47,11 +48,20 @@ namespace Anfragen.Implementations {
             return this;
         }
 
-        public void Finish( ) {
+        public void Finish( Action done = null ) {
             var width = Console.WindowWidth;
             while ( width-- > 0 ) {
                 Console.Write( "-" );
             }
+
+            done?.Invoke( );
+
+            this.State = QuestionStates.Finished;
+        }
+
+        public void PrintResult( IPrinter printer ) {
+            printer.Print( $"{this.Question} : {this.Answer}" );
+            printer.AddNewLine( );
         }
 
     }

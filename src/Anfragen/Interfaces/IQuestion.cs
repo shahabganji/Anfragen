@@ -9,14 +9,19 @@ namespace Anfragen.Interfaces {
     }
 
     public interface IQuestion {
-        QuestionStates State { get; }
-        string Question { get; }
+
+        string Hint { get; }
         string Answer { get; }
+        string Question { get; }
+
+        QuestionStates State { get; }
+
         IQuestion Ask( IPrinter printer ); // prints the question
         IQuestion TakeAnswer( ); // waits for the user to answer the question
         IQuestion Validate( Func<IQuestion, bool> validator = null ); // if any validator provided calls the custom validation, otherwise calls the default implementation
         IQuestion PrintValidationErrors( ); // Prints the validation errors
-        void Finish( ); // the finishing touches of the question, for example rendering some extra texts
+        void Finish( Action done = null ); // the finishing touches of the question, for example rendering some extra texts
+        void PrintResult( IPrinter printer );
     }
 
 
@@ -32,6 +37,8 @@ namespace Anfragen.Interfaces {
 
         IEnumerable<IBranch> Branches { get; }
         IEnumerable<IQuestion> Questions { get; } // questions in main branch 
+
+        IEnumerable<IQuestion> ProcessedQuestions { get; }
 
         IQuestion PreviousQuestion { get; }
         IQuestion CurrentQuestion { get; }
@@ -55,8 +62,9 @@ namespace Anfragen.Interfaces {
     public class QuestionnaireSetting {
 
         public string QuestionIcon { get; set; } = "?";
-        public ConsoleColor QuestionIconColor { get; set; } = ConsoleColor.DarkGreen;
-        public ConsoleColor QuestionColor { get; set; } = ConsoleColor.DarkGray;
+        public ConsoleColor HintColor { get; set; } = ConsoleColor.Gray;
         public ConsoleColor AnswerColor { get; set; } = ConsoleColor.DarkCyan;
+        public ConsoleColor QuestionColor { get; set; } = ConsoleColor.DarkGray;
+        public ConsoleColor QuestionIconColor { get; set; } = ConsoleColor.DarkGreen;
     }
 }
