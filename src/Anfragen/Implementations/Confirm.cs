@@ -7,49 +7,56 @@ using System.IO;
 
 namespace Anfragen.Implementations {
 
-	public class Confirm : Question {
+    public class Confirm : Question {
 
         public IList<string> PossibleAnswers { get; }
 
         public Confirm( string question, string[ ] possibleAnswers = null ) {
             this.Text = question;
-			this.Hint = "Yes/No";
+            this.Hint = "Yes/No";
 
-			this.PossibleAnswers = possibleAnswers ?? new[ ] { "Yes", "No" };
+            this.PossibleAnswers = possibleAnswers ?? new[ ] { "Yes", "No" };
         }
-			   		
-		protected override Question TakeAnswer() {
 
-			int cursorTop = Console.CursorTop,
-				cursorLeft= Console.CursorLeft;
+        protected override Question TakeAnswer( ) {
 
-			IUserTerminal terminal = this.Terminal;
-			
-			terminal.ForegroundColor = this.Questionnaire.Settings.AnswerColor;
+            IUserTerminal terminal = this.Terminal;
 
-			this.Answer = terminal.Scanner.ReadLine();
+            // this should be before ReadLine, 
+            // because ReadLine will eliminate the current Lef position and reset it to 0
+            int cursorLeft = Console.CursorLeft;
 
-			bool result = this.Validate();
-			this.State = result ? QuestionStates.Valid : QuestionStates.Invalid;
+            // always set the color of terminal to AnswerColor
+            terminal.ForegroundColor = this.Questionnaire.Settings.AnswerColor;
+            this.Answer = terminal.Scanner.ReadLine( );
 
-			if (result) {
-				this.ClearLine(cursorTop + 1);
-			} else {
-				terminal.ForegroundColor = this.Questionnaire.Settings.ValidationIconColor;
-				terminal.Printer.Write(this.Questionnaire.Settings.ValidationIcon + " ");
+            // this should be after ReadLine because 
+            // before the user enters the input he/she might resize the console, 
+            // hence the top will change 
+            int cursorTop = Console.CursorTop;
 
-				terminal.ForegroundColor = this.Questionnaire.Settings.QuestionColor;
-				this.PrintValidationErrors();
+            bool result = this.Validate( );
+            this.State = result ? QuestionStates.Valid : QuestionStates.Invalid;
 
-				Console.SetCursorPosition(left: cursorLeft, top: cursorTop);
-				return this.TakeAnswer();
-			}
+            if ( result ) {
+                this.ClearLine( cursorTop );
+            } else {
+                terminal.ForegroundColor = this.Questionnaire.Settings.ValidationIconColor;
+                terminal.Printer.Write( this.Questionnaire.Settings.ValidationIcon + " " );
 
-			terminal.ResetColor();
+                terminal.ForegroundColor = this.Questionnaire.Settings.QuestionColor;
+                this.PrintValidationErrors( );
 
-			return this;
-		}
-        
+                // -1 beacause of readline
+                Console.SetCursorPosition( left: cursorLeft, top: cursorTop - 1 );
+                return this.TakeAnswer( );
+            }
+
+            terminal.ResetColor( );
+
+            return this;
+        }
+
     }
 
 }
