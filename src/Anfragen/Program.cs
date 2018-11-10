@@ -1,62 +1,67 @@
-﻿using System;
+﻿using Anfragen.Extensions;
 using Anfragen.Implementations;
 using Anfragen.Interfaces;
-using Anfragen.Extensions;
+using System;
+using System.Linq.Expressions;
 
 namespace Anfragen {
 
-    public class Program {
+	public class Program {
 
-        public static void Main( string[ ] args ) {
+		public static void Main(string[ ] args) {
 
-            var writer = new ConsoleWriter( );
-            IQuestionnaire questionnaire = new Questionnaire( writer );
+			UserConsole terminal = new UserConsole( );
+			IQuestionnaire questionnaire = new Questionnaire( terminal );
+			questionnaire.Settings.WelcomeMessage = "Welcome to my questionnare";
 
-            IQuestion ask_name = new Prompt( "What's your name?" );
-            IQuestion ask_family = new Prompt( "What's your family?" );
+			Func<Question, bool> validator = x=> x.Answer.Length > 0;
+			var  errorMessage = "Plaese Provide a value";
 
-            questionnaire.Add( ask_name ).Add( ask_family );
+			Question ask_name = new Prompt( "What's your name? " ).Validator( validator,errorMessage);
+			Question ask_family = new Prompt( "What's your family? " ).Validator( validator,errorMessage); ;
 
-            questionnaire.Start( );
+			questionnaire
+				.Add(ask_name)
+				.Add(ask_family)
+				;
 
-            QuestionStates states = QuestionStates.NotValid;
+			questionnaire.Start();
 
-            bool add = true;
+			bool add = true;
 
-            // loop until there is a question to ask
-            while ( questionnaire.CanProceed ) {
+			// loop until there is a question to ask
+			while (questionnaire.CanProceed) {
 
-                while ( states == QuestionStates.NotValid || states == QuestionStates.Answered ) {
-                    states = questionnaire.Validate( ).CurrentQuestion.State;
-                }
+				if (add) {
 
-                questionnaire.CurrentQuestion.Finish( );
+					var confirm  = new Confirm("Are you older than 18? ");
 
-                if ( add ) {
-                    questionnaire.Prompt( new Prompt( "How old are you? " ) );
-                    add = false;
-                }
+					confirm.Validator(x => {
+						Confirm q = (Confirm)x;
+						return q.PossibleAnswers.Contains(x.Answer);
+					}, "Your value should be either 'Yes' or 'No'");
 
-                questionnaire.GoToNextStep( );
-            }
+					questionnaire.Confirm(confirm);
 
+					questionnaire.Prompt(new Prompt("How old are you? "));
+					add = false;
+				}
 
-            // for the last question
-            states = questionnaire.Validate( ).CurrentQuestion.State;
-            while ( states == QuestionStates.NotValid || states == QuestionStates.Answered ) {
-                states = questionnaire.Validate( ).CurrentQuestion.State;
-            }
+				questionnaire.Next();
 
-            questionnaire.CurrentQuestion.Finish( );
+			}
 
-            questionnaire.End( );
+			questionnaire.End();
 
-            // Print Processed questions
-            foreach ( var q in questionnaire.ProcessedQuestions ) {
-                writer.Print( $"{q.Question} : {q.Answer}" );
-                writer.AddNewLine( );
-            }
+			// Print Processed questions
+			foreach (Question q in questionnaire.ProcessedQuestions) {
 
-        }
-    }
+				terminal.Printer.Write($"{q.Text} : {q.Answer}");
+				terminal.Printer.WriteLine();
+
+			}
+
+			Console.ReadLine();
+		}
+	}
 }
