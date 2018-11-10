@@ -11,8 +11,8 @@ namespace Anfragen.Implementations {
 
         public IList<string> PossibleAnswers { get; }
 
-        public Confirm( string question, string[ ] possibleAnswers = null ) {
-            this.Text = question;
+        public Confirm( string question, string[ ] possibleAnswers = null, IQuestionnaire questionnaire = null ) : base( question, questionnaire ) {
+
             this.Hint = "Yes/No";
 
             this.PossibleAnswers = possibleAnswers ?? new[ ] { "Yes", "No" };

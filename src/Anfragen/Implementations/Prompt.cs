@@ -6,8 +6,8 @@ namespace Anfragen.Implementations {
 
     public class Prompt : Question {
 
-        public Prompt( string prompt, string hint = "", IQuestionnaire questionnaire = null ) : base( questionnaire ) {
-            this.Text = prompt;
+        public Prompt( string prompt, string hint = "", IQuestionnaire questionnaire = null ) : base( prompt, questionnaire ) {
+
             this.Hint = hint;
         }
 

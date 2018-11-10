@@ -9,7 +9,7 @@ namespace Anfragen.Interfaces {
 
     public abstract class Question {
 
-        public string Hint { get; protected set; }
+        public string Hint { get; protected set; } = "";
         public string Answer { get; protected set; }
         public string Text { get; protected set; }
 
@@ -22,7 +22,8 @@ namespace Anfragen.Interfaces {
 
         private Func<Question, bool> _Validator;
 
-        public Question( IQuestionnaire questionnaire = null ) {
+        public Question( string question, IQuestionnaire questionnaire = null ) {
+            this.Text = question;
             this.Questionnaire = questionnaire;
         }
 
