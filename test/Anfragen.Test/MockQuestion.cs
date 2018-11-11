@@ -10,6 +10,7 @@ namespace Anfragen.Test {
 
         protected override Question TakeAnswer( ) {
             this.Answer = this.Terminal.Scanner.ReadLine( );
+			this.Terminal.Printer.Write(this.Answer);  
             return this;
         }
     }

@@ -43,8 +43,12 @@ namespace Anfragen.Interfaces {
             // prints any hints available
             if ( this.Hint.Trim( ).Length > 0 ) {
                 terminal.ForegroundColor = this.Questionnaire.Settings.HintColor;
-                terminal.Printer.Write( $"( {this.Hint} ) " );
+                terminal.Printer.Write( $"( {this.Hint} )" );
             }
+
+			// a single space to seperate q/a
+			terminal.Printer.Write(" ");
+				
 
             // 2. wait for the user to give answer to the question
             this.TakeAnswer( );

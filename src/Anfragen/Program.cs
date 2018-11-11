@@ -17,8 +17,8 @@ namespace Anfragen {
 			Func<Question, bool> validator = x=> x.Answer.Length > 0;
 			var  errorMessage = "Plaese Provide a value";
 
-			Question ask_name = new Prompt( "What's your name? " ).Validator( validator,errorMessage);
-			Question ask_family = new Prompt( "What's your family? " ).Validator( validator,errorMessage); ;
+			Question ask_name = new Prompt( "What's your name?" ).Validator( validator,errorMessage);
+			Question ask_family = new Prompt( "What's your family?" ).Validator( validator,errorMessage); ;
 
 			questionnaire
 				.Add(ask_name)
@@ -34,7 +34,7 @@ namespace Anfragen {
 
 				if (add) {
 
-					var confirm  = new Confirm("Are you older than 18? ");
+					var confirm  = new Confirm("Are you older than 18?");
 
 					confirm.Validator(x => {
 						Confirm q = (Confirm)x;
@@ -43,7 +43,7 @@ namespace Anfragen {
 
 					questionnaire.Confirm(confirm);
 
-					questionnaire.Prompt(new Prompt("How old are you? "));
+					questionnaire.Prompt(new Prompt("How old are you?"));
 					add = false;
 				}
 
