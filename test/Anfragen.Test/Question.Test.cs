@@ -9,7 +9,7 @@ namespace Anfragen.Test {
 	public class QuestionTests {
 
 		[Fact]
-		public void Print_The_Result_Of_A_Question() {
+		public void Print_the_result_of_a_question() {
 
 			string fake_answer = "Shahab";
 			using (StringWriter output = new StringWriter()) {
@@ -45,7 +45,7 @@ namespace Anfragen.Test {
 		}
 
 		[Fact]
-		public void Ask_A_Question_Should_Print_Icon_QUESTION_AND_ANSWER_WITHOUT_HINT() {
+		public void Ask_a_question_should_print_icon_question_and_answer_without_hint() {
 
 			string fake_answer = "Shahab";
 			using (StringWriter output = new StringWriter()) {
@@ -75,10 +75,9 @@ namespace Anfragen.Test {
 				}
 			}
 		}
-
-
+		
 		[Fact]
-		public void Calling_Finshish_Method_Should_Change_State() {
+		public void Calling_Finshish_method_should_change_state() {
 
 			using (StringWriter output = new StringWriter()) {
 				// arrange
@@ -100,9 +99,8 @@ namespace Anfragen.Test {
 			}
 		}
 
-
 		[Fact]
-		public void Calling_Finshish_Method_Should_Change_State_And_Calls_Lambda() {
+		public void Calling_Finshish_method_should_change_state_and_calls_lambda() {
 
 			using (StringWriter output = new StringWriter()) {
 				// arrange
@@ -126,5 +124,15 @@ namespace Anfragen.Test {
 
 			}
 		}
+
+		[Fact]
+		public void Constructing_a_Question_without_a_text_should_throw_exception() {
+
+			Assert.Throws<ArgumentNullException>(() => {
+				var question = new MockQuestion(null);
+			});
+			
+		}
+
 	}
 }
