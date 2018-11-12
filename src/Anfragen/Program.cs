@@ -2,6 +2,7 @@
 using Anfragen.Implementations;
 using Anfragen.Interfaces;
 using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace Anfragen {
@@ -18,9 +19,18 @@ namespace Anfragen {
 			var  errorMessage = "Plaese Provide a value";
 
 			Question ask_name = new Prompt( "What's your name?" ).Validator( validator,errorMessage);
-			Question ask_family = new Prompt( "What's your family?" ).Validator( validator,errorMessage); ;
+			Question ask_family = new Prompt( "What's your family?" ).Validator( validator,errorMessage);
+
+			
+			var preferable_language = new RawList( "What's your favorite language?");
+			preferable_language
+				.AddOption(new ListOption("Persian"))
+				.AddOption(new ListOption("English"))
+				.AddOption(new ListOption("German"));
+
 
 			questionnaire
+				.Add(preferable_language)
 				.Add(ask_name)
 				.Add(ask_family)
 				;

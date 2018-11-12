@@ -9,7 +9,7 @@ namespace Anfragen.Extensions {
 
 			if (!line.HasValue) { line = Console.CursorTop; }
 
-			Console.SetCursorPosition(0, Console.CursorTop);
+			Console.SetCursorPosition(0, line.Value);
 			Console.Write(new string(' ', Console.WindowWidth));
 			Console.SetCursorPosition(0, line.Value);
 		}
@@ -24,7 +24,7 @@ namespace Anfragen.Extensions {
 			}
 		}
 
-		public static void ClearAnswer(this Question question, int line, int? col = null) {
+		public static void ClearAnswer(this Question question, int line, int? col = null ) {
 			int left =   col ??
 							question.Questionnaire.Settings.QuestionIcon.Length
 						+   1
@@ -32,7 +32,7 @@ namespace Anfragen.Extensions {
 						+   1
 						+   ( question.Hint.Length > 0 ? ( question.Hint.Length +   4 ) : 0 );
 			Console.SetCursorPosition(left, line);
-			Console.Write(new string(' ', question.Answer.Length));
+			Console.Write(new string(' ', question.Answer?.Length ?? Console.WindowWidth - left ));
 			Console.SetCursorPosition(left, line);
 
 		}
