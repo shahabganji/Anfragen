@@ -22,7 +22,7 @@ namespace Anfragen.Implementations {
 			int column = Console.CursorLeft;
 			int line = Console.CursorTop;
 
-			int activeOption = 0;
+			int activeOption = -1;
 			drawOptions(terminal);
 
 			Console.SetCursorPosition(column, line);
@@ -37,19 +37,22 @@ namespace Anfragen.Implementations {
 				switch (keyInfo.Key) {
 					case ConsoleKey.Enter:
 
-						this.Answer = this._options[ activeOption ].Text;
+						this.Answer = activeOption > -1 ? this._options[ activeOption ].Text : null;
 						answered = true;
 						break;
 					case ConsoleKey.UpArrow:
 
 						this.ClearLines(line + 1, line + this._options.Count);
 						Console.SetCursorPosition(column, line);
-						this.drawOptions(terminal, --activeOption);
-						Console.SetCursorPosition(column, line);
 
+						--activeOption;
 						if (activeOption == -1) {
 							activeOption = this._options.Count - 1;
 						}
+
+
+						this.drawOptions(terminal, activeOption);
+						Console.SetCursorPosition(column, line);
 
 						this.ClearAnswer(line);
 						terminal.ForegroundColor = this.Questionnaire.Settings.AnswerColor;
@@ -60,12 +63,14 @@ namespace Anfragen.Implementations {
 
 						this.ClearLines(line + 1, line + this._options.Count);
 						Console.SetCursorPosition(column, line);
-						this.drawOptions(terminal, ++activeOption);
-						Console.SetCursorPosition(column, line);
 
-						if( activeOption == this._options.Count ) {
+						++activeOption;
+						if (activeOption == this._options.Count) {
 							activeOption = 0;
 						}
+
+						this.drawOptions(terminal, activeOption);
+						Console.SetCursorPosition(column, line);
 
 						this.ClearAnswer(line);
 						terminal.ForegroundColor = this.Questionnaire.Settings.AnswerColor;
@@ -78,7 +83,7 @@ namespace Anfragen.Implementations {
 			}
 
 			this.ClearLines(line + 1, line + this._options.Count);
-			this.State = QuestionStates.Valid;
+			this.State = this.Validate() ? QuestionStates.Valid : QuestionStates.Invalid;
 
 			// resets the cursor to the nxt line, 
 			// because of the options the cursor might be in wrong position for the next question
@@ -91,6 +96,7 @@ namespace Anfragen.Implementations {
 
 		private void drawOptions(IUserTerminal terminal, int active = 0) {
 			// set terminal to next line
+			terminal.ForegroundColor = this.Questionnaire.Settings.QuestionColor;
 			terminal.Printer.WriteLine();
 
 			for (int index = 0; index < this.VisibleOptions; index++) {
