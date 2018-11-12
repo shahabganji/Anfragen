@@ -24,5 +24,18 @@ namespace Anfragen.Extensions {
 			}
 		}
 
+		public static void ClearAnswer(this Question question, int line, int? col = null) {
+			int left =   col ??
+							question.Questionnaire.Settings.QuestionIcon.Length
+						+   1
+						+   question.Text.Length
+						+   1
+						+   ( question.Hint.Length > 0 ? ( question.Hint.Length +   4 ) : 0 );
+			Console.SetCursorPosition(left, line);
+			Console.Write(new string(' ', question.Answer.Length));
+			Console.SetCursorPosition(left, line);
+
+		}
+
 	}
 }

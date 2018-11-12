@@ -47,8 +47,11 @@ namespace Anfragen.Implementations {
                 terminal.ForegroundColor = this.Questionnaire.Settings.QuestionColor;
                 this.PrintValidationErrors( );
 
-                // -1 beacause of readline
-                Console.SetCursorPosition( left: cursorLeft, top: cursorTop - 1 );
+				// -1 beacause of readline
+				var line = cursorTop - 1;
+
+				this.ClearAnswer(line: line);
+                Console.SetCursorPosition( left: cursorLeft, top: line );
                 return this.TakeAnswer( );
             }
 

@@ -43,7 +43,9 @@ namespace Anfragen {
 
 					questionnaire.Confirm(confirm);
 
-					questionnaire.Prompt(new Prompt("How old are you?"));
+					var age_prompt = new Prompt("How old are you?");
+					age_prompt.Validator(x => int.Parse(x.Answer) >= 18 , "Your must be older than 18");
+					questionnaire.Prompt(age_prompt);
 					add = false;
 				}
 

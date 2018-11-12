@@ -132,8 +132,7 @@ namespace Anfragen.Test {
 				MockQuestion question = new MockQuestion(null);
 			});
 		}
-
-
+		
 		[Fact]
 		public void A_Null_validator_should_fail() {
 
