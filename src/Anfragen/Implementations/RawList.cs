@@ -32,11 +32,11 @@ namespace Anfragen.Implementations {
 
 			int activeOption = -1;
 			if (State == QuestionStates.Initilaized) {
-				this.DrawOptions(terminal);
+				this.DrawOptions();
 			}
 
 			Console.SetCursorPosition(column, line);
-			activeOption = HandleInput(terminal, column, line, activeOption);
+			activeOption = HandleInput(column, line, activeOption);
 
 			this.State = this.Validate() ? QuestionStates.Valid : QuestionStates.Invalid;
 
@@ -59,7 +59,10 @@ namespace Anfragen.Implementations {
 
 		}
 
-		protected virtual int HandleInput(IUserTerminal terminal, int column, int line, int activeOption) {
+		protected virtual int HandleInput( int column, int line, int activeOption) {
+
+			var terminal = this.Terminal;
+
 			bool answered = false;
 
 			while (!answered) {
@@ -83,7 +86,7 @@ namespace Anfragen.Implementations {
 						}
 
 
-						this.DrawOptions(terminal, activeOption);
+						this.DrawOptions(activeOption);
 						Console.SetCursorPosition(column, line);
 
 						this.ClearAnswer(line);
@@ -101,7 +104,7 @@ namespace Anfragen.Implementations {
 							activeOption = 0;
 						}
 
-						this.DrawOptions(terminal, activeOption);
+						this.DrawOptions(activeOption);
 						Console.SetCursorPosition(column, line);
 
 						this.ClearAnswer(line);
@@ -117,7 +120,10 @@ namespace Anfragen.Implementations {
 			return activeOption;
 		}
 
-		protected virtual void DrawOptions(IUserTerminal terminal, int active = -1) {
+		protected virtual void DrawOptions(int active = -1) {
+
+			var terminal = this.Terminal;
+
 			// set terminal to next line
 			terminal.ForegroundColor = this.Questionnaire.Settings.QuestionColor;
 			terminal.Printer.WriteLine();
@@ -126,19 +132,23 @@ namespace Anfragen.Implementations {
 			var visible_items = this._options.Skip( page * this.VisibleOptions ).Take(this.VisibleOptions).ToList();
 
 			for (int index = 0; index < visible_items.Count; index++) {
-
-				// which option is selected
-				if (index == ( active >= this.VisibleOptions ? active - this.VisibleOptions : active)) {
-					terminal.ForegroundColor = this.Questionnaire.Settings.AnswerColor;
-				}
-				//	**********************************************************
-
-				terminal.Printer.Write("  > ");
-
-				terminal.ForegroundColor = this.Questionnaire.Settings.QuestionColor;
-				terminal.Printer.WriteLine($"{visible_items[ index ].Text}");
-
+				PrintIndividualOption(active, visible_items[ index ], index == (active >= this.VisibleOptions ? active - this.VisibleOptions : active));
 			}
+		}
+
+		protected virtual void PrintIndividualOption(int active, IOption option, bool isActive) {
+
+			var terminal = this.Terminal;
+
+			// which option is selected
+			if (isActive) {
+				terminal.ForegroundColor = this.Questionnaire.Settings.AnswerColor;
+			}
+			//	**********************************************************
+
+			terminal.Printer.Write("  > ");
+			terminal.ForegroundColor = this.Questionnaire.Settings.QuestionColor;
+			terminal.Printer.WriteLine($"{option.Text}");
 		}
 	}
 
