@@ -28,6 +28,9 @@ namespace Anfragen {
 			preferable_language
 				.AddOption(new ListOption("Persian"))
 				.AddOption(new ListOption("English"))
+				.AddOption(new ListOption("Italian"))
+				.AddOption(new ListOption("Spanish"))
+				.AddOption(new ListOption("French"))
 				.AddOption(new ListOption("German"));
 
 
