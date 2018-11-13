@@ -110,6 +110,11 @@ namespace Anfragen.Interfaces {
 				throw new InvalidOperationException($"You must fill the property {nameof(this._ErrorMessage)}, when providing any validator. ");
 			}
 
+			this.Terminal.ForegroundColor = this.Questionnaire.Settings.ValidationIconColor;
+			this.Terminal.Printer.Write(this.Questionnaire.Settings.ValidationIcon + " ");
+
+			this.Terminal.ForegroundColor = this.Questionnaire.Settings.QuestionColor;
+
 			this.Terminal.Printer.WriteLine(this._ErrorMessage);
 			return this;
 		}

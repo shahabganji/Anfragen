@@ -41,10 +41,6 @@ namespace Anfragen.Implementations {
             if ( result ) {
                 this.ClearLine( cursorTop );
             } else {
-                terminal.ForegroundColor = this.Questionnaire.Settings.ValidationIconColor;
-                terminal.Printer.Write( this.Questionnaire.Settings.ValidationIcon + " " );
-
-                terminal.ForegroundColor = this.Questionnaire.Settings.QuestionColor;
                 this.PrintValidationErrors( );
 
 				// -1 beacause of readline

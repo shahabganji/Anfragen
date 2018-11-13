@@ -23,7 +23,9 @@ namespace Anfragen.Implementations {
 			int line = Console.CursorTop;
 
 			int activeOption = -1;
-			drawOptions(terminal);
+			if (State == QuestionStates.Initilaized) {
+				this.drawOptions(terminal);
+			}
 
 			Console.SetCursorPosition(column, line);
 
@@ -56,7 +58,7 @@ namespace Anfragen.Implementations {
 
 						this.ClearAnswer(line);
 						terminal.ForegroundColor = this.Questionnaire.Settings.AnswerColor;
-						terminal.Printer.Write(this._options[activeOption].Text);
+						terminal.Printer.Write(this._options[ activeOption ].Text);
 
 						break;
 					case ConsoleKey.DownArrow:
@@ -82,19 +84,28 @@ namespace Anfragen.Implementations {
 				}
 			}
 
-			this.ClearLines(line + 1, line + this._options.Count);
 			this.State = this.Validate() ? QuestionStates.Valid : QuestionStates.Invalid;
+
+			if (this.State == QuestionStates.Invalid) {
+				Console.SetCursorPosition(0, line + this.VisibleOptions + 1);
+				this.PrintValidationErrors();
+				Console.SetCursorPosition(column, line);
+				this.TakeAnswer();
+
+			} else {
+				this.ClearLines(line + 1, line + this.VisibleOptions + 1 );
+			}
 
 			// resets the cursor to the nxt line, 
 			// because of the options the cursor might be in wrong position for the next question
-			Console.SetCursorPosition(0, line + 1); 
+			Console.SetCursorPosition(0, line + 1);
 
 			terminal.ResetColor();
 			return this;
 
 		}
 
-		private void drawOptions(IUserTerminal terminal, int active = 0) {
+		private void drawOptions(IUserTerminal terminal, int active = -1) {
 			// set terminal to next line
 			terminal.ForegroundColor = this.Questionnaire.Settings.QuestionColor;
 			terminal.Printer.WriteLine();

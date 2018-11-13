@@ -23,6 +23,8 @@ namespace Anfragen {
 
 			
 			var preferable_language = new RawList( "What's your favorite language?");
+			preferable_language.Validator(x=> x.Answer != null , "You must select an option");
+
 			preferable_language
 				.AddOption(new ListOption("Persian"))
 				.AddOption(new ListOption("English"))
