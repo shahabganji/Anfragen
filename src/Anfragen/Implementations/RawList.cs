@@ -6,9 +6,21 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace Anfragen.Implementations {
+	
+	public class OtherKeysPressedEventArgs : EventArgs {
+
+		public ConsoleKeyInfo KeyInfo { get; set; }
+
+		public int ActiveIndex { get; set; }
+
+		public IOption Option { get; set; }
+
+	}
+
 	public class RawList : Question {
 
-
+		protected delegate bool OtherKeysPressedEventHandler(OtherKeysPressedEventArgs e);
+		protected event OtherKeysPressedEventHandler OtherKyesPressed;
 
 		private IList<IOption> _options;
 		public IEnumerable<IOption> Options => this._options;
@@ -31,12 +43,12 @@ namespace Anfragen.Implementations {
 			int line = Console.CursorTop;
 
 			int activeOption = -1;
-			if (State == QuestionStates.Initilaized) {
+			if (this.State == QuestionStates.Initilaized) {
 				this.DrawOptions();
 			}
 
 			Console.SetCursorPosition(column, line);
-			activeOption = HandleInput(column, line, activeOption);
+			activeOption = this.HandleInput(column, line, activeOption);
 
 			this.State = this.Validate() ? QuestionStates.Valid : QuestionStates.Invalid;
 
@@ -59,9 +71,9 @@ namespace Anfragen.Implementations {
 
 		}
 
-		protected virtual int HandleInput( int column, int line, int activeOption) {
+		protected virtual int HandleInput(int column, int line, int activeOptionIndex) {
 
-			var terminal = this.Terminal;
+			IUserTerminal terminal = this.Terminal;
 
 			bool answered = false;
 
@@ -72,7 +84,7 @@ namespace Anfragen.Implementations {
 
 				switch (keyInfo.Key) {
 					case ConsoleKey.Enter:
-						this.Answer = activeOption > -1 ? this._options[ activeOption ].Text : null;
+						this.Answer = activeOptionIndex > -1 ? this._options[ activeOptionIndex ].Text : null;
 						answered = true;
 						break;
 					case ConsoleKey.UpArrow:
@@ -80,18 +92,18 @@ namespace Anfragen.Implementations {
 						this.ClearLines(line + 1, line + this._options.Count);
 						Console.SetCursorPosition(column, line);
 
-						--activeOption;
-						if (activeOption == -1) {
-							activeOption = this._options.Count - 1;
+						--activeOptionIndex;
+						if (activeOptionIndex == -1) {
+							activeOptionIndex = this._options.Count - 1;
 						}
 
 
-						this.DrawOptions(activeOption);
+						this.DrawOptions(activeOptionIndex);
 						Console.SetCursorPosition(column, line);
 
 						this.ClearAnswer(line);
 						terminal.ForegroundColor = this.Questionnaire.Settings.AnswerColor;
-						terminal.Printer.Write(this._options[ activeOption ].Text);
+						terminal.Printer.Write(this._options[ activeOptionIndex ].Text);
 
 						break;
 					case ConsoleKey.DownArrow:
@@ -99,46 +111,53 @@ namespace Anfragen.Implementations {
 						this.ClearLines(line + 1, line + this._options.Count);
 						Console.SetCursorPosition(column, line);
 
-						++activeOption;
-						if (activeOption == this._options.Count) {
-							activeOption = 0;
+						++activeOptionIndex;
+						if (activeOptionIndex == this._options.Count) {
+							activeOptionIndex = 0;
 						}
 
-						this.DrawOptions(activeOption);
+						this.DrawOptions(activeOptionIndex);
 						Console.SetCursorPosition(column, line);
 
 						this.ClearAnswer(line);
 						terminal.ForegroundColor = this.Questionnaire.Settings.AnswerColor;
-						terminal.Printer.Write(this._options[ activeOption ].Text);
+						terminal.Printer.Write(this._options[ activeOptionIndex ].Text);
 						break;
 					default:
-						this.ClearAnswer(line);
+						if (this.OtherKyesPressed != null) {
+							OtherKeysPressedEventArgs e = new OtherKeysPressedEventArgs{
+								ActiveIndex = activeOptionIndex ,
+								KeyInfo = keyInfo ,
+								Option = this._options[activeOptionIndex]
+							};
+							answered = this.OtherKyesPressed(e);
+						}
 						break;
 				}
 			}
 
-			return activeOption;
+			return activeOptionIndex;
 		}
 
 		protected virtual void DrawOptions(int active = -1) {
 
-			var terminal = this.Terminal;
+			IUserTerminal terminal = this.Terminal;
 
 			// set terminal to next line
 			terminal.ForegroundColor = this.Questionnaire.Settings.QuestionColor;
 			terminal.Printer.WriteLine();
 
 			int page = active / this.VisibleOptions;
-			var visible_items = this._options.Skip( page * this.VisibleOptions ).Take(this.VisibleOptions).ToList();
+			List<IOption> visible_items = this._options.Skip(page * this.VisibleOptions).Take(this.VisibleOptions).ToList();
 
 			for (int index = 0; index < visible_items.Count; index++) {
-				PrintIndividualOption(active, visible_items[ index ], index == (active >= this.VisibleOptions ? active - this.VisibleOptions : active));
+				this.PrintIndividualOption(active, visible_items[ index ], index == (active >= this.VisibleOptions ? active - this.VisibleOptions : active));
 			}
 		}
 
 		protected virtual void PrintIndividualOption(int active, IOption option, bool isActive) {
 
-			var terminal = this.Terminal;
+			IUserTerminal terminal = this.Terminal;
 
 			// which option is selected
 			if (isActive) {
@@ -154,13 +173,16 @@ namespace Anfragen.Implementations {
 
 	public class ListOption : IOption {
 		public string Text { get; }
+		public bool Selected { get ; set; }
 
-		public ListOption(string option) {
+		public ListOption(string option, bool selected = false) {
 			this.Text = option;
+			this.Selected = selected;
 		}
 	}
 
 	public interface IOption {
 		string Text { get; }
+		bool Selected { get; set; }
 	}
 }

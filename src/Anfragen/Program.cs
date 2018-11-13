@@ -22,7 +22,7 @@ namespace Anfragen {
 			Question ask_family = new Prompt( "What's your family?" ).Validator( validator,errorMessage);
 
 			
-			var preferable_language = new RawList( "What's your favorite language?");
+			var preferable_language = new CheckList( "What's your favorite language?");
 			preferable_language.Validator(x=> x.Answer != null , "You must select an option");
 
 			preferable_language
@@ -32,7 +32,6 @@ namespace Anfragen {
 				.AddOption(new ListOption("Spanish"))
 				.AddOption(new ListOption("French"))
 				.AddOption(new ListOption("German"));
-
 
 			questionnaire
 				.Add(preferable_language)
