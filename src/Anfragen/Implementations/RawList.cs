@@ -6,37 +6,31 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace Anfragen.Implementations {
-	
-	public class OtherKeysPressedEventArgs : EventArgs {
 
-		public ConsoleKeyInfo KeyInfo { get; set; }
-
-		public int ActiveIndex { get; set; }
-
-		public IOption Option { get; set; }
-
+	public enum ListType {
+		Simple, Radio, Check
 	}
+	
+	public class SingleSelect : Question {
 
-	public class RawList : Question {
-
-		protected delegate bool OtherKeysPressedEventHandler(OtherKeysPressedEventArgs e);
-		protected event OtherKeysPressedEventHandler OtherKyesPressed;
-
-		private IList<IOption> _options;
+		protected IList<IOption> _options;
 		public IEnumerable<IOption> Options => this._options;
 
+		public ListType Type { get; set; }
+
 		public int VisibleOptions { get; protected set; }
-		public RawList AddOption(IOption option) {
+		public SingleSelect AddOption(IOption option) {
 			this._options.Add(option);
 			return this;
 		}
 
-		public RawList(string question, IEnumerable<IOption> options = null, int visibleOptions = 3, IQuestionnaire questionnaire = null) : base(question, questionnaire) {
+		public SingleSelect(string question, IEnumerable<IOption> options = null, int visibleOptions = 3, IQuestionnaire questionnaire = null) : base(question, questionnaire) {
 			this._options = new List<IOption>();
 			this.VisibleOptions = visibleOptions;
 		}
 
 		protected override Question TakeAnswer() {
+
 			IUserTerminal terminal = this.Terminal;
 
 			int column = Console.CursorLeft;
@@ -80,7 +74,6 @@ namespace Anfragen.Implementations {
 			while (!answered) {
 
 				ConsoleKeyInfo keyInfo = Console.ReadKey();
-				Console.SetCursorPosition(column, line);
 
 				switch (keyInfo.Key) {
 					case ConsoleKey.Enter:
@@ -88,6 +81,8 @@ namespace Anfragen.Implementations {
 						answered = true;
 						break;
 					case ConsoleKey.UpArrow:
+						Console.SetCursorPosition(column, line);
+
 
 						this.ClearLines(line + 1, line + this._options.Count);
 						Console.SetCursorPosition(column, line);
@@ -96,7 +91,6 @@ namespace Anfragen.Implementations {
 						if (activeOptionIndex == -1) {
 							activeOptionIndex = this._options.Count - 1;
 						}
-
 
 						this.DrawOptions(activeOptionIndex);
 						Console.SetCursorPosition(column, line);
@@ -107,6 +101,7 @@ namespace Anfragen.Implementations {
 
 						break;
 					case ConsoleKey.DownArrow:
+						Console.SetCursorPosition(column, line);
 
 						this.ClearLines(line + 1, line + this._options.Count);
 						Console.SetCursorPosition(column, line);
@@ -123,15 +118,21 @@ namespace Anfragen.Implementations {
 						terminal.ForegroundColor = this.Questionnaire.Settings.AnswerColor;
 						terminal.Printer.Write(this._options[ activeOptionIndex ].Text);
 						break;
-					default:
-						if (this.OtherKyesPressed != null) {
-							OtherKeysPressedEventArgs e = new OtherKeysPressedEventArgs{
-								ActiveIndex = activeOptionIndex ,
-								KeyInfo = keyInfo ,
-								Option = this._options[activeOptionIndex]
-							};
-							answered = this.OtherKyesPressed(e);
+					case ConsoleKey.Spacebar:
+						Console.SetCursorPosition(column, line);
+						IOption selectedItem = activeOptionIndex > -1 ? this._options[ activeOptionIndex ] : null;
+						if (this.Type == ListType.Check && selectedItem != null) {
+							selectedItem.Selected = !selectedItem.Selected;
+							this.DrawOptions(-1);
 						}
+						break;
+
+					case ConsoleKey.F2:
+					default:
+						//this.ClearLines(line + 1, line + this._options.Count);
+						//Console.SetCursorPosition(column, line);
+						//this.DrawOptions(activeOptionIndex);
+						//Console.SetCursorPosition(column, line);
 						break;
 				}
 			}
@@ -151,38 +152,42 @@ namespace Anfragen.Implementations {
 			List<IOption> visible_items = this._options.Skip(page * this.VisibleOptions).Take(this.VisibleOptions).ToList();
 
 			for (int index = 0; index < visible_items.Count; index++) {
-				this.PrintIndividualOption(active, visible_items[ index ], index == (active >= this.VisibleOptions ? active - this.VisibleOptions : active));
+				if (this.Type != ListType.Check) {
+					this.PrintIndividualOption(visible_items[ index ], index == (active >= this.VisibleOptions ? active - this.VisibleOptions : active));
+				} else {
+					this.PrintIndividualOption(visible_items[ index ], visible_items[ index ].Selected);
+				}
 			}
 		}
 
-		protected virtual void PrintIndividualOption(int active, IOption option, bool isActive) {
+		protected virtual void PrintIndividualOption(IOption option, bool isActive, bool highlight = false) {
 
 			IUserTerminal terminal = this.Terminal;
 
 			// which option is selected
 			if (isActive) {
+
 				terminal.ForegroundColor = this.Questionnaire.Settings.AnswerColor;
+
+				if (this.Type == ListType.Radio) {
+					terminal.Printer.Write("    (O) ");
+				} else if (this.Type == ListType.Simple) {
+					terminal.Printer.Write("    > ");
+				}
+
+			} else {
+
+				if (this.Type == ListType.Radio) {
+					terminal.Printer.Write("    ( ) ");
+				} else if (this.Type == ListType.Simple) {
+					terminal.Printer.Write("    > ");
+				}
+
 			}
 			//	**********************************************************
 
-			terminal.Printer.Write("  > ");
-			terminal.ForegroundColor = this.Questionnaire.Settings.QuestionColor;
 			terminal.Printer.WriteLine($"{option.Text}");
+			terminal.ForegroundColor = this.Questionnaire.Settings.QuestionColor;
 		}
-	}
-
-	public class ListOption : IOption {
-		public string Text { get; }
-		public bool Selected { get ; set; }
-
-		public ListOption(string option, bool selected = false) {
-			this.Text = option;
-			this.Selected = selected;
-		}
-	}
-
-	public interface IOption {
-		string Text { get; }
-		bool Selected { get; set; }
 	}
 }

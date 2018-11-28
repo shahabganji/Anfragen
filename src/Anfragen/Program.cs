@@ -31,12 +31,14 @@ namespace Anfragen {
 				.AddOption(new ListOption("Italian"))
 				.AddOption(new ListOption("Spanish"))
 				.AddOption(new ListOption("French"))
-				.AddOption(new ListOption("German"));
+				.AddOption(new ListOption("German"))
+				.Type = ListType.Check;
+				;
 
 			questionnaire
 				.Add(preferable_language)
-				.Add(ask_name)
-				.Add(ask_family)
+				//.Add(ask_name)
+				//.Add(ask_family)
 				;
 
 			questionnaire.Start();
@@ -48,19 +50,19 @@ namespace Anfragen {
 
 				if (add) {
 
-					var confirm  = new Confirm("Are you older than 18?");
+					//var confirm  = new Confirm("Are you older than 18?");
 
-					confirm.Validator(x => {
-						Confirm q = (Confirm)x;
-						return q.PossibleAnswers.Contains(x.Answer);
-					}, "Your value should be either 'Yes' or 'No'");
+					//confirm.Validator(x => {
+					//	Confirm q = (Confirm)x;
+					//	return q.PossibleAnswers.Contains(x.Answer);
+					//}, "Your value should be either 'Yes' or 'No'");
 
-					questionnaire.Confirm(confirm);
+					//questionnaire.Confirm(confirm);
 
-					var age_prompt = new Prompt("How old are you?");
-					age_prompt.Validator(x => int.Parse(x.Answer) >= 18 , "Your must be older than 18");
-					questionnaire.Prompt(age_prompt);
-					add = false;
+					//var age_prompt = new Prompt("How old are you?");
+					//age_prompt.Validator(x => int.Parse(x.Answer) >= 18 , "Your must be older than 18");
+					//questionnaire.Prompt(age_prompt);
+					//add = false;
 				}
 
 				questionnaire.Next();
