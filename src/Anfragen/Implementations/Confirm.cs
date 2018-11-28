@@ -1,21 +1,20 @@
-using Anfragen.Interfaces;
 using Anfragen.Extensions;
+using Anfragen.Interfaces;
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 
 namespace Anfragen.Implementations {
 
-    public class Confirm : Question {
+	public class Confirm : Question {
 
         public IList<string> PossibleAnswers { get; }
 
-        public Confirm( string question, string[ ] possibleAnswers = null, IQuestionnaire questionnaire = null ) : base( question, questionnaire ) {
+        public Confirm( string question, string hint = "y/n" ,  string[ ] possibleAnswers = null, IQuestionnaire questionnaire = null ) : base( question, questionnaire ) {
 
-            this.Hint = "Yes/No";
+            this.Hint = hint;
 
-            this.PossibleAnswers = possibleAnswers ?? new[ ] { "Yes", "No" };
+            this.PossibleAnswers = possibleAnswers ?? new[ ] { "y", "n" };
         }
 
         protected override Question TakeAnswer( ) {
@@ -41,10 +40,6 @@ namespace Anfragen.Implementations {
             if ( result ) {
                 this.ClearLine( cursorTop );
             } else {
-                terminal.ForegroundColor = this.Questionnaire.Settings.ValidationIconColor;
-                terminal.Printer.Write( this.Questionnaire.Settings.ValidationIcon + " " );
-
-                terminal.ForegroundColor = this.Questionnaire.Settings.QuestionColor;
                 this.PrintValidationErrors( );
 
 				// -1 beacause of readline
@@ -61,5 +56,4 @@ namespace Anfragen.Implementations {
         }
 
     }
-
 }

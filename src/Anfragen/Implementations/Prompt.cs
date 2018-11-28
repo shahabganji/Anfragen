@@ -6,7 +6,8 @@ namespace Anfragen.Implementations {
 
     public class Prompt : Question {
 
-        public Prompt( string prompt, string hint = "", IQuestionnaire questionnaire = null ) : base( prompt, questionnaire ) {
+        public Prompt( string prompt, string hint = "", IQuestionnaire questionnaire = null ) : 
+			base( prompt, questionnaire ) {
 
             this.Hint = hint;
         }
@@ -37,10 +38,6 @@ namespace Anfragen.Implementations {
                 this.ClearLine( cursorTop );
             } else {
 
-                terminal.ForegroundColor = this.Questionnaire.Settings.ValidationIconColor;
-                terminal.Printer.Write( this.Questionnaire.Settings.ValidationIcon + " " );
-
-                terminal.ForegroundColor = this.Questionnaire.Settings.QuestionColor;
                 this.PrintValidationErrors( );
 
 				// -1 because of read line

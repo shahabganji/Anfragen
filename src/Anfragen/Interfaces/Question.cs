@@ -6,13 +6,13 @@ namespace Anfragen.Interfaces {
 		Initilaized, Valid, Invalid, Finished
 	}
 
-	public abstract class Question {
+	public abstract class Question : ICloneable {
 
-		public string Hint { get; protected set; } = "";
+		public string Hint { get; internal set; } = "";
 		public string Answer { get; protected set; }
-		public string Text { get; protected set; }
+		public string Text { get; internal set; }
 
-		private string _ErrorMessage;
+		internal string ErrorMessage { get; set; } = "";
 
 		public QuestionStates State { get; protected set; } = QuestionStates.Initilaized;
 		public IQuestionnaire Questionnaire { get; internal set; }
@@ -22,8 +22,11 @@ namespace Anfragen.Interfaces {
 		private Func<Question, bool> _Validator;
 
 		public Question(string question, IQuestionnaire questionnaire = null) {
+
 			this.Text = question ?? throw new ArgumentNullException($"{nameof(question)} cannot be null");
+
 			this.Questionnaire = questionnaire;
+
 		}
 
 		// prints the question
@@ -81,7 +84,7 @@ namespace Anfragen.Interfaces {
 				throw new ArgumentNullException($"{nameof(errorMessage) } cannot be null");
 			}
 
-			this._ErrorMessage = errorMessage;
+			this.ErrorMessage = errorMessage;
 			this._Validator = validator;
 			return this;
 		}
@@ -106,14 +109,24 @@ namespace Anfragen.Interfaces {
 		// Prints the validation errors
 		protected virtual Question PrintValidationErrors() {
 
-			if (this.State == QuestionStates.Invalid && this._ErrorMessage.Trim().Length == 0) {
-				throw new InvalidOperationException($"You must fill the property {nameof(this._ErrorMessage)}, when providing any validator. ");
+			if (this.State == QuestionStates.Invalid && this.ErrorMessage.Trim().Length == 0) {
+				throw new InvalidOperationException($"You must fill the property {nameof(this.ErrorMessage)}, when providing any validator. ");
 			}
 
-			this.Terminal.Printer.WriteLine(this._ErrorMessage);
+			this.Terminal.ForegroundColor = this.Questionnaire.Settings.ValidationIconColor;
+			this.Terminal.Printer.Write(this.Questionnaire.Settings.ValidationIcon + " ");
+
+			this.Terminal.ForegroundColor = this.Questionnaire.Settings.QuestionColor;
+
+			this.Terminal.Printer.WriteLine(this.ErrorMessage);
 			return this;
 		}
 		protected abstract Question TakeAnswer();
+
+		public object Clone() {
+			return this.MemberwiseClone();
+		}
+
 	}
 
 }
