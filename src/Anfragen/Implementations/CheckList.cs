@@ -6,9 +6,10 @@ using System.Linq;
 
 namespace Anfragen.Implementations {
 
-	public class CheckList : SelectableList {
+	class CheckList : SelectableList {
 
-		public CheckList(string question, IEnumerable<IOption> options = null, int visibleOptions = 4, IQuestionnaire questionnaire = null) : base(question, options, visibleOptions, questionnaire) {
+		internal CheckList(string question, IEnumerable<IOption> options = null, int visibleOptions = 4, IQuestionnaire questionnaire = null) :
+			base(question, options, visibleOptions, questionnaire) {
 		}
 
 		protected override Question TakeAnswer() {

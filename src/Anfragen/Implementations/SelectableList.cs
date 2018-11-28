@@ -7,21 +7,30 @@ using System.Linq;
 
 namespace Anfragen.Implementations {
 	
-	public class SelectableList : Question {
+	class SelectableList : Question {
 
 		protected IList<IOption> _options;
 		public IEnumerable<IOption> Options => this._options;
 
 		internal bool ShowAsRadio { get; set; } = false;
 
-		public int VisibleOptions { get; protected set; }
+		public int VisibleOptions { get; internal set; }
 		public SelectableList AddOption(IOption option) {
 			this._options.Add(option);
 			return this;
 		}
 
-		public SelectableList(string question, IEnumerable<IOption> options = null, int visibleOptions = 4, IQuestionnaire questionnaire = null) : base(question, questionnaire) {
+		internal SelectableList(string question, IEnumerable<IOption> options = null, int visibleOptions = 4, IQuestionnaire questionnaire = null) : 
+			base(question, questionnaire) {
+
 			this._options = new List<IOption>();
+
+			if( options != null) {
+				foreach( var option in options) {
+					this._options.Add(option);
+				}
+			}
+
 			this.VisibleOptions = visibleOptions;
 		}
 
@@ -169,5 +178,7 @@ namespace Anfragen.Implementations {
 			terminal.Printer.WriteLine($"{option.Text}");
 			terminal.ForegroundColor = this.Questionnaire.Settings.QuestionColor;
 		}
+
+	
 	}
 }
