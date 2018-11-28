@@ -12,7 +12,7 @@ namespace Anfragen.Demo {
 			questionnaire.Settings.WelcomeMessage = "Welcome to my questionnare";
 
 			Func<Question, bool> validator = x=> x.Answer.Length > 0;
-			string  errorMessage = "Plaese Provide a value";
+			string  errorMessage = "Please Provide a value";
 
 			Question ask_name = new Prompt( "What's your name?" ).Validator( validator,errorMessage);
 			Question ask_family = new Prompt( "What's your family?" ).Validator( validator,errorMessage);
@@ -30,7 +30,7 @@ namespace Anfragen.Demo {
 												new QuestionOption("French"),
 												new QuestionOption("German")
 											})
-											//.AsRadioList()
+											.AsCheckList()
 											.AddToQuestionnaire(questionnaire)
 											.WithErrorMessage("You must select an option")
 											.Build();
