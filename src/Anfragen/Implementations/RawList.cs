@@ -6,25 +6,21 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace Anfragen.Implementations {
-
-	public enum ListType {
-		Simple, Radio, Check
-	}
 	
-	public class SingleSelect : Question {
+	public class SelectableList : Question {
 
 		protected IList<IOption> _options;
 		public IEnumerable<IOption> Options => this._options;
 
-		public ListType Type { get; set; }
+		internal bool ShowAsRadio { get; set; } = false;
 
 		public int VisibleOptions { get; protected set; }
-		public SingleSelect AddOption(IOption option) {
+		public SelectableList AddOption(IOption option) {
 			this._options.Add(option);
 			return this;
 		}
 
-		public SingleSelect(string question, IEnumerable<IOption> options = null, int visibleOptions = 3, IQuestionnaire questionnaire = null) : base(question, questionnaire) {
+		public SelectableList(string question, IEnumerable<IOption> options = null, int visibleOptions = 4, IQuestionnaire questionnaire = null) : base(question, questionnaire) {
 			this._options = new List<IOption>();
 			this.VisibleOptions = visibleOptions;
 		}
@@ -118,21 +114,7 @@ namespace Anfragen.Implementations {
 						terminal.ForegroundColor = this.Questionnaire.Settings.AnswerColor;
 						terminal.Printer.Write(this._options[ activeOptionIndex ].Text);
 						break;
-					case ConsoleKey.Spacebar:
-						Console.SetCursorPosition(column, line);
-						IOption selectedItem = activeOptionIndex > -1 ? this._options[ activeOptionIndex ] : null;
-						if (this.Type == ListType.Check && selectedItem != null) {
-							selectedItem.Selected = !selectedItem.Selected;
-							this.DrawOptions(-1);
-						}
-						break;
-
-					case ConsoleKey.F2:
 					default:
-						//this.ClearLines(line + 1, line + this._options.Count);
-						//Console.SetCursorPosition(column, line);
-						//this.DrawOptions(activeOptionIndex);
-						//Console.SetCursorPosition(column, line);
 						break;
 				}
 			}
@@ -152,11 +134,9 @@ namespace Anfragen.Implementations {
 			List<IOption> visible_items = this._options.Skip(page * this.VisibleOptions).Take(this.VisibleOptions).ToList();
 
 			for (int index = 0; index < visible_items.Count; index++) {
-				if (this.Type != ListType.Check) {
+				
 					this.PrintIndividualOption(visible_items[ index ], index == (active >= this.VisibleOptions ? active - this.VisibleOptions : active));
-				} else {
-					this.PrintIndividualOption(visible_items[ index ], visible_items[ index ].Selected);
-				}
+				
 			}
 		}
 
@@ -169,17 +149,17 @@ namespace Anfragen.Implementations {
 
 				terminal.ForegroundColor = this.Questionnaire.Settings.AnswerColor;
 
-				if (this.Type == ListType.Radio) {
+				if (this.ShowAsRadio) {
 					terminal.Printer.Write("    (O) ");
-				} else if (this.Type == ListType.Simple) {
+				} else  {
 					terminal.Printer.Write("    > ");
 				}
 
 			} else {
 
-				if (this.Type == ListType.Radio) {
+				if (this.ShowAsRadio) {
 					terminal.Printer.Write("    ( ) ");
-				} else if (this.Type == ListType.Simple) {
+				} else {
 					terminal.Printer.Write("    > ");
 				}
 

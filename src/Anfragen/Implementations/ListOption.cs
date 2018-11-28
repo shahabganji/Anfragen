@@ -1,4 +1,6 @@
-﻿namespace Anfragen.Implementations {
+﻿using Anfragen.Interfaces;
+
+namespace Anfragen.Implementations {
 	public class ListOption : IOption {
 		public string Text { get; }
 		public bool Selected { get; set; }

@@ -5,8 +5,10 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace Anfragen.Implementations {
-	public class CheckList : SingleSelect {
-		public CheckList(string question, IEnumerable<IOption> options = null, int visibleOptions = 3, IQuestionnaire questionnaire = null) : base(question, options, visibleOptions, questionnaire) {
+
+	public class CheckList : SelectableList {
+
+		public CheckList(string question, IEnumerable<IOption> options = null, int visibleOptions = 4, IQuestionnaire questionnaire = null) : base(question, options, visibleOptions, questionnaire) {
 		}
 
 		protected override Question TakeAnswer() {
@@ -45,7 +47,7 @@ namespace Anfragen.Implementations {
 
 		}
 
-		protected virtual int HandleInput(int column, int line, int activeOptionIndex) {
+		protected override int HandleInput(int column, int line, int activeOptionIndex) {
 
 			IUserTerminal terminal = this.Terminal;
 
@@ -57,10 +59,7 @@ namespace Anfragen.Implementations {
 
 				switch (keyInfo.Key) {
 					case ConsoleKey.Enter:
-						this.Answer = this._options
-										.Where(op => op.Selected == true)
-										.Select( opt => opt.Text )
-										.Aggregate((a, b) => $"{a}, {b}");
+						this.Answer = this.RedrawAnswer(line);
 
 						answered = true;
 						break;
@@ -99,32 +98,43 @@ namespace Anfragen.Implementations {
 						Console.SetCursorPosition(column, line);
 
 						IOption selectedItem = activeOptionIndex > -1 ? this._options[ activeOptionIndex ] : null;
-						if (this.Type == ListType.Check && selectedItem != null) {
+						if (selectedItem != null) {
 							selectedItem.Selected = !selectedItem.Selected;
 							this.DrawOptions(activeOptionIndex);
 						}
 
-						this.ClearAnswer(line);
-						terminal.ForegroundColor = this.Questionnaire.Settings.AnswerColor;
-						var selected = this._options
-										.Where(op => op.Selected == true)
-										.Select( opt => opt.Text )
-										.Aggregate((a, b) => $"{a}, {b}");
-						terminal.Printer.Write(selected);
+						this.RedrawAnswer(line);
 
 						break;
 
 					case ConsoleKey.F2:
 					default:
-						//this.ClearLines(line + 1, line + this._options.Count);
-						//Console.SetCursorPosition(column, line);
-						//this.DrawOptions(activeOptionIndex);
-						//Console.SetCursorPosition(column, line);
+						this.RedrawAnswer(line);
 						break;
 				}
 			}
 
 			return activeOptionIndex;
+		}
+
+		private string RedrawAnswer(int line) {
+
+			var terminal = this.Terminal;
+
+			string selected = "";
+			this.ClearAnswer(line);
+			terminal.ForegroundColor = this.Questionnaire.Settings.AnswerColor;
+
+			var query =this._options
+							.Where(op => op.Selected == true)
+							.Select(opt => opt.Text);
+
+			if (query.Count() > 0) {
+				selected = query.Aggregate((a, b) => $"{a}, {b}");
+			}
+
+			terminal.Printer.Write(selected);
+			return selected;
 		}
 
 		protected override void DrawOptions(int active = -1) {
@@ -143,6 +153,7 @@ namespace Anfragen.Implementations {
 		}
 
 		protected override void PrintIndividualOption(IOption option, bool isActive, bool highlight = false) {
+
 			IUserTerminal terminal = this.Terminal;
 
 			if (highlight ) {
@@ -156,6 +167,7 @@ namespace Anfragen.Implementations {
 				terminal.Printer.Write("    [ ] ");
 			}
 			//	**********************************************************
+
 			terminal.Printer.WriteLine($"{option.Text}");
 			terminal.ForegroundColor = this.Questionnaire.Settings.QuestionColor;
 		}
