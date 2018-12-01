@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 
-namespace Anfragen.Interfaces {
+namespace Anfragen.Abstractions {
 
     public interface IUserTerminal {
 

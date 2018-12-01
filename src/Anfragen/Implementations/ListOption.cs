@@ -1,4 +1,4 @@
-﻿using Anfragen.Interfaces;
+﻿using Anfragen.Abstractions;
 
 namespace Anfragen.Implementations {
 	public class QuestionOption : IOption {

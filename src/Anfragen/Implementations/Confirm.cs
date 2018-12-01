@@ -1,5 +1,5 @@
 using Anfragen.Extensions;
-using Anfragen.Interfaces;
+using Anfragen.Abstractions;
 
 using System;
 using System.Collections.Generic;
@@ -17,7 +17,7 @@ namespace Anfragen.Implementations {
             this.PossibleAnswers = possibleAnswers ?? new[ ] { "y", "n" };
         }
 
-        protected override Question TakeAnswer( ) {
+        protected override IQuestion TakeAnswer( ) {
 
             IUserTerminal terminal = this.Terminal;
 

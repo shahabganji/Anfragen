@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Anfragen.Interfaces
+namespace Anfragen.Abstractions
 {
 	public class QuestionnaireSetting
 	{

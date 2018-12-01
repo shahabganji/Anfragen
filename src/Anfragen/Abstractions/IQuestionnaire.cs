@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Anfragen.Interfaces
+namespace Anfragen.Abstractions
 {
 	public interface IQuestionnaire
 	{
@@ -14,13 +14,13 @@ namespace Anfragen.Interfaces
 		IUserTerminal Terminal { get; }
 
 		IEnumerable<IBranch> Branches { get; }
-		IEnumerable<Question> Questions { get; } // questions in main branch 
+		IEnumerable<IQuestion> Questions { get; } // questions in main branch 
 
-		IEnumerable<Question> ProcessedQuestions { get; }
+		IEnumerable<IQuestion> ProcessedQuestions { get; }
 
-		Question PreviousQuestion { get; }
-		Question CurrentQuestion { get; }
-		Question NextQuestion { get; }
+		IQuestion PreviousQuestion { get; }
+		IQuestion CurrentQuestion { get; }
+		IQuestion NextQuestion { get; }
 
 		IQuestionnaire Start(); // prints the first question
 		void End(); // prints the first question
@@ -33,7 +33,7 @@ namespace Anfragen.Interfaces
 
 
 		IQuestionnaire Add(IBranch branch); // adds questions to the main branch unless a branch is provided
-		IQuestionnaire Add(Question question, IBranch branch = null, bool here = false); // adds questions to the main branch unless a branch is provided
+		IQuestionnaire Add(IQuestion question, IBranch branch = null, bool here = false); // adds questions to the main branch unless a branch is provided
 
 	}
 }

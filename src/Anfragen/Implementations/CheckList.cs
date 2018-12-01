@@ -1,5 +1,5 @@
 ﻿using Anfragen.Extensions;
-using Anfragen.Interfaces;
+using Anfragen.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +12,7 @@ namespace Anfragen.Implementations {
 			base(question, options, visibleOptions, questionnaire) {
 		}
 
-		protected override Question TakeAnswer() {
+		protected override IQuestion TakeAnswer() {
 
 			IUserTerminal terminal = this.Terminal;
 

@@ -1,4 +1,4 @@
-using Anfragen.Interfaces;
+using Anfragen.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,8 +16,8 @@ namespace Anfragen {
 		private bool branchSwitched = false;
 
 		private List<IBranch> _branches;
-		private List<Question> _questions;
-		private List<Question> _processedQuestions;
+		private List<IQuestion> _questions;
+		private List<IQuestion> _processedQuestions;
 
 		#endregion
 
@@ -28,14 +28,14 @@ namespace Anfragen {
 		public IUserTerminal Terminal { get; private set; }
 
 		public IEnumerable<IBranch> Branches => this._branches;
-		public IEnumerable<Question> Questions => this._questions;
+		public IEnumerable<IQuestion> Questions => this._questions;
 
-		public IEnumerable<Question> ProcessedQuestions => this._processedQuestions;
+		public IEnumerable<IQuestion> ProcessedQuestions => this._processedQuestions;
 
 
 		private int Count => this.currentBranch != null ? this.currentBranch.Questions.Count() : this._questions.Count;
 
-		public Question PreviousQuestion {
+		public IQuestion PreviousQuestion {
 			get {
 				// you are at hte beginning of the list , so no previous questions
 				if (this.currentStep == 0) {
@@ -46,7 +46,7 @@ namespace Anfragen {
 			}
 		}
 
-		public Question CurrentQuestion {
+		public IQuestion CurrentQuestion {
 			get {
 				// this.should never happen
 				if (this.currentStep >= this.Count) {
@@ -57,7 +57,7 @@ namespace Anfragen {
 			}
 		}
 
-		public Question NextQuestion {
+		public IQuestion NextQuestion {
 			get {
 				// you are at the last question so no more questions exists
 				if (this.currentStep + 1 == this.Count) {
@@ -85,13 +85,13 @@ namespace Anfragen {
 
 
 			this._branches = new List<IBranch>();
-			this._questions = new List<Question>();
-			this._processedQuestions = new List<Question>();
+			this._questions = new List<IQuestion>();
+			this._processedQuestions = new List<IQuestion>();
 		}
 
 		private void AskQuestionWaitAnswer() {
 
-			Question question = this.CurrentQuestion;
+			IQuestion question = this.CurrentQuestion;
 
 			question.Ask();
 
@@ -211,7 +211,7 @@ namespace Anfragen {
 			return this;
 		}
 
-		public IQuestionnaire Add(Question question, IBranch branch = null, bool here = false) {
+		public IQuestionnaire Add(IQuestion question, IBranch branch = null, bool here = false) {
 
 			if( question.Questionnaire == null) {
 				question.Questionnaire = this;

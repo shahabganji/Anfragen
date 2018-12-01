@@ -1,12 +1,12 @@
 ﻿using Anfragen.Extensions;
-using Anfragen.Interfaces;
+using Anfragen.Abstractions;
 using System;
 using System.Collections.Generic;
 
 namespace Anfragen.Implementations {
 	public class SelectableListQuestionBuilder : ISelectableListQuestionBuilder {
 
-		private Func<Question, Question> builderFunc;
+		private Func<IQuestion, IQuestion> builderFunc;
 
 		public ISelectableListQuestionBuilder New(string text) {
 			this.builderFunc = (q) => new SelectableList(question: text);
@@ -26,7 +26,7 @@ namespace Anfragen.Implementations {
 			return this;
 		}
 
-		public ISelectableListQuestionBuilder AddValidation(Func<Question, bool> validator, string errormessage = "") {
+		public ISelectableListQuestionBuilder AddValidation(Func<IQuestion, bool> validator, string errormessage = "") {
 			this.builderFunc = this.builderFunc.Compose((question) => {
 
 				question.Validator(validator, errormessage);
@@ -95,7 +95,7 @@ namespace Anfragen.Implementations {
 			return this;
 		}
 
-		public Question Build() {
+		public IQuestion Build() {
 
 			return this.builderFunc?.Invoke(null);
 

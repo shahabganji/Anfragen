@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Anfragen.Interfaces;
+using Anfragen.Abstractions;
 using System;
 namespace Anfragen.Implementations {
 
@@ -9,13 +9,13 @@ namespace Anfragen.Implementations {
 
         public Branch( string name ) {
             this.Name = name;
-            this._questions = new List<Question>( );
+            this._questions = new List<IQuestion>( );
         }
 
-        private List<Question> _questions;
-        public IEnumerable<Question> Questions => this._questions;
+        private List<IQuestion> _questions;
+        public IEnumerable<IQuestion> Questions => this._questions;
 
-        public IBranch Add( Question question, int? position = null ) {
+        public IBranch Add( IQuestion question, int? position = null ) {
 
             if ( position < 0 ) {
                 throw new InvalidOperationException( $"The {nameof( position )} is invalid" );

@@ -1,5 +1,5 @@
 ﻿using System;
-using Anfragen.Interfaces;
+using Anfragen.Abstractions;
 namespace Anfragen.Test {
 
     public class MockQuestion : Question {
@@ -8,7 +8,7 @@ namespace Anfragen.Test {
 
         }
 
-        protected override Question TakeAnswer( ) {
+        protected override IQuestion TakeAnswer( ) {
             this.Answer = this.Terminal.Scanner.ReadLine( );
 			this.Terminal.Printer.Write(this.Answer);  
             return this;

@@ -1,4 +1,4 @@
-﻿using Anfragen.Interfaces;
+﻿using Anfragen.Abstractions;
 using System;
 using System.Collections.Generic;
 
@@ -6,7 +6,7 @@ namespace Anfragen {
 
 	public interface ISelectableListQuestionBuilder {
 		ISelectableListQuestionBuilder New(string text);
-		ISelectableListQuestionBuilder AddValidation(Func<Question, bool> validator, string errormessage = "");
+		ISelectableListQuestionBuilder AddValidation(Func<IQuestion, bool> validator, string errormessage = "");
 		ISelectableListQuestionBuilder WithErrorMessage(string errorMessage);
 		ISelectableListQuestionBuilder WithHint(string hint);
 		ISelectableListQuestionBuilder WithVisibleOptions(int visibleItems);
@@ -15,6 +15,6 @@ namespace Anfragen {
 		ISelectableListQuestionBuilder AsRadioList();
 		ISelectableListQuestionBuilder AsCheckList();
 		ISelectableListQuestionBuilder AddToQuestionnaire(IQuestionnaire questionnaire);
-		Question Build();
+		IQuestion Build();
 	}
 }

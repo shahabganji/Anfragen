@@ -1,5 +1,5 @@
 ﻿using Anfragen.Implementations;
-using Anfragen.Interfaces;
+using Anfragen.Abstractions;
 
 namespace Anfragen.Extensions {
 

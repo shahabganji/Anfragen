@@ -1,25 +1,25 @@
 using System;
 
-namespace Anfragen.Interfaces {
+namespace Anfragen.Abstractions {
 
 	public enum QuestionStates {
 		Initilaized, Valid, Invalid, Finished
 	}
 
-	public abstract class Question : ICloneable {
+	public abstract class Question : IQuestion {
 
-		public string Hint { get; internal set; } = "";
+		public string Hint { get; set; } = "";
 		public string Answer { get; protected set; }
 		public string Text { get; internal set; }
 
-		internal string ErrorMessage { get; set; } = "";
+		public string ErrorMessage { get; set; } = "";
 
 		public QuestionStates State { get; protected set; } = QuestionStates.Initilaized;
-		public IQuestionnaire Questionnaire { get; internal set; }
+		public IQuestionnaire Questionnaire { get; set; }
 
 		public IUserTerminal Terminal => this.Questionnaire.Terminal ?? null;
 
-		private Func<Question, bool> _Validator;
+		private Func<IQuestion, bool> _Validator;
 
 		public Question(string question, IQuestionnaire questionnaire = null) {
 
@@ -30,7 +30,7 @@ namespace Anfragen.Interfaces {
 		}
 
 		// prints the question
-		public virtual Question Ask() {
+		public virtual IQuestion Ask() {
 
 			IUserTerminal terminal = this.Terminal;
 
@@ -69,12 +69,12 @@ namespace Anfragen.Interfaces {
 		}
 
 		// the finishing touches of the question, for example rendering some extra texts
-		public void Finish(Action<Question> done = null) {
+		public void Finish(Action<IQuestion> done = null) {
 			done?.Invoke(this);
 			this.State = QuestionStates.Finished;
 		}
 
-		public Question Validator(Func<Question, bool> validator, string errorMessage) {
+		public IQuestion Validator(Func<IQuestion, bool> validator, string errorMessage) {
 
 			if (validator == null) {
 				throw new ArgumentNullException($"{nameof(validator)} cannot be null");
@@ -107,7 +107,7 @@ namespace Anfragen.Interfaces {
 
 		// waits for the user to answer the question
 		// Prints the validation errors
-		protected virtual Question PrintValidationErrors() {
+		protected virtual IQuestion PrintValidationErrors() {
 
 			if (this.State == QuestionStates.Invalid && this.ErrorMessage.Trim().Length == 0) {
 				throw new InvalidOperationException($"You must fill the property {nameof(this.ErrorMessage)}, when providing any validator. ");
@@ -121,7 +121,7 @@ namespace Anfragen.Interfaces {
 			this.Terminal.Printer.WriteLine(this.ErrorMessage);
 			return this;
 		}
-		protected abstract Question TakeAnswer();
+		protected abstract IQuestion TakeAnswer();
 
 		public object Clone() {
 			return this.MemberwiseClone();

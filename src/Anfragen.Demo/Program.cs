@@ -1,6 +1,6 @@
 ﻿using Anfragen.Extensions;
 using Anfragen.Implementations;
-using Anfragen.Interfaces;
+using Anfragen.Abstractions;
 using System;
 
 namespace Anfragen.Demo {
@@ -11,15 +11,15 @@ namespace Anfragen.Demo {
             IQuestionnaire questionnaire = new Questionnaire( terminal );
             questionnaire.Settings.WelcomeMessage = "Welcome to my questionnare";
 
-            Func<Question, bool> validator = x => x.Answer.Length > 0;
+            Func<IQuestion, bool> validator = x => x.Answer.Length > 0;
             string errorMessage = "Please Provide a value";
 
-            Question ask_name = new Prompt( "What's your name?" ).Validator( validator, errorMessage );
-            Question ask_family = new Prompt( "What's your family?" ).Validator( validator, errorMessage );
+            var ask_name = new Prompt( "What's your name?" ).Validator( validator, errorMessage );
+            var ask_family = new Prompt( "What's your family?" ).Validator( validator, errorMessage );
 
             var builder = new SelectableListQuestionBuilder( );
 
-            Question preferable_language = builder
+            var preferable_language = builder
                                             .New( "What's your favorite language?" )
                                             .AddValidation( x => x.Answer != null )
                                             .AddOption( new QuestionOption( "Persian" ) )

@@ -1,5 +1,5 @@
 using Anfragen.Extensions;
-using Anfragen.Interfaces;
+using Anfragen.Abstractions;
 using System;
 
 namespace Anfragen.Implementations {
@@ -12,7 +12,7 @@ namespace Anfragen.Implementations {
             this.Hint = hint;
         }
 
-        protected override Question TakeAnswer( ) {
+        protected override IQuestion TakeAnswer( ) {
 
 
             IUserTerminal terminal = this.Terminal;

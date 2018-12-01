@@ -1,4 +1,4 @@
-using Anfragen.Interfaces;
+using Anfragen.Abstractions;
 using Moq;
 using System;
 using System.IO;
