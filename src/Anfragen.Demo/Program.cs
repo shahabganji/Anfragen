@@ -4,6 +4,7 @@ using Anfragen.Extensions;
 using Anfragen.Implementations;
 
 using System;
+using System.Linq;
 
 namespace Anfragen.Demo {
 	internal class Program {
@@ -18,7 +19,7 @@ namespace Anfragen.Demo {
 
 			QuestionBuilder builder = new QuestionBuilder( );
 
-			IQuestion ask_name = builder.Simple().New("What's your name?" ).AddValidation( validator, errorMessage ).Build();
+			IQuestion ask_name = builder.Simple().New("What's your name?" ).Build();
 
 			IQuestion ask_family = builder.Simple().New("What's your family?" ).AddValidation( validator, errorMessage ).Build();
 
@@ -63,9 +64,9 @@ namespace Anfragen.Demo {
 										}, "Your value should be either 'y' or 'n'" )
 										.Build();
 
-					questionnaire.Confirm(confirm as Confirm);
-
-					IQuestion age_prompt = builder.Simple()
+					confirm.Finish((q) => {
+						if (q.Answer == "y") {
+							IQuestion age_prompt = builder.Simple()
 													.New("How old are you?" )
 													.AddValidation(x => {
 
@@ -76,7 +77,11 @@ namespace Anfragen.Demo {
 													}, "Your must be older than 18")
 													.Build();
 
-					questionnaire.Prompt(age_prompt as Prompt);
+							questionnaire.Prompt(age_prompt as Prompt);
+						}
+					});
+
+					questionnaire.Confirm(confirm as Confirm);
 
 					add = false;
 				}

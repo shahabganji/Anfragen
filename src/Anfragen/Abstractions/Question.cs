@@ -68,8 +68,15 @@ namespace Anfragen.Abstractions {
 			return $"{this.Text}: {this.Answer}";
 		}
 
+		private Action<IQuestion> OnFinish;
 		// the finishing touches of the question, for example rendering some extra texts
 		public void Finish(Action<IQuestion> done = null) {
+
+			if (done != null) {
+				this.OnFinish = done;
+				return;
+			}
+
 			done?.Invoke(this);
 			this.State = QuestionStates.Finished;
 		}
@@ -91,6 +98,9 @@ namespace Anfragen.Abstractions {
 
 		protected virtual bool Validate() {
 
+			bool result = false;
+
+			//try {
 			if (this._Validator == null) {
 				// if no validator is provided then all the values will be considered true.
 				this._Validator = exp => true;
@@ -98,9 +108,18 @@ namespace Anfragen.Abstractions {
 				//	$@"The validation function is 'null', you should provide validation function by calling {nameof(this.Validator)} method}.");
 			}
 
-			bool result = this._Validator( this ); //.Invoke(this);
+			result = this._Validator(this); //.Invoke(this);
 
 			this.State = result ? QuestionStates.Valid : QuestionStates.Invalid;
+
+			if (result) {
+				this.OnFinish?.Invoke(this);
+			}
+
+			//} catch(Exception ex) {
+
+			//	//this.OnFinish?.Invoke(this, ex);
+			//}
 
 			return result;
 		}
