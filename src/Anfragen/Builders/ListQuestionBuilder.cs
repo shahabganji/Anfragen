@@ -1,20 +1,22 @@
-﻿using Anfragen.Extensions;
-using Anfragen.Abstractions;
+﻿using Anfragen.Abstractions;
+using Anfragen.Builders.Abstractions;
+using Anfragen.Extensions;
+using Anfragen.Implementations;
+
 using System;
 using System.Collections.Generic;
 
-namespace Anfragen.Implementations {
-	public class SelectableListQuestionBuilder : ISelectableListQuestionBuilder {
+namespace Anfragen.Builders {
+	class ListQuestionBuilder : IListQuestionBuilder {
 
 		private Func<IQuestion, IQuestion> builderFunc;
 
-		public ISelectableListQuestionBuilder New(string text) {
+		public IListQuestionBuilder New(string text) {
 			this.builderFunc = (q) => new SelectableList(question: text);
 			return this;
 		}
 
-
-		public ISelectableListQuestionBuilder WithHint(string hint) {
+		public IListQuestionBuilder WithHint(string hint) {
 
 			this.builderFunc = this.builderFunc.Compose(question => {
 
@@ -26,7 +28,7 @@ namespace Anfragen.Implementations {
 			return this;
 		}
 
-		public ISelectableListQuestionBuilder AddValidation(Func<IQuestion, bool> validator, string errormessage = "") {
+		public IListQuestionBuilder AddValidation(Func<IQuestion, bool> validator, string errormessage = "") {
 			this.builderFunc = this.builderFunc.Compose((question) => {
 
 				question.Validator(validator, errormessage);
@@ -37,7 +39,7 @@ namespace Anfragen.Implementations {
 			return this;
 		}
 
-		public ISelectableListQuestionBuilder WithErrorMessage(string errorMessage) {
+		public IListQuestionBuilder WithErrorMessage(string errorMessage) {
 
 			this.builderFunc = this.builderFunc.Compose(question => {
 
@@ -49,7 +51,7 @@ namespace Anfragen.Implementations {
 			return this;
 		}
 
-		public ISelectableListQuestionBuilder AddOption(IOption option) {
+		public IListQuestionBuilder AddOption(IOption option) {
 
 			this.builderFunc = this.builderFunc.Compose((question) => {
 
@@ -60,7 +62,7 @@ namespace Anfragen.Implementations {
 
 			return this;
 		}
-		public ISelectableListQuestionBuilder AddOptions(IEnumerable<IOption> options) {
+		public IListQuestionBuilder AddOptions(IEnumerable<IOption> options) {
 
 			this.builderFunc = this.builderFunc.Compose((question) => {
 
@@ -74,7 +76,7 @@ namespace Anfragen.Implementations {
 			return this;
 		}
 
-		public ISelectableListQuestionBuilder AsRadioList() {
+		public IListQuestionBuilder AsRadioList() {
 
 			this.builderFunc = this.builderFunc.Compose(question => {
 				(question as SelectableList).ShowAsRadio = true;
@@ -84,11 +86,11 @@ namespace Anfragen.Implementations {
 			return this;
 		}
 
-		public ISelectableListQuestionBuilder AsCheckList() {
+		public IListQuestionBuilder AsCheckList() {
 
 			this.builderFunc = this.builderFunc.Compose(question => {
 				SelectableList q = (question as SelectableList );
-				var q2 = new CheckList(q.Text, q.Options, q.VisibleOptions, q.Questionnaire);
+				CheckList q2 = new CheckList(q.Text, q.Options, q.VisibleOptions, q.Questionnaire);
 				return q2;
 			});
 
@@ -101,7 +103,7 @@ namespace Anfragen.Implementations {
 
 		}
 
-		public ISelectableListQuestionBuilder WithVisibleOptions(int visibleItems) {
+		public IListQuestionBuilder WithVisibleOptions(int visibleItems) {
 
 			this.builderFunc = this.builderFunc.Compose(question => {
 
@@ -113,7 +115,7 @@ namespace Anfragen.Implementations {
 			return this;
 		}
 
-		public ISelectableListQuestionBuilder AddToQuestionnaire(IQuestionnaire questionnaire) {
+		public IListQuestionBuilder AddToQuestionnaire(IQuestionnaire questionnaire) {
 
 			this.builderFunc = this.builderFunc.Compose(question => {
 				questionnaire.Add(question);
@@ -122,5 +124,6 @@ namespace Anfragen.Implementations {
 
 			return this;
 		}
+
 	}
 }
