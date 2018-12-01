@@ -111,11 +111,12 @@ namespace Anfragen.Test {
 				MockQuestion question = new MockQuestion( text );
 
 				string test_variable = "";
-
-				// act
 				question.Finish(x => {
 					test_variable = "done called from Finish method";
 				});
+
+				// act
+				question.Finish();
 
 
 				// assert

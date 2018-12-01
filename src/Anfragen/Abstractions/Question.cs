@@ -77,7 +77,7 @@ namespace Anfragen.Abstractions {
 				return;
 			}
 
-			done?.Invoke(this);
+			this.OnFinish?.Invoke(this);
 			this.State = QuestionStates.Finished;
 		}
 
