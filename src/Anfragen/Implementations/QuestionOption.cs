@@ -1,7 +1,7 @@
 ﻿using Anfragen.Abstractions;
 
 namespace Anfragen.Implementations {
-	public class QuestionOption : IOption {
+	class QuestionOption : IOption {
 		public string Text { get; }
 		public bool Selected { get; set; }
 

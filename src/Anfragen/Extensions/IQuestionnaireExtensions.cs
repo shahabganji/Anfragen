@@ -1,9 +1,9 @@
-﻿using Anfragen.Implementations;
-using Anfragen.Abstractions;
+﻿using Anfragen.Abstractions;
+using Anfragen.Implementations;
 
 namespace Anfragen.Extensions {
 
-    public static class IQuestionnaireExtensions {
+	public static class IQuestionnaireExtensions {
 
         public static IQuestionnaire Prompt( this IQuestionnaire questionnaire, Prompt prompt ) {
 
