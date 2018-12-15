@@ -1,17 +1,26 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{97E87A4A-52D0-4087-8F7C-038B607BBA89}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Umfrage", "src\Umfrage\Umfrage.csproj", "{B3767259-F192-4A58-AB65-B24276833B40}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Umfrage", "src\Umfrage\Umfrage.csproj", "{B3767259-F192-4A58-AB65-B24276833B40}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{A29E3FC6-FCBA-41BB-B8A2-1812EBAD3138}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Umfrage.Test", "test\Umfrage.Test\Umfrage.Test.csproj", "{4B531F98-1CF8-4FF5-805D-6874C2250B58}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Umfrage.Test", "test\Umfrage.Test\Umfrage.Test.csproj", "{4B531F98-1CF8-4FF5-805D-6874C2250B58}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Umfrage.Demo", "src\Umfrage.Demo\Umfrage.Demo.csproj", "{6DBB2983-CF05-43F6-A9B9-913563508CFA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Umfrage.Demo", "src\Umfrage.Demo\Umfrage.Demo.csproj", "{6DBB2983-CF05-43F6-A9B9-913563508CFA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{5344D773-144E-4FE6-8EED-A3DCE42B8BDA}"
+	ProjectSection(SolutionItems) = preProject
+		docs\Questionnaire.md = docs\Questionnaire.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "global_docs", "global_docs", "{5337F14E-B46B-45D2-AEBE-863BEC4D8C07}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

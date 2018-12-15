@@ -1,6 +1,7 @@
 ﻿using System;
 using Umfrage.Abstractions;
 using Umfrage.Builders;
+using Umfrage.Builders.Abstractions;
 using Umfrage.Extensions;
 using Umfrage.Implementations;
 
@@ -10,17 +11,16 @@ namespace Umfrage.Demo {
 
             UserConsole terminal = new UserConsole( );
             IQuestionnaire questionnaire = new Questionnaire( terminal );
-            questionnaire.Settings.WelcomeMessage = "Welcome to my questionnare";
+            questionnaire.Settings.WelcomeMessage = "Welcome to my questionnaire";
 
             Func<IQuestion, bool> validator = x => x.Answer.Length > 0;
             string errorMessage = "Please Provide a value";
 
-            QuestionBuilder builder = new QuestionBuilder( );
+            IQuestionBuilder builder = new QuestionBuilder( );
 
             IQuestion ask_name = builder.Simple( ).New( "What's your name?" ).Build( );
 
             IQuestion ask_family = builder.Simple( ).New( "What's your family?" ).AddValidation( validator, errorMessage ).Build( );
-
 
             IQuestion preferable_language = builder.List( )
                                             .New( "What's your favorite language?" )

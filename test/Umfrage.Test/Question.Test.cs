@@ -76,7 +76,40 @@ namespace Umfrage.Test {
             }
         }
 
-        [Fact]
+		[Fact]
+		public void Ask_a_question_should_print_icon_question_and_answer_with_hint() {
+
+			string fake_answer = "Shahab";
+			using (StringWriter output = new StringWriter()) {
+				using (StringReader input = new StringReader(fake_answer)) {
+
+					// arrange
+					Mock<IUserTerminal> mock_user_terminal = new Mock<IUserTerminal>( );
+					mock_user_terminal.SetupGet(x => x.Printer).Returns(output);
+					mock_user_terminal.SetupGet(x => x.Scanner).Returns(input);
+
+
+					Mock<IQuestionnaire> mock_questionnaire = new Mock<IQuestionnaire>( );
+					mock_questionnaire.SetupGet(x => x.Terminal).Returns(mock_user_terminal.Object);
+					mock_questionnaire.SetupGet(x => x.Settings).Returns(new QuestionnaireSetting());
+
+					string text = "What's your name?";
+					MockQuestion question = new MockQuestion( text, mock_questionnaire.Object );
+					question.Hint = "This is a hint";
+
+					question.Ask();
+
+					// assert
+					string result = output.ToString( );
+					string expected = $"{question.Questionnaire.Settings.QuestionIcon} {text}( {question.Hint} ) {fake_answer}";
+
+					Assert.Equal(expected, result);
+
+				}
+			}
+		}
+
+		[Fact]
         public void Calling_Finshish_method_should_change_state( ) {
 
             using ( StringWriter output = new StringWriter( ) ) {
