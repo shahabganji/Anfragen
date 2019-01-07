@@ -27,6 +27,18 @@ namespace Umfrage.Builders {
 			return this;
 		}
 
+		public ISimpleQuestionBuilder WithDefaultAnswer(string defaultAnswer) {
+
+			this.builderFunc = this.builderFunc.Compose(question => {
+
+				question.DefaultAnswer= defaultAnswer;
+
+				return question;
+			});
+
+			return this;
+		}
+
 		public ISimpleQuestionBuilder AddValidation(Func<IQuestion, bool> validator, string errormessage = "") {
 			this.builderFunc = this.builderFunc.Compose((question) => {
 
@@ -69,7 +81,7 @@ namespace Umfrage.Builders {
 		public ISimpleQuestionBuilder AsConfirm() {
 
 			this.builderFunc = this.builderFunc.Compose(question => {
-				Confirm q = new Confirm(question.Text , question.Hint , questionnaire: question.Questionnaire);
+				Confirm q = new Confirm(question.Text , question.Hint , question.DefaultAnswer , questionnaire: question.Questionnaire);
 				return q;
 			});
 

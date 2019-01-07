@@ -10,6 +10,7 @@ namespace Umfrage.Abstractions {
 
 		public string Hint { get; set; } = "";
 		public string Answer { get; protected set; }
+		public string DefaultAnswer { get; set; } = null;
 		public string Text { get; internal set; }
 
 		public string ErrorMessage { get; set; } = "";
@@ -21,9 +22,12 @@ namespace Umfrage.Abstractions {
 
 		private Func<IQuestion, bool> _Validator;
 
-		public Question(string question, IQuestionnaire questionnaire = null) {
+		public Question(string question, IQuestionnaire questionnaire = null , string hint = "" , string defaultAnswer = null) {
 
 			this.Text = question ?? throw new ArgumentNullException($"{nameof(question)} cannot be null");
+
+			this.Hint = hint;
+			this.DefaultAnswer = defaultAnswer;
 
 			this.Questionnaire = questionnaire;
 
@@ -50,7 +54,6 @@ namespace Umfrage.Abstractions {
 
 			// a single space to seperate q/a
 			terminal.Printer.Write(" ");
-
 
 			// 2. wait for the user to give answer to the question
 			this.TakeAnswer();

@@ -12,9 +12,9 @@ namespace Umfrage.Builders.Abstractions {
 		IListQuestionBuilder AddValidation(Func<IQuestion, bool> validator, string errormessage = "");
 		IListQuestionBuilder WithErrorMessage(string errorMessage);
 		IListQuestionBuilder WithHint(string hint);
+		IListQuestionBuilder WithDefaultAnswer(string defaultAnswer);
 		IListQuestionBuilder AddToQuestionnaire(IQuestionnaire questionnaire);
-
-
+		
 		IListQuestionBuilder WithVisibleOptions(int visibleItems);
 		IListQuestionBuilder AddOptions(IEnumerable<IOption> options);
 		IListQuestionBuilder AddOption(IOption option);
@@ -31,6 +31,7 @@ namespace Umfrage.Builders.Abstractions {
 		ISimpleQuestionBuilder AddValidation(Func<IQuestion, bool> validator, string errormessage = "");
 		ISimpleQuestionBuilder WithErrorMessage(string errorMessage);
 		ISimpleQuestionBuilder WithHint(string hint);
+		ISimpleQuestionBuilder WithDefaultAnswer(string defaultAnswer);
 		ISimpleQuestionBuilder AddToQuestionnaire(IQuestionnaire questionnaire);
 
 		ISimpleQuestionBuilder AsConfirm();

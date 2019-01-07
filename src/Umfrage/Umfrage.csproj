@@ -4,7 +4,10 @@
     <OutputType>Library</OutputType>
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
+
   <ItemGroup>
-    <Folder Include="Abstractions\Builders\" />
+    <Compile Remove="Abstractions\Builders\**" />
+    <EmbeddedResource Remove="Abstractions\Builders\**" />
+    <None Remove="Abstractions\Builders\**" />
   </ItemGroup>
 </Project>

@@ -1,13 +1,12 @@
-﻿using Umfrage.Abstractions;
+﻿using System;
+using System.Collections.Generic;
+using Umfrage.Abstractions;
 using Umfrage.Builders.Abstractions;
 using Umfrage.Extensions;
 using Umfrage.Implementations;
 
-using System;
-using System.Collections.Generic;
-
 namespace Umfrage.Builders {
-	class ListQuestionBuilder : IListQuestionBuilder {
+	internal class ListQuestionBuilder : IListQuestionBuilder {
 
 		private Func<IQuestion, IQuestion> builderFunc;
 
@@ -21,6 +20,18 @@ namespace Umfrage.Builders {
 			this.builderFunc = this.builderFunc.Compose(question => {
 
 				question.Hint = hint;
+
+				return question;
+			});
+
+			return this;
+		}
+
+		public IListQuestionBuilder WithDefaultAnswer(string defaultAnswer) {
+
+			this.builderFunc = this.builderFunc.Compose(question => {
+
+				question.DefaultAnswer = defaultAnswer;
 
 				return question;
 			});
@@ -90,7 +101,7 @@ namespace Umfrage.Builders {
 
 			this.builderFunc = this.builderFunc.Compose(question => {
 				SelectableList q = (question as SelectableList );
-				CheckList q2 = new CheckList(q.Text, q.Options, q.VisibleOptions, q.Questionnaire);
+				CheckList q2 = new CheckList(q.Text, q.Options, q.Hint , q.DefaultAnswer, q.VisibleOptions, q.Questionnaire);
 				return q2;
 			});
 

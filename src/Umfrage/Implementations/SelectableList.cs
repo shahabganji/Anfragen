@@ -1,13 +1,11 @@
-﻿using Umfrage.Extensions;
-using Umfrage.Abstractions;
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Umfrage.Abstractions;
+using Umfrage.Extensions;
 
 namespace Umfrage.Implementations {
-	
-	class SelectableList : Question {
+	internal class SelectableList : Question {
 
 		protected IList<IOption> _options;
 		public IEnumerable<IOption> Options => this._options;
@@ -20,13 +18,13 @@ namespace Umfrage.Implementations {
 			return this;
 		}
 
-		internal SelectableList(string question, IEnumerable<IOption> options = null, int visibleOptions = 4, IQuestionnaire questionnaire = null) : 
-			base(question, questionnaire) {
+		internal SelectableList(string question, IEnumerable<IOption> options = null, string hint = "", string defaultAnswer = null, int visibleOptions = 4, IQuestionnaire questionnaire = null) :
+			base(question, questionnaire, hint, defaultAnswer) {
 
 			this._options = new List<IOption>();
 
-			if( options != null) {
-				foreach( var option in options) {
+			if (options != null) {
+				foreach (IOption option in options) {
 					this._options.Add(option);
 				}
 			}
@@ -83,6 +81,20 @@ namespace Umfrage.Implementations {
 				switch (keyInfo.Key) {
 					case ConsoleKey.Enter:
 						this.Answer = activeOptionIndex > -1 ? this._options[ activeOptionIndex ].Text : null;
+
+						if (this.Answer == null && this.DefaultAnswer != null) {
+
+							this._options
+							.Where(op => this.DefaultAnswer.Split(',').Contains(op.Text))
+							.Select(op => op).ToList().ForEach(defaultSelected => defaultSelected.Selected = true); ;
+
+							Console.SetCursorPosition(column, line );
+							terminal.ForegroundColor = this.Questionnaire.Settings.AnswerColor;
+							terminal.Printer.WriteLine( this.DefaultAnswer );
+							
+							this.Answer = this.DefaultAnswer;
+						}
+
 						answered = true;
 						break;
 					case ConsoleKey.UpArrow:
@@ -143,9 +155,9 @@ namespace Umfrage.Implementations {
 			List<IOption> visible_items = this._options.Skip(page * this.VisibleOptions).Take(this.VisibleOptions).ToList();
 
 			for (int index = 0; index < visible_items.Count; index++) {
-				
-					this.PrintIndividualOption(visible_items[ index ], index == (active >= this.VisibleOptions ? active - this.VisibleOptions : active));
-				
+
+				this.PrintIndividualOption(visible_items[ index ], index == (active >= this.VisibleOptions ? active - this.VisibleOptions : active));
+
 			}
 		}
 
@@ -160,7 +172,7 @@ namespace Umfrage.Implementations {
 
 				if (this.ShowAsRadio) {
 					terminal.Printer.Write("    (O) ");
-				} else  {
+				} else {
 					terminal.Printer.Write("    > ");
 				}
 
@@ -179,6 +191,6 @@ namespace Umfrage.Implementations {
 			terminal.ForegroundColor = this.Questionnaire.Settings.QuestionColor;
 		}
 
-	
+
 	}
 }

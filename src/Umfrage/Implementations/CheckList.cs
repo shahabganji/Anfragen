@@ -8,8 +8,8 @@ namespace Umfrage.Implementations {
 
 	class CheckList : SelectableList {
 
-		internal CheckList(string question, IEnumerable<IOption> options = null, int visibleOptions = 4, IQuestionnaire questionnaire = null) :
-			base(question, options, visibleOptions, questionnaire) {
+		internal CheckList(string question, IEnumerable<IOption> options = null, string hint = "" ,  string defaultAnswer = null , int visibleOptions = 4, IQuestionnaire questionnaire = null) :
+			base(question, options, hint , defaultAnswer, visibleOptions, questionnaire) {
 		}
 
 		protected override IQuestion TakeAnswer() {
@@ -61,6 +61,15 @@ namespace Umfrage.Implementations {
 				switch (keyInfo.Key) {
 					case ConsoleKey.Enter:
 						this.Answer = this.RedrawAnswer(line);
+
+						if( this.Answer.Trim().Length == 0 && this.DefaultAnswer != null) {
+
+							this._options
+							.Where(op => this.DefaultAnswer.Split(',').Contains(op.Text) )
+							.Select( op => op ).ToList().ForEach( defaultSelected => defaultSelected.Selected = true ); ;
+
+							this.Answer = this.RedrawAnswer(line);
+						}
 
 						answered = true;
 						break;

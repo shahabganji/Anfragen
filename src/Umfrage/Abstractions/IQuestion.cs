@@ -7,6 +7,7 @@ namespace Umfrage.Abstractions {
 
 		string Hint { get; set; }
 		string Answer { get;}
+		string DefaultAnswer { get; set; }
 		string Text { get; }
 
 		string ErrorMessage { get; set; }

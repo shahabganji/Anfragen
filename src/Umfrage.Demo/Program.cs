@@ -32,8 +32,10 @@ namespace Umfrage.Demo {
                                                 new QuestionOption("French"),
                                                 new QuestionOption("German")
                                             } )
-                                            .AddValidation( x => x.Answer != null )
-                                            .AsCheckList( )
+											.WithHint("Persian")
+											.WithDefaultAnswer("Persian")
+											.AddValidation( x => x.Answer != null )
+                                            //.AsCheckList( )
                                             .AddToQuestionnaire( questionnaire )
                                             .WithErrorMessage( "You must select an option" )
                                             .Build( );
@@ -55,7 +57,8 @@ namespace Umfrage.Demo {
                     IQuestion confirm = builder.Simple( )
                                         .New( "Are you older than 18?" )
                                         .AsConfirm( )
-                                        .WithHint( "y/n" )
+                                        .WithHint( "Y/n" )
+										.WithDefaultAnswer( "y" )
                                         .AddValidation( x => {
                                             Confirm q = ( Confirm ) x;
                                             return q.PossibleAnswers.Contains( x.Answer );

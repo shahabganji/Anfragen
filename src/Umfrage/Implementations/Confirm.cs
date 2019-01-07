@@ -10,9 +10,10 @@ namespace Umfrage.Implementations {
 
         public IList<string> PossibleAnswers { get; }
 
-        public Confirm( string question, string hint = "y/n" ,  string[ ] possibleAnswers = null, IQuestionnaire questionnaire = null ) : base( question, questionnaire ) {
+        public Confirm( string question, string hint = "y/n" , string defaultAnswer = null , string[ ] possibleAnswers = null, IQuestionnaire questionnaire = null ) : base( question, questionnaire ) {
 
             this.Hint = hint;
+			this.DefaultAnswer = defaultAnswer;
 
             this.PossibleAnswers = possibleAnswers ?? new[ ] { "y", "n" };
         }
@@ -29,12 +30,18 @@ namespace Umfrage.Implementations {
             terminal.ForegroundColor = this.Questionnaire.Settings.AnswerColor;
             this.Answer = terminal.Scanner.ReadLine( );
 
-            // this should be after ReadLine because 
-            // before the user enters the input he/she might resize the console, 
-            // hence the top will change 
-            int cursorTop = Console.CursorTop;
+			// this should be after ReadLine because 
+			// before the user enters the input he/she might resize the console, 
+			// hence the top will change 
+			int cursorTop = Console.CursorTop;
 
-            bool result = this.Validate( );
+			if (this.Answer.Trim().Length == 0 && this.DefaultAnswer != null) {
+				Console.SetCursorPosition(left: cursorLeft, top: cursorTop - 1 );
+				terminal.Printer.Write(this.DefaultAnswer);
+				this.Answer = this.DefaultAnswer;
+			}
+
+			bool result = this.Validate( );
             this.State = result ? QuestionStates.Valid : QuestionStates.Invalid;
 
             if ( result ) {
