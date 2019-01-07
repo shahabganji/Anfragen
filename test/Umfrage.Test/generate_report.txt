@@ -1,0 +1,1 @@
+ E:\Projects\git\Umfrage\test\Umfrage.Test> reportgenerator "-reports:coverage.xml" "-targetdir:E:\Projects\git\Umfrage\test\Umfrage.Test\Report"
