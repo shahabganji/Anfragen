@@ -2,6 +2,9 @@ using Umfrage.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Umfrage.Builders;
+using Umfrage.Builders.Abstractions;
+using Umfrage.Implementations;
 
 namespace Umfrage {
 
@@ -25,6 +28,8 @@ namespace Umfrage {
 
 		public bool CanProceed => this.NextQuestion != null;
 
+		public IQuestionBuilder Builder { get; }
+
 		public IUserTerminal Terminal { get; private set; }
 
 		public IEnumerable<IBranch> Branches => this._branches;
@@ -33,7 +38,7 @@ namespace Umfrage {
 		public IEnumerable<IQuestion> ProcessedQuestions => this._processedQuestions;
 
 
-		private int Count => this.currentBranch != null ? this.currentBranch.Questions.Count() : this._questions.Count;
+		private int Count => currentBranch?.Questions.Count() ?? this._questions.Count;
 
 		public IQuestion PreviousQuestion {
 			get {
@@ -77,16 +82,18 @@ namespace Umfrage {
 
 		#endregion
 
-		public Questionnaire(IUserTerminal userConsole, QuestionnaireSetting settings = null) {
+		public Questionnaire(IUserTerminal userConsole = null, QuestionnaireSetting settings = null) {
 
-			this.Terminal = userConsole;
+			this.Terminal = userConsole ?? new UserConsole();
 
 			this.Settings = settings ?? new QuestionnaireSetting();
-
-
+			
 			this._branches = new List<IBranch>();
 			this._questions = new List<IQuestion>();
 			this._processedQuestions = new List<IQuestion>();
+
+			this.Builder = new QuestionBuilder();
+
 		}
 
 		private void AskQuestionWaitAnswer() {

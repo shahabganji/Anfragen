@@ -1414,7 +1414,7 @@
             <Method cyclomaticComplexity="0" nPathComplexity="0" sequenceCoverage="0" branchCoverage="0" isConstructor="False" isGetter="False" isSetter="False" isStatic="True">
               <Summary numSequencePoints="4" visitedSequencePoints="0" numBranchPoints="0" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="0" minCyclomaticComplexity="0" visitedClasses="0" numClasses="0" visitedMethods="0" numMethods="1" />
               <MetadataToken />
-              <Name>Umfrage.Builders.Abstractions.IListQuestionBuilder Umfrage.Builders.ListQuestionBuilder::New(System.String)</Name>
+              <Name>Umfrage.Builders.Abstractions.IListQuestionBuilder Umfrage.Builders.ListQuestionBuilder::Text(System.String)</Name>
               <FileRef uid="12" />
               <SequencePoints>
                 <SequencePoint vc="0" upsid="13" ordinal="0" sl="13" sc="1" el="13" ec="2" bec="0" bev="0" fileid="12" />
@@ -1680,7 +1680,7 @@
             <Method cyclomaticComplexity="0" nPathComplexity="0" sequenceCoverage="0" branchCoverage="0" isConstructor="False" isGetter="False" isSetter="False" isStatic="True">
               <Summary numSequencePoints="4" visitedSequencePoints="0" numBranchPoints="0" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="0" minCyclomaticComplexity="0" visitedClasses="0" numClasses="0" visitedMethods="0" numMethods="1" />
               <MetadataToken />
-              <Name>Umfrage.Builders.Abstractions.ISimpleQuestionBuilder Umfrage.Builders.SimpleQuestionBuilder::New(System.String)</Name>
+              <Name>Umfrage.Builders.Abstractions.ISimpleQuestionBuilder Umfrage.Builders.SimpleQuestionBuilder::Text(System.String)</Name>
               <FileRef uid="14" />
               <SequencePoints>
                 <SequencePoint vc="0" upsid="13" ordinal="0" sl="13" sc="1" el="13" ec="2" bec="0" bev="0" fileid="14" />

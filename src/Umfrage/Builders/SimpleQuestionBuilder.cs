@@ -8,16 +8,21 @@ using System;
 namespace Umfrage.Builders {
 	class SimpleQuestionBuilder : ISimpleQuestionBuilder {
 
-		private Func<IQuestion, IQuestion> builderFunc;
+		private Func<IQuestion, IQuestion> _builderFunc;
+		private readonly IQuestionBuilder _builder;
 
-		public ISimpleQuestionBuilder New(string text) {
-			this.builderFunc = (q) => new Prompt(prompt: text) as IQuestion;
+		internal SimpleQuestionBuilder(IQuestionBuilder builder) {
+			_builder = builder;
+		}
+
+		public ISimpleQuestionBuilder Text(string text) {
+			this._builderFunc = (q) => new Prompt(prompt: text) as IQuestion;
 			return this;
 		}
 
 		public ISimpleQuestionBuilder WithHint(string hint) {
 
-			this.builderFunc = this.builderFunc.Compose(question => {
+			this._builderFunc = this._builderFunc.Compose(question => {
 
 				question.Hint = hint;
 
@@ -29,7 +34,7 @@ namespace Umfrage.Builders {
 
 		public ISimpleQuestionBuilder WithDefaultAnswer(string defaultAnswer) {
 
-			this.builderFunc = this.builderFunc.Compose(question => {
+			this._builderFunc = this._builderFunc.Compose(question => {
 
 				question.DefaultAnswer= defaultAnswer;
 
@@ -39,10 +44,10 @@ namespace Umfrage.Builders {
 			return this;
 		}
 
-		public ISimpleQuestionBuilder AddValidation(Func<IQuestion, bool> validator, string errormessage = "") {
-			this.builderFunc = this.builderFunc.Compose((question) => {
+		public ISimpleQuestionBuilder AddValidation(Func<IQuestion, bool> validator, string errorMessage = "") {
+			this._builderFunc = this._builderFunc.Compose((question) => {
 
-				question.Validator(validator, errormessage);
+				question.Validator(validator, errorMessage);
 
 				return question;
 			});
@@ -52,7 +57,7 @@ namespace Umfrage.Builders {
 
 		public ISimpleQuestionBuilder WithErrorMessage(string errorMessage) {
 
-			this.builderFunc = this.builderFunc.Compose(question => {
+			this._builderFunc = this._builderFunc.Compose(question => {
 
 				question.ErrorMessage = errorMessage;
 
@@ -62,25 +67,25 @@ namespace Umfrage.Builders {
 			return this;
 		}
 
-		public ISimpleQuestionBuilder AddToQuestionnaire(IQuestionnaire questionnaire) {
+		public IQuestionBuilder AddToQuestionnaire(IQuestionnaire questionnaire) {
 
-			this.builderFunc = this.builderFunc.Compose(question => {
+			this._builderFunc = this._builderFunc.Compose(question => {
 				questionnaire.Add(question);
 				return question;
 			});
 
-			return this;
+			return _builder;
 		}
 
 		public IQuestion Build() {
 
-			return this.builderFunc?.Invoke(null);
+			return this._builderFunc?.Invoke(null);
 
 		}
 
 		public ISimpleQuestionBuilder AsConfirm() {
 
-			this.builderFunc = this.builderFunc.Compose(question => {
+			this._builderFunc = this._builderFunc.Compose(question => {
 				Confirm q = new Confirm(question.Text , question.Hint , question.DefaultAnswer , questionnaire: question.Questionnaire);
 				return q;
 			});

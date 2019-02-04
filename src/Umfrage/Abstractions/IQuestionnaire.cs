@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Umfrage.Builders.Abstractions;
 
 namespace Umfrage.Abstractions
 {
@@ -8,6 +9,8 @@ namespace Umfrage.Abstractions
 	{
 
 		bool CanProceed { get; }
+
+		IQuestionBuilder Builder { get; }
 
 		QuestionnaireSetting Settings { get; set; }
 
