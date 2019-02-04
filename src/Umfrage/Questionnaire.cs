@@ -2,6 +2,7 @@ using Umfrage.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Umfrage.Implementations;
 
 namespace Umfrage {
 
@@ -79,7 +80,7 @@ namespace Umfrage {
 
 		public Questionnaire(IUserTerminal userConsole, QuestionnaireSetting settings = null) {
 
-			this.Terminal = userConsole;
+			this.Terminal = userConsole ?? new UserConsole();
 
 			this.Settings = settings ?? new QuestionnaireSetting();
 
