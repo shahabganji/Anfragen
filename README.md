@@ -89,18 +89,18 @@ var list = builder.List()
 var list = builder.List()
 		.New("What's your favorite language?")
 		.AddOptions(new[ ] {
-			new QuestionOption("Persian")
-			new QuestionOption("English"),
-			new QuestionOption("Italian"),
-			new QuestionOption("Spanish"),
-			new QuestionOption("French"),
-			new QuestionOption("German")
+			"Persian"
+			"English",
+			"Italian",
+			"Spanish",
+			"French",
+			"German"
 		})
 		.AsCheckList()
 		.Build();
 ```
 
-* You can use a `constructor` to create these four types of questions, yet I suggest to use the builder for easier usee
+* You can use `constructor` method to create these four types of questions, yet I suggest to use the builder for easier usee
 
 ```csharp
 var agePrompt = new Prompt("How old are you?");
@@ -119,7 +119,7 @@ questionnaire.Prompt(agePrompt);    // questionnaire.Add(agePrompt);
 
 ```
 
-An at the end you have aceess to the list of asked/processed questions:
+And at the end you have aceess to the list of asked/processed questions:
 
 ```csharp
  // Print Processed questions
