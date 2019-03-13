@@ -22,6 +22,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "global_docs", "global_docs"
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Umfrage.Extensions", "Umfrage.Extensions\Umfrage.Extensions.csproj", "{435E88FC-22CD-4F13-85C5-145838F22F12}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -68,6 +70,18 @@ Global
 		{6DBB2983-CF05-43F6-A9B9-913563508CFA}.Release|x64.Build.0 = Release|Any CPU
 		{6DBB2983-CF05-43F6-A9B9-913563508CFA}.Release|x86.ActiveCfg = Release|Any CPU
 		{6DBB2983-CF05-43F6-A9B9-913563508CFA}.Release|x86.Build.0 = Release|Any CPU
+		{435E88FC-22CD-4F13-85C5-145838F22F12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{435E88FC-22CD-4F13-85C5-145838F22F12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{435E88FC-22CD-4F13-85C5-145838F22F12}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{435E88FC-22CD-4F13-85C5-145838F22F12}.Debug|x64.Build.0 = Debug|Any CPU
+		{435E88FC-22CD-4F13-85C5-145838F22F12}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{435E88FC-22CD-4F13-85C5-145838F22F12}.Debug|x86.Build.0 = Debug|Any CPU
+		{435E88FC-22CD-4F13-85C5-145838F22F12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{435E88FC-22CD-4F13-85C5-145838F22F12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{435E88FC-22CD-4F13-85C5-145838F22F12}.Release|x64.ActiveCfg = Release|Any CPU
+		{435E88FC-22CD-4F13-85C5-145838F22F12}.Release|x64.Build.0 = Release|Any CPU
+		{435E88FC-22CD-4F13-85C5-145838F22F12}.Release|x86.ActiveCfg = Release|Any CPU
+		{435E88FC-22CD-4F13-85C5-145838F22F12}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -76,6 +90,7 @@ Global
 		{B3767259-F192-4A58-AB65-B24276833B40} = {97E87A4A-52D0-4087-8F7C-038B607BBA89}
 		{4B531F98-1CF8-4FF5-805D-6874C2250B58} = {A29E3FC6-FCBA-41BB-B8A2-1812EBAD3138}
 		{6DBB2983-CF05-43F6-A9B9-913563508CFA} = {97E87A4A-52D0-4087-8F7C-038B607BBA89}
+		{435E88FC-22CD-4F13-85C5-145838F22F12} = {97E87A4A-52D0-4087-8F7C-038B607BBA89}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9761E83E-7629-4DB7-8132-7460E92A7D72}

@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Umfrage.Extensions\Umfrage.Extensions.csproj" />
     <ProjectReference Include="..\Umfrage\Umfrage.csproj" />
   </ItemGroup>
 </Project>

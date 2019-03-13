@@ -10,12 +10,11 @@ namespace Umfrage.Implementations {
 
         public IList<string> PossibleAnswers { get; }
 
-        public Confirm( string question, string hint = "y/n" , string defaultAnswer = null , string[ ] possibleAnswers = null, IQuestionnaire questionnaire = null ) : base( question, questionnaire ) {
-
-            this.Hint = hint;
-			this.DefaultAnswer = defaultAnswer;
+        public Confirm( string question, string hint = "y/n" , string defaultAnswer = null , string[ ] possibleAnswers = null, IQuestionnaire questionnaire = null )
+			: base(question: question, questionnaire: questionnaire,hint: hint , defaultAnswer: defaultAnswer) { 
 
             this.PossibleAnswers = possibleAnswers ?? new[ ] { "y", "n" };
+
         }
 
         protected override IQuestion TakeAnswer( ) {

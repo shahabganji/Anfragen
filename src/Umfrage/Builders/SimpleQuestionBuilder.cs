@@ -1,11 +1,13 @@
-﻿using Umfrage.Abstractions;
+﻿using System;
+
+using Umfrage.Abstractions;
 using Umfrage.Builders.Abstractions;
 using Umfrage.Extensions;
 using Umfrage.Implementations;
 
-using System;
 
-namespace Umfrage.Builders {
+namespace Umfrage.Builders
+{
 	class SimpleQuestionBuilder : ISimpleQuestionBuilder {
 
 		private Func<IQuestion, IQuestion> _builderFunc;

@@ -1,10 +1,8 @@
 using Umfrage.Abstractions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Umfrage.Builders;
 using Umfrage.Builders.Abstractions;
 using Umfrage.Implementations;
+using System;
 
 namespace Umfrage {
 
@@ -82,17 +80,16 @@ namespace Umfrage {
 
 		#endregion
 
-		public Questionnaire(IUserTerminal userConsole = null, QuestionnaireSetting settings = null) {
+		public Questionnaire(IUserTerminal userConsole = null, QuestionnaireSetting settings = null , IQuestionBuilder builder = null) {
 
-			this.Terminal = userConsole ?? new UserConsole();
-
+			this.Builder = builder ?? new QuestionBuilder();
+			this.Terminal = userConsole ?? new UserTerminal();
 			this.Settings = settings ?? new QuestionnaireSetting();
 			
 			this._branches = new List<IBranch>();
 			this._questions = new List<IQuestion>();
 			this._processedQuestions = new List<IQuestion>();
 
-			this.Builder = new QuestionBuilder();
 
 		}
 
@@ -220,9 +217,12 @@ namespace Umfrage {
 
 		public IQuestionnaire Add(IQuestion question, IBranch branch = null, bool here = false) {
 
-			if( question.Questionnaire == null) {
-				question.Questionnaire = this;
+			// the question already blongs to a quesstionnnaire
+			if( question.Questionnaire != null) {
+				throw new InvalidOperationException($"The {nameof(question)} already belongs to a questionnaire, cannot add it.");
 			}
+
+			question.Questionnaire = this;
 
 			if (branch == null) {
 
