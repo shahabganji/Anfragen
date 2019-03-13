@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Umfrage.Abstractions;
 using Umfrage.Extensions;
 
-namespace Umfrage.Implementations {
-	internal class SelectableList : Question {
+namespace Umfrage.Implementations
+{
+	public class SelectableList : Question {
 
 		protected IList<IOption> _options;
 		public IEnumerable<IOption> Options => this._options;
@@ -18,7 +20,7 @@ namespace Umfrage.Implementations {
 			return this;
 		}
 
-		internal SelectableList(string question, IEnumerable<IOption> options = null, string hint = "", string defaultAnswer = null, int visibleOptions = 4, IQuestionnaire questionnaire = null) :
+		public SelectableList(string question, IEnumerable<IOption> options = null, string hint = "", string defaultAnswer = null, int visibleOptions = 4, IQuestionnaire questionnaire = null) :
 			base(question, questionnaire, hint, defaultAnswer) {
 
 			this._options = new List<IOption>();

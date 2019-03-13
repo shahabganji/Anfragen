@@ -1,6 +1,7 @@
 using System;
 
-namespace Umfrage.Abstractions {
+namespace Umfrage.Abstractions
+{
 
 	public enum QuestionStates {
 		Initilaized, Valid, Invalid, Finished

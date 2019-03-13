@@ -1,8 +1,10 @@
 using System;
+
 using Umfrage.Abstractions;
 using Umfrage.Extensions;
 
-namespace Umfrage.Implementations {
+namespace Umfrage.Implementations
+{
 
 	public class Prompt : Question {
 

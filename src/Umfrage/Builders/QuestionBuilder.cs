@@ -1,6 +1,7 @@
 ﻿using Umfrage.Builders.Abstractions;
 
-namespace Umfrage.Builders {
+namespace Umfrage.Builders
+{
 	public class QuestionBuilder : IQuestionBuilder {
 
 		public IListQuestionBuilder List() {

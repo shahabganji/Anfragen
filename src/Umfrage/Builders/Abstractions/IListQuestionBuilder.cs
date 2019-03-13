@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
-namespace Umfrage.Builders.Abstractions {
+using Umfrage.Abstractions;
+
+namespace Umfrage.Builders.Abstractions
+{
 	public interface IListQuestionBuilder {
 
 		IListQuestionBuilder Text(string text);

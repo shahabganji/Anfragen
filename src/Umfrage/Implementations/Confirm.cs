@@ -1,10 +1,11 @@
-using Umfrage.Extensions;
-using Umfrage.Abstractions;
-
 using System;
 using System.Collections.Generic;
 
-namespace Umfrage.Implementations {
+using Umfrage.Abstractions;
+using Umfrage.Extensions;
+
+namespace Umfrage.Implementations
+{
 
 	public class Confirm : Question {
 
@@ -34,7 +35,7 @@ namespace Umfrage.Implementations {
 			// hence the top will change 
 			int cursorTop = Console.CursorTop;
 
-			if (this.Answer.Trim().Length == 0 && this.DefaultAnswer != null) {
+			if (this.Answer?.Trim().Length == 0 && this.DefaultAnswer != null) {
 				Console.SetCursorPosition(left: cursorLeft, top: cursorTop - 1 );
 				terminal.Printer.Write(this.DefaultAnswer);
 				this.Answer = this.DefaultAnswer;

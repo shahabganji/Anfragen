@@ -1,13 +1,14 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
 using Umfrage.Abstractions;
 using Umfrage.Builders;
 using Umfrage.Builders.Abstractions;
 using Umfrage.Implementations;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Umfrage.Implementations;
 
-namespace Umfrage {
+namespace Umfrage
+{
 
 	public class Questionnaire : IQuestionnaire {
 

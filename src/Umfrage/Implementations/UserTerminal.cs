@@ -1,10 +1,12 @@
-using Umfrage.Abstractions;
 using System;
 using System.IO;
 
-namespace Umfrage.Implementations {
+using Umfrage.Abstractions;
 
-    public class UserTerminal : IUserTerminal {
+namespace Umfrage.Implementations
+{
+
+	public class UserTerminal : IUserTerminal {
 
         public TextWriter Printer { get; }
         public TextReader Scanner { get; }

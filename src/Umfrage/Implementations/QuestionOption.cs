@@ -1,6 +1,7 @@
 ﻿using Umfrage.Abstractions;
 
-namespace Umfrage.Implementations {
+namespace Umfrage.Implementations
+{
 	public class QuestionOption : IOption {
 		public string Text { get; }
 		public bool Selected { get; set; }

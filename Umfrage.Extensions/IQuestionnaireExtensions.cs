@@ -1,7 +1,8 @@
 ﻿using Umfrage.Abstractions;
 using Umfrage.Implementations;
 
-namespace Umfrage.Extensions {
+namespace Umfrage.Extensions
+{
 
 	public static class IQuestionnaireExtensions {
 

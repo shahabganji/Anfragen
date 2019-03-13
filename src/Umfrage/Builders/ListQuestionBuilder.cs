@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+
 using Umfrage.Abstractions;
 using Umfrage.Builders.Abstractions;
 using Umfrage.Extensions;
 using Umfrage.Implementations;
 
-namespace Umfrage.Builders {
+namespace Umfrage.Builders
+{
 	internal class ListQuestionBuilder : IListQuestionBuilder {
 
 		private Func<IQuestion, IQuestion> _builderFunc;

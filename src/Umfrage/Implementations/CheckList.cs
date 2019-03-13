@@ -1,14 +1,16 @@
-﻿using Umfrage.Extensions;
-using Umfrage.Abstractions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Umfrage.Implementations {
+using Umfrage.Abstractions;
+using Umfrage.Extensions;
 
-	class CheckList : SelectableList {
+namespace Umfrage.Implementations
+{
 
-		internal CheckList(string question, IEnumerable<IOption> options = null, string hint = "" ,  string defaultAnswer = null , int visibleOptions = 4, IQuestionnaire questionnaire = null) :
+	public class CheckList : SelectableList {
+
+		public CheckList(string question, IEnumerable<IOption> options = null, string hint = "" ,  string defaultAnswer = null , int visibleOptions = 4, IQuestionnaire questionnaire = null) :
 			base(question, options, hint , defaultAnswer, visibleOptions, questionnaire) {
 		}
 

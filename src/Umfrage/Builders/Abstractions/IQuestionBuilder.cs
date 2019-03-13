@@ -1,6 +1,5 @@
-﻿using Umfrage.Abstractions;
-
-namespace Umfrage.Builders.Abstractions {
+﻿namespace Umfrage.Builders.Abstractions
+{
 
 	public interface IQuestionBuilder {
 		ISimpleQuestionBuilder Simple();

@@ -1,9 +1,10 @@
 using System;
 using System.IO;
 
-namespace Umfrage.Abstractions {
+namespace Umfrage.Abstractions
+{
 
-    public interface IUserTerminal {
+	public interface IUserTerminal {
 
 		TextWriter Printer { get; }
 		TextReader Scanner { get; }

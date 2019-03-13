@@ -1,8 +1,9 @@
-﻿using Umfrage.Abstractions;
+﻿using System;
 
-using System;
+using Umfrage.Abstractions;
 
-namespace Umfrage.Extensions {
+namespace Umfrage.Extensions
+{
 
 	public static class IQuestionExtensions {
 		public static void ClearLine(this IQuestion question, int? line) {

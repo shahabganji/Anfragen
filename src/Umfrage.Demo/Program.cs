@@ -1,7 +1,6 @@
 ﻿using System;
+
 using Umfrage.Abstractions;
-using Umfrage.Builders;
-using Umfrage.Builders.Abstractions;
 using Umfrage.Extensions;
 using Umfrage.Implementations;
 

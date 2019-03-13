@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Umfrage.Abstractions {
+namespace Umfrage.Abstractions
+{
 	public interface IQuestion : ICloneable {
 
 		string Hint { get; set; }

@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
-using Umfrage.Abstractions;
-using System;
-namespace Umfrage.Implementations {
+﻿using System;
+using System.Collections.Generic;
 
-    public class Branch : IBranch {
+using Umfrage.Abstractions;
+namespace Umfrage.Implementations
+{
+
+	public class Branch : IBranch {
 
         public string Name { get; }
 

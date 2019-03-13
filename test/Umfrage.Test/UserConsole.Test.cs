@@ -1,13 +1,14 @@
 using System;
 using System.IO;
+
 using Umfrage.Implementations;
+
 using Xunit;
-using Xunit.Abstractions;
-using Xunit.Sdk;
 
-namespace Umfrage.Test {
+namespace Umfrage.Test
+{
 
-    public class UserConsoleTests {
+	public class UserConsoleTests {
 
         //public ConsoleWriterTest( ) {
         //    StreamWriter standardOut =
@@ -25,7 +26,7 @@ namespace Umfrage.Test {
                 Console.SetOut( output );
                 Console.Clear( );
 
-                var cw = new UserConsole( );
+                var cw = new UserTerminal( );
 
                 //When
                 cw.Printer.Write( "Hello there" );
@@ -43,7 +44,7 @@ namespace Umfrage.Test {
                 //Given
                 Console.SetIn( input );
 
-                var cw = new UserConsole( );
+                var cw = new UserTerminal( );
 
                 //When
                 var data = cw.Scanner.ReadLine( );
