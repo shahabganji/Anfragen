@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Abstractions\Builders\**" />
+    <EmbeddedResource Remove="Abstractions\Builders\**" />
+    <None Remove="Abstractions\Builders\**" />
+  </ItemGroup>
+</Project>
