@@ -12,17 +12,31 @@ Add `Umfrage` package from [Nuget]() by running the following command
 dotnet add package Umfrage --version 1.0.0
 ```
 
+Also another package is avaialable which provides some extension methods, not required necessarily:
+
+```shell
+dotnet add package Umfrage.Extensions --version 1.0.0
+```
+
 ### Usage
 
 ```csharp
-var questionnaire = new Questionnaire( );
 var builder = new QuestionBuilder( );
+var questionnaire = new Questionnaire( );
 
-var question = builder.Simple( ).New( "What's your name?" ).Build( );
+builder
+    .Simple( )
+    .New( "What's your name?" )
+    .AddToQuestionnaire( questionnaire );
 
-questionnaire.Add(question);
+var another = builder.Simple( ).New( "What's your lastname?" ).Build( );
+questionnaire.Add(another);
 
 questionnaire.Start();
+
+While( questionnaire.CanProceed ){
+    questionnaire.Next();
+}
 
 questionnaire.End();
 
@@ -85,3 +99,33 @@ var list = builder.List()
 		.AsCheckList()
 		.Build();
 ```
+
+* You can use a `constructor` to create these four types of questions, yet I suggest to use the builder for easier usee
+
+```csharp
+var agePrompt = new Prompt("How old are you?");
+
+agePrompt.Validator(x =>
+{
+
+	int.TryParse(x.Answer, out int age);
+
+	return age >= 18;
+
+}, "You must be older than 18");
+
+// Use Extension methods in Umfrage.Extensions package
+questionnaire.Prompt(agePrompt);    // questionnaire.Add(agePrompt);
+
+```
+
+An at the end you have aceess to the list of asked/processed questions:
+
+```csharp
+ // Print Processed questions
+foreach ( var q in questionnaire.ProcessedQuestions ) {
+    questionnaire.Terminal.Printer.Write( $"{q.Text} : {q.Answer}" );
+    questionnaire.Terminal.Printer.WriteLine( );
+}
+```
+
