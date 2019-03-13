@@ -1,34 +1,36 @@
 ﻿using System;
 
 using Umfrage.Abstractions;
+using Umfrage.Builders;
+using Umfrage.Builders.Abstractions;
 using Umfrage.Extensions;
 using Umfrage.Implementations;
 
 namespace Umfrage.Demo
 {
-	internal class Program
+	internal static class Program
 	{
 		public static void Main(string[ ] args) {
 
-			//UserConsole terminal = new UserConsole( );
 			IQuestionnaire questionnaire = new Questionnaire( );
 			questionnaire.Settings.WelcomeMessage = "Welcome to my questionnaire";
+
+			IQuestionBuilder builder = new QuestionBuilder();
 
 			bool Validator(IQuestion x) => x.Answer.Length > 0;
 			string errorMessage = "Please Provide a value";
 
 
-			var builder = questionnaire.Builder;
-
 			IQuestion askName = builder.Simple( ).Text( "What's your name?" ).Build( );
+			builder.Simple( ).Text( "What's your family?" ).AddValidation( Validator, errorMessage ).AddToQuestionnaire( questionnaire );
 
-			IQuestion askFamily = builder.Simple( ).Text( "What's your family?" ).AddValidation( Validator, errorMessage ).Build( );
+			questionnaire.Add(askName);
 
 			builder.List()
 				.Text("What's your favorite language?")
-				.AddOption(new QuestionOption("Persian"))
 				.AddOptions(new[]
 				{
+					new QuestionOption("Persian"),
 					new QuestionOption("English"),
 					new QuestionOption("Italian"),
 					new QuestionOption("Spanish"),
@@ -42,16 +44,11 @@ namespace Umfrage.Demo
 				.WithErrorMessage("You must select an option")
 				.AddToQuestionnaire(questionnaire);
 
-            questionnaire
-                .Add(askName)
-                .Add(askFamily)
-                ;
-
 			questionnaire.Start();
 
 			bool add = true;
 
-			// loop until there is a question to ask
+			// loop as far as there is a question to ask
 			while (questionnaire.CanProceed) {
 
 				if (add) {
@@ -69,21 +66,24 @@ namespace Umfrage.Demo
 
 					confirm.Finish((q) => {
 						if (q.Answer == "y") {
-							IQuestion agePrompt = builder.Simple( )
-													.Text( "How old are you?" )
-													.AddValidation( x => {
 
-														int.TryParse( x.Answer, out int age );
+							var agePrompt = new Prompt("How old are you?");
 
-														return age >= 18;
+							agePrompt.Validator(x =>
+							{
 
-													}, "Your must be older than 18" )
-													.Build( );
+								int.TryParse(x.Answer, out int age);
 
-                            questionnaire.Prompt(agePrompt as Prompt );
+								return age >= 18;
+
+							}, "You must be older than 18");
+
+							// Use of Extension methods
+							questionnaire.Prompt(agePrompt);
                         }
                     } );
 
+					// Add a builder-made question via an extension method
 					questionnaire.Confirm(confirm as Confirm);
 
 					add = false;

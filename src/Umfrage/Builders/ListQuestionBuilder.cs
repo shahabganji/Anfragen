@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using System.Linq;
 using Umfrage.Abstractions;
 using Umfrage.Builders.Abstractions;
 using Umfrage.Extensions;
@@ -71,24 +71,38 @@ namespace Umfrage.Builders
 			return this;
 		}
 
-		public IListQuestionBuilder AddOption(IOption option) {
+		//public IListQuestionBuilder AddOption(IOption option) {
+
+		//	this._builderFunc = this._builderFunc.Compose((question) => {
+
+		//		(question as SelectableList).AddOption(option);
+
+		//		return question;
+		//	});
+
+		//	return this;
+		//}
+		public IListQuestionBuilder AddOptions(IEnumerable<IOption> options) {
 
 			this._builderFunc = this._builderFunc.Compose((question) => {
 
-				(question as SelectableList).AddOption(option);
+				foreach (IOption option in options) {
+					(question as SelectableList)?.AddOption(option);
+				}
 
 				return question;
 			});
 
 			return this;
 		}
-		public IListQuestionBuilder AddOptions(IEnumerable<IOption> options) {
 
-			this._builderFunc = this._builderFunc.Compose((question) => {
+		public IListQuestionBuilder AddOptions(IEnumerable<string> options) {
 
-				foreach (IOption option in options) {
-					(question as SelectableList).AddOption(option);
-				}
+			this._builderFunc = this._builderFunc.Compose((question) =>
+			{
+				var opts = options.Select( o=> new QuestionOption(o) );
+
+				this.AddOptions(opts);
 
 				return question;
 			});

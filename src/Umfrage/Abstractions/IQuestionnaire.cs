@@ -9,7 +9,7 @@ namespace Umfrage.Abstractions
 
 		bool CanProceed { get; }
 
-		IQuestionBuilder Builder { get; }
+		//IQuestionBuilder Builder { get; }
 
 		QuestionnaireSetting Settings { get; set; }
 

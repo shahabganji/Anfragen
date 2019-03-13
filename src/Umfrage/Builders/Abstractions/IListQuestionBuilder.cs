@@ -17,7 +17,8 @@ namespace Umfrage.Builders.Abstractions
 
 		IListQuestionBuilder WithVisibleOptions(int visibleItems);
 		IListQuestionBuilder AddOptions(IEnumerable<IOption> options);
-		IListQuestionBuilder AddOption(IOption option);
+		IListQuestionBuilder AddOptions(IEnumerable<string> options);
+		//IListQuestionBuilder AddOption(IOption option);
 		IListQuestionBuilder AsRadioList();
 		IListQuestionBuilder AsCheckList();
 

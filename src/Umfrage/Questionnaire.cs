@@ -30,7 +30,7 @@ namespace Umfrage
 
 		public bool CanProceed => this.NextQuestion != null;
 
-		public IQuestionBuilder Builder { get; }
+		//public IQuestionBuilder Builder { get; }
 
 		public IUserTerminal Terminal { get; private set; }
 
@@ -84,9 +84,9 @@ namespace Umfrage
 
 		#endregion
 
-		public Questionnaire(IUserTerminal userConsole = null, QuestionnaireSetting settings = null , IQuestionBuilder builder = null) {
+		public Questionnaire(IUserTerminal userConsole = null, QuestionnaireSetting settings = null ) {
 
-			this.Builder = builder ?? new QuestionBuilder();
+			//this.Builder = builder ?? new QuestionBuilder();
 			this.Terminal = userConsole ?? new UserTerminal();
 			this.Settings = settings ?? new QuestionnaireSetting();
 			

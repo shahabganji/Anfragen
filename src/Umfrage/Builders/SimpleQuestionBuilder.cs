@@ -76,6 +76,8 @@ namespace Umfrage.Builders
 				return question;
 			});
 
+			this.Build();
+
 			return _builder;
 		}
 
