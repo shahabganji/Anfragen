@@ -9,40 +9,41 @@ namespace Umfrage.Demo {
     internal class Program {
         public static void Main( string[ ] args ) {
 
-            UserConsole terminal = new UserConsole( );
-            IQuestionnaire questionnaire = new Questionnaire( terminal );
-            questionnaire.Settings.WelcomeMessage = "Welcome to my questionnaire";
+			//UserConsole terminal = new UserConsole( );
+			IQuestionnaire questionnaire = new Questionnaire( );
+			questionnaire.Settings.WelcomeMessage = "Welcome to my questionnaire";
 
-            Func<IQuestion, bool> validator = x => x.Answer.Length > 0;
-            string errorMessage = "Please Provide a value";
+			bool Validator(IQuestion x) => x.Answer.Length > 0;
+			string errorMessage = "Please Provide a value";
 
-            IQuestionBuilder builder = new QuestionBuilder( );
 
-            IQuestion ask_name = builder.Simple( ).New( "What's your name?" ).Build( );
+			var builder = questionnaire.Builder;
 
-            IQuestion ask_family = builder.Simple( ).New( "What's your family?" ).AddValidation( validator, errorMessage ).Build( );
+			IQuestion askName = builder.Simple( ).Text( "What's your name?" ).Build( );
 
-            IQuestion preferable_language = builder.List( )
-                                            .New( "What's your favorite language?" )
-                                            .AddOption( new QuestionOption( "Persian" ) )
-                                            .AddOptions( new[ ] {
-                                                new QuestionOption("English"),
-                                                new QuestionOption("Italian"),
-                                                new QuestionOption("Spanish"),
-                                                new QuestionOption("French"),
-                                                new QuestionOption("German")
-                                            } )
-											.WithHint("Persian")
-											.WithDefaultAnswer("Persian")
-											.AddValidation( x => x.Answer != null )
-                                            //.AsCheckList( )
-                                            .AddToQuestionnaire( questionnaire )
-                                            .WithErrorMessage( "You must select an option" )
-                                            .Build( );
+			IQuestion askFamily = builder.Simple( ).Text( "What's your family?" ).AddValidation( Validator, errorMessage ).Build( );
+
+			builder.List()
+				.Text("What's your favorite language?")
+				.AddOption(new QuestionOption("Persian"))
+				.AddOptions(new[]
+				{
+					new QuestionOption("English"),
+					new QuestionOption("Italian"),
+					new QuestionOption("Spanish"),
+					new QuestionOption("French"),
+					new QuestionOption("German")
+				})
+				.WithHint("Persian")
+				.WithDefaultAnswer("Persian")
+				.AddValidation(x => x.Answer != null)
+				.AsCheckList()
+				.WithErrorMessage("You must select an option")
+				.AddToQuestionnaire(questionnaire);
 
             questionnaire
-                .Add( ask_name )
-                .Add( ask_family )
+                .Add(askName)
+                .Add(askFamily)
                 ;
 
             questionnaire.Start( );
@@ -54,10 +55,10 @@ namespace Umfrage.Demo {
 
                 if ( add ) {
 
-                    IQuestion confirm = builder.Simple( )
-                                        .New( "Are you older than 18?" )
-                                        .AsConfirm( )
-                                        .WithHint( "Y/n" )
+					IQuestion confirm = builder.Simple( )
+										.Text( "Are you older than 18?" )
+										.AsConfirm( )
+										.WithHint( "Y/n" )
 										.WithDefaultAnswer( "y" )
                                         .AddValidation( x => {
                                             Confirm q = ( Confirm ) x;
@@ -65,11 +66,11 @@ namespace Umfrage.Demo {
                                         }, "Your value should be either 'y' or 'n'" )
                                         .Build( );
 
-                    confirm.Finish( ( q ) => {
-                        if ( q.Answer == "y" ) {
-                            IQuestion age_prompt = builder.Simple( )
-                                                    .New( "How old are you?" )
-                                                    .AddValidation( x => {
+					confirm.Finish((q) => {
+						if (q.Answer == "y") {
+							IQuestion agePrompt = builder.Simple( )
+													.Text( "How old are you?" )
+													.AddValidation( x => {
 
                                                         int.TryParse( x.Answer, out int age );
 
@@ -78,7 +79,7 @@ namespace Umfrage.Demo {
                                                     }, "Your must be older than 18" )
                                                     .Build( );
 
-                            questionnaire.Prompt( age_prompt as Prompt );
+                            questionnaire.Prompt(agePrompt as Prompt );
                         }
                     } );
 
@@ -94,10 +95,10 @@ namespace Umfrage.Demo {
             questionnaire.End( );
 
             // Print Processed questions
-            foreach ( Question q in questionnaire.ProcessedQuestions ) {
+            foreach ( var q in questionnaire.ProcessedQuestions ) {
 
-                terminal.Printer.Write( $"{q.Text} : {q.Answer}" );
-                terminal.Printer.WriteLine( );
+                questionnaire.Terminal.Printer.Write( $"{q.Text} : {q.Answer}" );
+                questionnaire.Terminal.Printer.WriteLine( );
 
             }
 

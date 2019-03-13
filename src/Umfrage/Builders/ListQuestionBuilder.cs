@@ -8,16 +8,23 @@ using Umfrage.Implementations;
 namespace Umfrage.Builders {
 	internal class ListQuestionBuilder : IListQuestionBuilder {
 
-		private Func<IQuestion, IQuestion> builderFunc;
+		private Func<IQuestion, IQuestion> _builderFunc;
+		private readonly IQuestionBuilder _builder;
 
-		public IListQuestionBuilder New(string text) {
-			this.builderFunc = (q) => new SelectableList(question: text);
+		internal ListQuestionBuilder(IQuestionBuilder builder)
+		{
+			_builder = builder;
+		}
+
+
+		public IListQuestionBuilder Text(string text) {
+			this._builderFunc = (q) => new SelectableList(question: text);
 			return this;
 		}
 
 		public IListQuestionBuilder WithHint(string hint) {
 
-			this.builderFunc = this.builderFunc.Compose(question => {
+			this._builderFunc = this._builderFunc.Compose(question => {
 
 				question.Hint = hint;
 
@@ -29,7 +36,7 @@ namespace Umfrage.Builders {
 
 		public IListQuestionBuilder WithDefaultAnswer(string defaultAnswer) {
 
-			this.builderFunc = this.builderFunc.Compose(question => {
+			this._builderFunc = this._builderFunc.Compose(question => {
 
 				question.DefaultAnswer = defaultAnswer;
 
@@ -39,10 +46,10 @@ namespace Umfrage.Builders {
 			return this;
 		}
 
-		public IListQuestionBuilder AddValidation(Func<IQuestion, bool> validator, string errormessage = "") {
-			this.builderFunc = this.builderFunc.Compose((question) => {
+		public IListQuestionBuilder AddValidation(Func<IQuestion, bool> validator, string errorMessage = "") {
+			this._builderFunc = this._builderFunc.Compose((question) => {
 
-				question.Validator(validator, errormessage);
+				question.Validator(validator, errorMessage);
 
 				return question;
 			});
@@ -52,7 +59,7 @@ namespace Umfrage.Builders {
 
 		public IListQuestionBuilder WithErrorMessage(string errorMessage) {
 
-			this.builderFunc = this.builderFunc.Compose(question => {
+			this._builderFunc = this._builderFunc.Compose(question => {
 
 				question.ErrorMessage = errorMessage;
 
@@ -64,7 +71,7 @@ namespace Umfrage.Builders {
 
 		public IListQuestionBuilder AddOption(IOption option) {
 
-			this.builderFunc = this.builderFunc.Compose((question) => {
+			this._builderFunc = this._builderFunc.Compose((question) => {
 
 				(question as SelectableList).AddOption(option);
 
@@ -75,7 +82,7 @@ namespace Umfrage.Builders {
 		}
 		public IListQuestionBuilder AddOptions(IEnumerable<IOption> options) {
 
-			this.builderFunc = this.builderFunc.Compose((question) => {
+			this._builderFunc = this._builderFunc.Compose((question) => {
 
 				foreach (IOption option in options) {
 					(question as SelectableList).AddOption(option);
@@ -89,7 +96,7 @@ namespace Umfrage.Builders {
 
 		public IListQuestionBuilder AsRadioList() {
 
-			this.builderFunc = this.builderFunc.Compose(question => {
+			this._builderFunc = this._builderFunc.Compose(question => {
 				(question as SelectableList).ShowAsRadio = true;
 				return question;
 			});
@@ -99,7 +106,7 @@ namespace Umfrage.Builders {
 
 		public IListQuestionBuilder AsCheckList() {
 
-			this.builderFunc = this.builderFunc.Compose(question => {
+			this._builderFunc = this._builderFunc.Compose(question => {
 				SelectableList q = (question as SelectableList );
 				CheckList q2 = new CheckList(q.Text, q.Options, q.Hint , q.DefaultAnswer, q.VisibleOptions, q.Questionnaire);
 				return q2;
@@ -110,13 +117,13 @@ namespace Umfrage.Builders {
 
 		public IQuestion Build() {
 
-			return this.builderFunc?.Invoke(null);
+			return this._builderFunc?.Invoke(null);
 
 		}
 
 		public IListQuestionBuilder WithVisibleOptions(int visibleItems) {
 
-			this.builderFunc = this.builderFunc.Compose(question => {
+			this._builderFunc = this._builderFunc.Compose(question => {
 
 				(question as SelectableList).VisibleOptions = visibleItems;
 
@@ -126,14 +133,16 @@ namespace Umfrage.Builders {
 			return this;
 		}
 
-		public IListQuestionBuilder AddToQuestionnaire(IQuestionnaire questionnaire) {
+		public IQuestionBuilder AddToQuestionnaire(IQuestionnaire questionnaire) {
 
-			this.builderFunc = this.builderFunc.Compose(question => {
+			this._builderFunc = this._builderFunc.Compose(question => {
 				questionnaire.Add(question);
 				return question;
 			});
 
-			return this;
+			this.Build();
+
+			return _builder;
 		}
 
 	}

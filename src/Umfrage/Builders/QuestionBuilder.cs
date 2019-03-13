@@ -4,11 +4,11 @@ namespace Umfrage.Builders {
 	public class QuestionBuilder : IQuestionBuilder {
 
 		public IListQuestionBuilder List() {
-			return new ListQuestionBuilder();
+			return new ListQuestionBuilder(this);
 		}
 
 		public ISimpleQuestionBuilder Simple() {
-			return new SimpleQuestionBuilder();
+			return new SimpleQuestionBuilder(this);
 		}
 	}
 }

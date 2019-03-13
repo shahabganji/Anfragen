@@ -7,9 +7,7 @@ namespace Umfrage.Implementations {
 	public class Prompt : Question {
 
 		public Prompt(string prompt, string hint = "", string defaultAnswer = null, IQuestionnaire questionnaire = null) :
-			base(prompt, questionnaire) {
-
-			this.Hint = hint;
+			base(question: prompt, questionnaire: questionnaire,hint: hint , defaultAnswer: defaultAnswer) {
 		}
 
 		protected override IQuestion TakeAnswer() {
