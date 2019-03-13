@@ -5,9 +5,11 @@ using Umfrage.Builders.Abstractions;
 using Umfrage.Extensions;
 using Umfrage.Implementations;
 
-namespace Umfrage.Demo {
-    internal class Program {
-        public static void Main( string[ ] args ) {
+namespace Umfrage.Demo
+{
+	internal class Program
+	{
+		public static void Main(string[ ] args) {
 
 			//UserConsole terminal = new UserConsole( );
 			IQuestionnaire questionnaire = new Questionnaire( );
@@ -46,25 +48,25 @@ namespace Umfrage.Demo {
                 .Add(askFamily)
                 ;
 
-            questionnaire.Start( );
+			questionnaire.Start();
 
-            bool add = true;
+			bool add = true;
 
-            // loop until there is a question to ask
-            while ( questionnaire.CanProceed ) {
+			// loop until there is a question to ask
+			while (questionnaire.CanProceed) {
 
-                if ( add ) {
+				if (add) {
 
 					IQuestion confirm = builder.Simple( )
 										.Text( "Are you older than 18?" )
 										.AsConfirm( )
 										.WithHint( "Y/n" )
 										.WithDefaultAnswer( "y" )
-                                        .AddValidation( x => {
-                                            Confirm q = ( Confirm ) x;
-                                            return q.PossibleAnswers.Contains( x.Answer );
-                                        }, "Your value should be either 'y' or 'n'" )
-                                        .Build( );
+										.AddValidation( x => {
+											Confirm q = ( Confirm ) x;
+											return q.PossibleAnswers.Contains( x.Answer );
+										}, "Your value should be either 'y' or 'n'" )
+										.Build( );
 
 					confirm.Finish((q) => {
 						if (q.Answer == "y") {
@@ -72,27 +74,27 @@ namespace Umfrage.Demo {
 													.Text( "How old are you?" )
 													.AddValidation( x => {
 
-                                                        int.TryParse( x.Answer, out int age );
+														int.TryParse( x.Answer, out int age );
 
-                                                        return age >= 18;
+														return age >= 18;
 
-                                                    }, "Your must be older than 18" )
-                                                    .Build( );
+													}, "Your must be older than 18" )
+													.Build( );
 
                             questionnaire.Prompt(agePrompt as Prompt );
                         }
                     } );
 
-                    questionnaire.Confirm( confirm as Confirm );
+					questionnaire.Confirm(confirm as Confirm);
 
-                    add = false;
-                }
+					add = false;
+				}
 
-                questionnaire.Next( );
+				questionnaire.Next();
 
-            }
+			}
 
-            questionnaire.End( );
+			questionnaire.End();
 
             // Print Processed questions
             foreach ( var q in questionnaire.ProcessedQuestions ) {
@@ -100,9 +102,9 @@ namespace Umfrage.Demo {
                 questionnaire.Terminal.Printer.Write( $"{q.Text} : {q.Answer}" );
                 questionnaire.Terminal.Printer.WriteLine( );
 
-            }
+			}
 
-            Console.ReadLine( );
-        }
-    }
+			Console.ReadLine();
+		}
+	}
 }
