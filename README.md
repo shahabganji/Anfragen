@@ -2,7 +2,7 @@
 
 This is a .Net Core plugin enabling you to have questionnaires or console-like wizards in your applications. 
 
-Umfrage inspired by [Yeomon](https://yeoman.io/) and [Inquirer.js](https://github.com/SBoudrias/Inquirer.js/), yet it is implemented and looks different.
+Umfrage inspired by [Yeomon](https://yeoman.io/) and [Inquirer.js](https://github.com/SBoudrias/Inquirer.js/), yet it is implemented differently and looks different.
 
 ### Install
 
