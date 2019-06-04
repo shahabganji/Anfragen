@@ -1,4 +1,4 @@
-version: $(APPVEYOR_REPO_TAG_NAME).{build}
+version: '1.1.1.{build}'
 image: Visual Studio 2017
 #skip_branch_with_pr: true
 configuration: Release
@@ -7,9 +7,9 @@ platform:
 
 branches:
   only:
-    - master
-    - develop
     - /\d*\.\d*\.\d*/
+#    - master
+#    - develop
 
 dotnet_csproj:
   patch: true
