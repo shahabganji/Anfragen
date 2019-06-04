@@ -31,11 +31,12 @@ build_script:
 test_script:
   - ps: dotnet test test/Umfrage.Test/Umfrage.Test.csproj --verbosity normal
 
+after_test:
+  - ps: dotnet pack src/Umfrage/Umfrage.csproj -c Release -o publish
+  - ps: dotnet pack src/Umfrage.Extensions/Umfrage.Extensions.csproj -c Release -o publish
+
 deploy:
   provider: NuGet
-  server:                  # remove to push to NuGet.org
   api_key:
-    secure: $NUGET_API_KEY
-  skip_symbols: false
-  symbol_server:           # remove to push symbols to SymbolSource.org
+    secure: UNhG2ePtkOWC4kyxRzHWPVYv5GM+QgT1/8S3aVsU3Vyrhag1VnzaN7jUe7vxcZZJ
   artifact: /.*\.nupkg/
