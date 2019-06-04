@@ -1,0 +1,523 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BuildServerSettings">
+    <option name="LOGIN" value="" />
+    <option name="SERVER_URL" value="http://buildserver" />
+    <option name="REMEMBER_ME" value="true" />
+    <option name="USE_IDEA_PROXY_SETTINGS" value="true" />
+    <option name="INSPECTIONS_BUILD_TYPE_IDS" />
+    <option name="DUPLICATES_BUILD_TYPE_IDS" />
+    <option name="COVERAGE_SETTINGS" />
+    <option name="TEST_STATUS_ENABLED" value="true" />
+    <option name="TEST_STATUS_SHOW_SUCCESSFUL" value="false" />
+    <option name="POSTPONE_SUITABLE_CONFIGURATIONS_SEARCH" value="false" />
+    <option name="ARTIFACTS_BUILD_TYPE_IDS" />
+    <option name="PERFORM_COMMIT_IF_SUCCESSFUL" value="true" />
+    <option name="PERFORM_COMMIT_IF_NO_NEW_FAILED_TESTS" value="false" />
+    <option name="REQUEST_CONFIRMATON" value="false" />
+    <option name="PRE_TESTED_COMMIT" value="true" />
+    <option name="FILTER_BY_STATUS" value="false" />
+    <option name="FILTER_MARKED_AS_FIXED" value="false" />
+    <option name="SHOW_CLOSE_PROMPT" value="true" />
+    <option name="TOOL_WINDOW_SELECTED_CONTENT_INDEX" value="0" />
+    <option name="FILTER_BY_CURRENT_PROJECT" value="true" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="94925ba7-2382-4131-b77f-241281a925ad" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/.idea.Umfrage/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.idea.Umfrage/.idea/indexLayout.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.idea.Umfrage/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.idea.Umfrage/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Umfrage.Demo/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Umfrage.Demo/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Umfrage/Implementations/UserConsole.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Umfrage/Implementations/UserConsole.cs" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="Umfrage" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/Umfrage.Test/Question.Test.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="880">
+              <caret line="44" column="9" selection-start-line="44" selection-start-column="9" selection-end-line="44" selection-end-column="9" />
+              <folding>
+                <marker date="1550226362988" expanded="true" signature="6:82" ph="..." />
+                <marker date="1550226362988" expanded="true" signature="107:10235" ph="{...}" />
+                <marker date="1550226362988" expanded="true" signature="138:10233" ph="{...}" />
+                <marker date="1550226362988" expanded="true" signature="197:1177" ph="{...}" />
+                <marker date="1550226362988" expanded="true" signature="286:1173" ph="{...}" />
+                <marker date="1550226362988" expanded="true" signature="351:1168" ph="{...}" />
+                <marker date="1550226362988" expanded="false" signature="1270:2249" ph="{...}" />
+                <marker date="1550226362988" expanded="true" signature="1359:2245" ph="{...}" />
+                <marker date="1550226362988" expanded="true" signature="1424:2240" ph="{...}" />
+                <marker date="1550226362988" expanded="false" signature="2339:3374" ph="{...}" />
+                <marker date="1550226362988" expanded="true" signature="2428:3370" ph="{...}" />
+                <marker date="1550226362988" expanded="true" signature="2493:3365" ph="{...}" />
+                <marker date="1550226362988" expanded="true" signature="3088:3126" ph="{...}" />
+                <marker date="1550226362988" expanded="false" signature="3452:4384" ph="{...}" />
+                <marker date="1550226362988" expanded="true" signature="3541:4380" ph="{...}" />
+                <marker date="1550226362988" expanded="true" signature="3606:4375" ph="{...}" />
+                <marker date="1550226362988" expanded="false" signature="4455:4998" ph="{...}" />
+                <marker date="1550226362988" expanded="true" signature="4510:4994" ph="{...}" />
+                <marker date="1550226362988" expanded="false" signature="5086:5698" ph="{...}" />
+                <marker date="1550226362988" expanded="true" signature="5141:5694" ph="{...}" />
+                <marker date="1550226362988" expanded="true" signature="5447:5509" ph="{...}" />
+                <marker date="1550226362988" expanded="false" signature="5787:5902" ph="{...}" />
+                <marker date="1550226362988" expanded="true" signature="5836:5896" ph="{...}" />
+                <marker date="1550226362988" expanded="false" signature="5958:6292" ph="{...}" />
+                <marker date="1550226362988" expanded="true" signature="6227:6286" ph="{...}" />
+                <marker date="1550226362988" expanded="false" signature="6346:7260" ph="{...}" />
+                <marker date="1550226362988" expanded="true" signature="6401:7256" ph="{...}" />
+                <marker date="1550226362988" expanded="true" signature="6457:7251" ph="{...}" />
+                <marker date="1550226362988" expanded="true" signature="7026:7076" ph="{...}" />
+                <marker date="1550226362988" expanded="false" signature="7334:8428" ph="{...}" />
+                <marker date="1550226362988" expanded="true" signature="7388:8424" ph="{...}" />
+                <marker date="1550226362988" expanded="true" signature="7447:8419" ph="{...}" />
+                <marker date="1550226362988" expanded="true" signature="8016:8066" ph="{...}" />
+                <marker date="1550226362988" expanded="true" signature="8217:8260" ph="{...}" />
+                <marker date="1550226362988" expanded="false" signature="8494:9410" ph="{...}" />
+                <marker date="1550226362988" expanded="true" signature="8548:9406" ph="{...}" />
+                <marker date="1550226362988" expanded="true" signature="8607:9401" ph="{...}" />
+                <marker date="1550226362988" expanded="true" signature="9176:9226" ph="{...}" />
+                <marker date="1550226362988" expanded="false" signature="9470:9806" ph="{...}" />
+                <marker date="1550226362988" expanded="true" signature="9741:9800" ph="{...}" />
+                <marker date="1550226362988" expanded="false" signature="9857:10229" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/Umfrage.Test/UserConsole.Test.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="80">
+              <caret line="9" column="17" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
+              <folding>
+                <marker date="1544813473290" expanded="false" signature="6:117" ph="..." />
+                <marker date="1544813473290" expanded="true" signature="142:1322" ph="{...}" />
+                <marker date="1544813473290" expanded="true" signature="179:1320" ph="{...}" />
+                <marker date="1544813473290" expanded="true" signature="190:432" ph="/* public ConsoleWriterTest( ) { ... */" />
+                <marker date="1544813473290" expanded="false" signature="505:901" ph="{...}" />
+                <marker date="1544813473290" expanded="true" signature="563:891" ph="{...}" />
+                <marker date="1544813473290" expanded="false" signature="967:1314" ph="{...}" />
+                <marker date="1544813473290" expanded="true" signature="1032:1304" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Umfrage/Implementations/UserConsole.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="402">
+              <caret line="24" column="12" selection-start-line="24" selection-start-column="12" selection-end-line="24" selection-end-column="12" />
+              <folding>
+                <marker date="1558733546305" expanded="false" signature="6:58" ph="..." />
+                <marker date="1558733546305" expanded="true" signature="93:900" ph="{...}" />
+                <marker date="1558733546305" expanded="true" signature="140:898" ph="{...}" />
+                <marker date="1558733546305" expanded="true" signature="277:393" ph="{...}" />
+                <marker date="1558733546305" expanded="true" signature="438:554" ph="{...}" />
+                <marker date="1558733546305" expanded="true" signature="628:648" ph="{...}" />
+                <marker date="1558733546305" expanded="true" signature="714:804" ph="{...}" />
+                <marker date="1558733546305" expanded="true" signature="838:892" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/Umfrage.Demo/Program.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="550">
+              <caret line="33" column="50" selection-start-line="33" selection-start-column="50" selection-end-line="33" selection-end-column="50" />
+              <folding>
+                <marker date="1558733999685" expanded="false" signature="6:159" ph="..." />
+                <marker date="1558733999685" expanded="true" signature="183:3613" ph="{...}" />
+                <marker date="1558733999685" expanded="true" signature="219:3611" ph="{...}" />
+                <marker date="1558733999685" expanded="true" signature="272:3605" ph="{...}" />
+                <marker date="1558733999685" expanded="true" signature="1059:1330" ph="{...}" />
+                <marker date="1558733999685" expanded="true" signature="1913:3282" ph="{...}" />
+                <marker date="1558733999685" expanded="true" signature="1952:3229" ph="{...}" />
+                <marker date="1558733999685" expanded="true" signature="2271:2420" ph="{...}" />
+                <marker date="1558733999685" expanded="true" signature="2559:3111" ph="{...}" />
+                <marker date="1558733999685" expanded="true" signature="2801:2952" ph="{...}" />
+                <marker date="1558733999685" expanded="true" signature="3422:3562" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="feature/fluent_api" />
+      </map>
+    </option>
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/test/Umfrage.Test/Question.Test.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Umfrage.Demo/Program.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Umfrage/Implementations/UserConsole.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/test/Umfrage.Test/UserConsole.Test.cs" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/src/Umfrage/Implementations/UserConsole.cs" />
+        <option value="$PROJECT_DIR$/src/Umfrage.Demo/Program.cs" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds" fullScreen="true">
+    <option name="width" value="1440" />
+    <option name="height" value="900" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="SolutionExplorer" proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="FileSystemExplorer" />
+      <pane id="AssemblyExplorer" />
+      <pane id="SolutionExplorer">
+        <subPane>
+          <expand>
+            <path>
+              <item name="" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="Umfrage" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
+            <path>
+              <item name="" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="Umfrage" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="src" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
+            <path>
+              <item name="" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="Umfrage" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="src" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="Umfrage" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
+            <path>
+              <item name="" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="Umfrage" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="src" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="Umfrage" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="Implementations" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
+            <path>
+              <item name="" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="Umfrage" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="src" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="Umfrage.Demo" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+        <option name="show-all-files" value="false" />
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="Rider.DefaultBreakpoints.AreToggled" value="true" />
+    <property name="Rider.ProjectViewActivator.IsNotFirstRun" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="settings.editor.selected.configurable" value="RiderTestRunnerUnitTestingPageId" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="Default" type="DotNetProject" factoryName=".NET Project">
+      <option name="EXE_PATH" value="" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="PASS_PARENT_ENVS" value="1" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <option name="USE_MONO" value="0" />
+      <option name="RUNTIME_ARGUMENTS" value="" />
+      <option name="PROJECT_PATH" value="" />
+      <option name="PROJECT_EXE_PATH_TRACKING" value="1" />
+      <option name="PROJECT_ARGUMENTS_TRACKING" value="1" />
+      <option name="PROJECT_WORKING_DIRECTORY_TRACKING" value="1" />
+      <option name="PROJECT_KIND" value="None" />
+      <option name="PROJECT_TFM" value="" />
+      <method v="2">
+        <option name="Build" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="94925ba7-2382-4131-b77f-241281a925ad" name="Default Changelist" comment="" />
+      <created>1545948218517</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1545948218517</updated>
+      <workItem from="1545948220717" duration="1110000" />
+      <workItem from="1550226415825" duration="381000" />
+      <workItem from="1558711188662" duration="550000" />
+      <workItem from="1558711896136" duration="87000" />
+      <workItem from="1558712037747" duration="198000" />
+      <workItem from="1558733142372" duration="887000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="3213000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="0" y="0" width="1920" height="1080" extended-state="0" />
+    <editor active="true" />
+    <layout>
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2630458" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Image Layers" order="2" />
+      <window_info id="Capture Tool" order="3" />
+      <window_info id="Favorites" order="4" side_tool="true" weight="0.3297568" />
+      <window_info id="Azure Explorer" order="5" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.32891566" />
+      <window_info anchor="bottom" id="NuGet" order="7" weight="0.32891566" />
+      <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="9" weight="0.32891566" />
+      <window_info anchor="bottom" id="Database Changes" order="10" />
+      <window_info anchor="bottom" id="Unit Tests" order="11" weight="0.44455445" />
+      <window_info anchor="bottom" id="Terminal" order="12" weight="0.32871288" />
+      <window_info anchor="bottom" id="Event Log" order="13" side_tool="true" />
+      <window_info anchor="bottom" id="Build" order="14" />
+      <window_info anchor="bottom" id="Azure Activity Log" order="15" />
+      <window_info anchor="bottom" id="TeamCity" order="16" />
+      <window_info anchor="bottom" id="Performance Profiler" order="17" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Capture Analysis" order="3" />
+      <window_info anchor="right" id="Errors In Solution" order="4" weight="0.3297568" />
+      <window_info anchor="right" id="Database" order="5" weight="0.3297568" />
+      <window_info anchor="right" id="Unit Tests Coverage" order="6" weight="0.5414878" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="UnitTestsCoverage.Settings">
+    <option name="coveragePercentColumnWidth" value="150" />
+    <option name="sortOrder" value="DESCENDING" />
+    <option name="sortedColumn" value="1" />
+    <option name="symbolColumnWidth" value="303" />
+    <coverage-tree-state>
+      <expand>
+        <path>
+          <item name="rootNode" type="c53c71d1:RiderDotCoverCoverageTreeModel$RootNode" />
+          <item name="1" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+        </path>
+        <path>
+          <item name="rootNode" type="c53c71d1:RiderDotCoverCoverageTreeModel$RootNode" />
+          <item name="1" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="5" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+        </path>
+        <path>
+          <item name="rootNode" type="c53c71d1:RiderDotCoverCoverageTreeModel$RootNode" />
+          <item name="1" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="5" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="6" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+        </path>
+        <path>
+          <item name="rootNode" type="c53c71d1:RiderDotCoverCoverageTreeModel$RootNode" />
+          <item name="1" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="5" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="6" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="12" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+        </path>
+        <path>
+          <item name="rootNode" type="c53c71d1:RiderDotCoverCoverageTreeModel$RootNode" />
+          <item name="1" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="2" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+        </path>
+        <path>
+          <item name="rootNode" type="c53c71d1:RiderDotCoverCoverageTreeModel$RootNode" />
+          <item name="1" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="2" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="3" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+        </path>
+        <path>
+          <item name="rootNode" type="c53c71d1:RiderDotCoverCoverageTreeModel$RootNode" />
+          <item name="1" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="2" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="3" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="246" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+        </path>
+      </expand>
+      <select />
+    </coverage-tree-state>
+  </component>
+  <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
+  <component name="UnityUnitTestConfiguration" currentTestLauncher="NUnit" />
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" suspend="NONE" type="DotNet Exception Breakpoints">
+          <properties exception="System.Threading.ThreadAbortException" displayValue="System.Threading.ThreadAbortException" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/test/Umfrage.Test/Question.Test.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="880">
+          <caret line="44" column="9" selection-start-line="44" selection-start-column="9" selection-end-line="44" selection-end-column="9" />
+          <folding>
+            <marker date="1550226362988" expanded="true" signature="6:82" ph="..." />
+            <marker date="1550226362988" expanded="true" signature="107:10235" ph="{...}" />
+            <marker date="1550226362988" expanded="true" signature="138:10233" ph="{...}" />
+            <marker date="1550226362988" expanded="true" signature="197:1177" ph="{...}" />
+            <marker date="1550226362988" expanded="true" signature="286:1173" ph="{...}" />
+            <marker date="1550226362988" expanded="true" signature="351:1168" ph="{...}" />
+            <marker date="1550226362988" expanded="false" signature="1270:2249" ph="{...}" />
+            <marker date="1550226362988" expanded="true" signature="1359:2245" ph="{...}" />
+            <marker date="1550226362988" expanded="true" signature="1424:2240" ph="{...}" />
+            <marker date="1550226362988" expanded="false" signature="2339:3374" ph="{...}" />
+            <marker date="1550226362988" expanded="true" signature="2428:3370" ph="{...}" />
+            <marker date="1550226362988" expanded="true" signature="2493:3365" ph="{...}" />
+            <marker date="1550226362988" expanded="true" signature="3088:3126" ph="{...}" />
+            <marker date="1550226362988" expanded="false" signature="3452:4384" ph="{...}" />
+            <marker date="1550226362988" expanded="true" signature="3541:4380" ph="{...}" />
+            <marker date="1550226362988" expanded="true" signature="3606:4375" ph="{...}" />
+            <marker date="1550226362988" expanded="false" signature="4455:4998" ph="{...}" />
+            <marker date="1550226362988" expanded="true" signature="4510:4994" ph="{...}" />
+            <marker date="1550226362988" expanded="false" signature="5086:5698" ph="{...}" />
+            <marker date="1550226362988" expanded="true" signature="5141:5694" ph="{...}" />
+            <marker date="1550226362988" expanded="true" signature="5447:5509" ph="{...}" />
+            <marker date="1550226362988" expanded="false" signature="5787:5902" ph="{...}" />
+            <marker date="1550226362988" expanded="true" signature="5836:5896" ph="{...}" />
+            <marker date="1550226362988" expanded="false" signature="5958:6292" ph="{...}" />
+            <marker date="1550226362988" expanded="true" signature="6227:6286" ph="{...}" />
+            <marker date="1550226362988" expanded="false" signature="6346:7260" ph="{...}" />
+            <marker date="1550226362988" expanded="true" signature="6401:7256" ph="{...}" />
+            <marker date="1550226362988" expanded="true" signature="6457:7251" ph="{...}" />
+            <marker date="1550226362988" expanded="true" signature="7026:7076" ph="{...}" />
+            <marker date="1550226362988" expanded="false" signature="7334:8428" ph="{...}" />
+            <marker date="1550226362988" expanded="true" signature="7388:8424" ph="{...}" />
+            <marker date="1550226362988" expanded="true" signature="7447:8419" ph="{...}" />
+            <marker date="1550226362988" expanded="true" signature="8016:8066" ph="{...}" />
+            <marker date="1550226362988" expanded="true" signature="8217:8260" ph="{...}" />
+            <marker date="1550226362988" expanded="false" signature="8494:9410" ph="{...}" />
+            <marker date="1550226362988" expanded="true" signature="8548:9406" ph="{...}" />
+            <marker date="1550226362988" expanded="true" signature="8607:9401" ph="{...}" />
+            <marker date="1550226362988" expanded="true" signature="9176:9226" ph="{...}" />
+            <marker date="1550226362988" expanded="false" signature="9470:9806" ph="{...}" />
+            <marker date="1550226362988" expanded="true" signature="9741:9800" ph="{...}" />
+            <marker date="1550226362988" expanded="false" signature="9857:10229" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/Umfrage.Test/UserConsole.Test.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="80">
+          <caret line="9" column="17" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
+          <folding>
+            <marker date="1544813473290" expanded="false" signature="6:117" ph="..." />
+            <marker date="1544813473290" expanded="true" signature="142:1322" ph="{...}" />
+            <marker date="1544813473290" expanded="true" signature="179:1320" ph="{...}" />
+            <marker date="1544813473290" expanded="true" signature="190:432" ph="/* public ConsoleWriterTest( ) { ... */" />
+            <marker date="1544813473290" expanded="false" signature="505:901" ph="{...}" />
+            <marker date="1544813473290" expanded="true" signature="563:891" ph="{...}" />
+            <marker date="1544813473290" expanded="false" signature="967:1314" ph="{...}" />
+            <marker date="1544813473290" expanded="true" signature="1032:1304" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Umfrage/Implementations/UserConsole.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="402">
+          <caret line="24" column="12" selection-start-line="24" selection-start-column="12" selection-end-line="24" selection-end-column="12" />
+          <folding>
+            <marker date="1558733546305" expanded="false" signature="6:58" ph="..." />
+            <marker date="1558733546305" expanded="true" signature="93:900" ph="{...}" />
+            <marker date="1558733546305" expanded="true" signature="140:898" ph="{...}" />
+            <marker date="1558733546305" expanded="true" signature="277:393" ph="{...}" />
+            <marker date="1558733546305" expanded="true" signature="438:554" ph="{...}" />
+            <marker date="1558733546305" expanded="true" signature="628:648" ph="{...}" />
+            <marker date="1558733546305" expanded="true" signature="714:804" ph="{...}" />
+            <marker date="1558733546305" expanded="true" signature="838:892" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Umfrage.Demo/Program.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="550">
+          <caret line="33" column="50" selection-start-line="33" selection-start-column="50" selection-end-line="33" selection-end-column="50" />
+          <folding>
+            <marker date="1558733999685" expanded="false" signature="6:159" ph="..." />
+            <marker date="1558733999685" expanded="true" signature="183:3613" ph="{...}" />
+            <marker date="1558733999685" expanded="true" signature="219:3611" ph="{...}" />
+            <marker date="1558733999685" expanded="true" signature="272:3605" ph="{...}" />
+            <marker date="1558733999685" expanded="true" signature="1059:1330" ph="{...}" />
+            <marker date="1558733999685" expanded="true" signature="1913:3282" ph="{...}" />
+            <marker date="1558733999685" expanded="true" signature="1952:3229" ph="{...}" />
+            <marker date="1558733999685" expanded="true" signature="2271:2420" ph="{...}" />
+            <marker date="1558733999685" expanded="true" signature="2559:3111" ph="{...}" />
+            <marker date="1558733999685" expanded="true" signature="2801:2952" ph="{...}" />
+            <marker date="1558733999685" expanded="true" signature="3422:3562" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>
