@@ -4,17 +4,20 @@ skip_branch_with_pr: true
 configuration: Release
 platform: x64
 environment:
-  my_variable:
+  NUGET_API_KEY:
     secure: UNhG2ePtkOWC4kyxRzHWPVYv5GM+QgT1/8S3aVsU3Vyrhag1VnzaN7jUe7vxcZZJ
+branches:
+  only:
+    - master
+    - develop
+    - /v\d*\.\d*\.\d*/
 init:
   - ps: dir
   - ps: dotnet nuget locals http-cache -c
 before_build:
   - ps: dotnet restore
 build_script:
-  - ps: dir
   - ps: dotnet build src/Umfrage/Umfrage.csproj --verbosity m
   - ps: dotnet build src/Umfrage.Extensions/Umfrage.Extensions.csproj --verbosity m
 test_script:
-  - ps: dir
-  - ps: dotnet test tests/Umfrage.Test.csproj --verbosity normal
+  - ps: dotnet test test/Umfrage.Test/Umfrage.Test.csproj --verbosity normal
