@@ -18,19 +18,19 @@ clone_folder: /var/appveyor/umfrage
 
 init:
   - git config --global core.autocrlf input
-  - sh: ls
-  - sh: dotnet nuget locals http-cache -c
+  - ls
+  - dotnet nuget locals http-cache -c
 
 before_build:
-  - sh: ls
-  - sh: dotnet restore
+  - ls
+  - dotnet restore
 
 build_script:
-  - sh: dotnet build src/Umfrage/Umfrage.csproj --verbosity m
-  - sh: dotnet build src/Umfrage.Extensions/Umfrage.Extensions.csproj --verbosity m
+  - dotnet build src/Umfrage/Umfrage.csproj --verbosity m
+  - dotnet build src/Umfrage.Extensions/Umfrage.Extensions.csproj --verbosity m
 
 test_script:
-  - sh: dotnet test test/Umfrage.Test/Umfrage.Test.csproj --verbosity normal
+  - dotnet test test/Umfrage.Test/Umfrage.Test.csproj --verbosity normal
 
 deploy:
   provider: NuGet
