@@ -1,109 +1,110 @@
-﻿using System;
-
-using Umfrage.Abstractions;
+﻿using Umfrage.Abstractions;
 using Umfrage.Builders;
 using Umfrage.Builders.Abstractions;
-using Umfrage.Extensions;
 using Umfrage.Implementations;
+using System;
+using Umfrage.Extensions;
+
 
 namespace Umfrage.Demo
 {
-	internal static class Program
-	{
-		public static void Main(string[ ] args) {
+    internal static class Program
+    {
+        public static void Main(string[] args)
+        {
+            var terminal = new UserTerminal();
+            IQuestionnaire questionnaire = new Questionnaire(terminal);
+            questionnaire.Settings.WelcomeMessage = "Welcome to my questionnaire";
 
-			IQuestionnaire questionnaire = new Questionnaire( );
-			questionnaire.Settings.WelcomeMessage = "Welcome to my questionnaire";
+            bool Validator(IQuestion x) => x.Answer.Length > 0;
+            var errorMessage = "Please Provide a value";
 
-			IQuestionBuilder builder = new QuestionBuilder();
+            IQuestionBuilder builder = new QuestionBuilder();
 
-			bool Validator(IQuestion x) => x.Answer.Length > 0;
-			string errorMessage = "Please Provide a value";
+            var askName = builder.Simple().Text("What's your name?").Build();
 
+            var askFamily = builder.Simple().Text("What's your family?").AddValidation(Validator, errorMessage).Build();
 
-			IQuestion askName = builder.Simple( ).Text( "What's your name?" ).Build( );
-			builder.Simple( ).Text( "What's your family?" ).AddValidation( Validator, errorMessage ).AddToQuestionnaire( questionnaire );
+            builder.List()
+                .Text("What's your favorite language?")
+                .AddOptions(new []
+                {
+                    new QuestionOption("Persian"),
+                    new QuestionOption("English"),
+                    new QuestionOption("Italian"),
+                    new QuestionOption("Spanish"),
+                    new QuestionOption("French"),
+                    new QuestionOption("German")
+                })
+                .WithHint("Persian")
+                .WithDefaultAnswer("Persian")
+                .AddValidation(x => x.Answer != null)
+                //.AsCheckList( )
+                .WithErrorMessage("You must select an option")
+                .AddToQuestionnaire(questionnaire)
+                ;
 
-			questionnaire.Add(askName);
+            questionnaire
+                .Add(askName)
+                .Add(askFamily)
+                ;
 
-			builder.List()
-				.Text("What's your favorite language?")
-				.AddOptions(new[]
-				{
-					new QuestionOption("Persian"),
-					new QuestionOption("English"),
-					new QuestionOption("Italian"),
-					new QuestionOption("Spanish"),
-					new QuestionOption("French"),
-					new QuestionOption("German")
-				})
-				.WithHint("Persian")
-				.WithDefaultAnswer("Persian")
-				.AddValidation(x => x.Answer != null)
-				.AsCheckList()
-				.WithErrorMessage("You must select an option")
-				.AddToQuestionnaire(questionnaire);
+            questionnaire.Start();
 
-			questionnaire.Start();
+            var add = true;
 
-			bool add = true;
+            // loop until there is a question to ask
+            while (questionnaire.CanProceed)
+            {
+                if (add)
+                {
+                    var confirm = builder.Simple()
+                        .Text("Are you older than 18?")
+                        .AsConfirm()
+                        .WithHint("Y/n")
+                        .WithDefaultAnswer("y")
+                        .AddValidation(x =>
+                        {
+                            var q = (Confirm) x;
+                            return q.PossibleAnswers.Contains(x.Answer);
+                        }, "Your value should be either 'y' or 'n'")
+                        .Build();
 
-			// loop as far as there is a question to ask
-			while (questionnaire.CanProceed) {
+                    confirm.Finish(q =>
+                    {
+                        if (q.Answer != "y") return;
 
-				if (add) {
+                        var agePrompt = builder.Simple()
+                            .Text("How old are you?")
+                            .AddValidation(x =>
+                            {
+                                int.TryParse(x.Answer, out var age);
 
-					IQuestion confirm = builder.Simple( )
-										.Text( "Are you older than 18?" )
-										.AsConfirm( )
-										.WithHint( "Y/n" )
-										.WithDefaultAnswer( "y" )
-										.AddValidation( x => {
-											Confirm q = ( Confirm ) x;
-											return q.PossibleAnswers.Contains( x.Answer );
-										}, "Your value should be either 'y' or 'n'" )
-										.Build( );
+                                return age >= 18;
+                            }, "Your must be older than 18")
+                            .Build();
 
-					confirm.Finish((q) => {
-						if (q.Answer == "y") {
+                        questionnaire.Prompt(agePrompt as Prompt);
+                    });
 
-							var agePrompt = new Prompt("How old are you?");
+                    questionnaire.Confirm(confirm as Confirm);
 
-							agePrompt.Validator(x =>
-							{
+                    add = false;
+                }
 
-								int.TryParse(x.Answer, out int age);
+                questionnaire.Next();
+            }
 
-								return age >= 18;
-
-							}, "You must be older than 18");
-
-							// Use of Extension methods
-							questionnaire.Prompt(agePrompt);
-                        }
-                    } );
-
-					// Add a builder-made question via an extension method
-					questionnaire.Confirm(confirm as Confirm);
-
-					add = false;
-				}
-
-				questionnaire.Next();
-
-			}
-
-			questionnaire.End();
+            questionnaire.End();
 
             // Print Processed questions
-            foreach ( var q in questionnaire.ProcessedQuestions ) {
+            foreach (var q in questionnaire.ProcessedQuestions)
+            {
+                terminal.Printer.Write($"{q.Text} : {q.Answer}");
+                terminal.Printer.WriteLine();
+            }
 
-                questionnaire.Terminal.Printer.Write( $"{q.Text} : {q.Answer}" );
-                questionnaire.Terminal.Printer.WriteLine( );
-
-			}
-
-			Console.ReadLine();
-		}
-	}
+            Console.ReadLine();
+        }
+    }
 }
