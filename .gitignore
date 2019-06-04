@@ -4,4 +4,6 @@
 **/bin/*
 **/obj/*
 
+\.idea/
+
 Umfrage\.sln\.DotSettings\.user
