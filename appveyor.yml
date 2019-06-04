@@ -1,18 +1,24 @@
-version: '1.0.0-pre-{build}'
+version: '1.0.0.{build}'
 image: Visual Studio 2017
-skip_branch_with_pr: true
+#skip_branch_with_pr: true
 configuration: Release
 platform:
   - Any CPU
 
-environment:
-  NUGET_API_KEY:
-    secure: 1mdi2SiGn3xkp9/LhAaeBi032LeQ2fOuKFNm06P++VhPTcHbbv+AsA73iraxGT2S
 branches:
   only:
     - master
     - develop
     - /v\d*\.\d*\.\d*/
+
+dotnet_csproj:
+  patch: true
+  file: '**\*.csproj'
+  version: '{version}'
+  package_version: '{version}'
+  assembly_version: '{version}'
+  file_version: '{version}'
+  informational_version: '{version}'
 
 #clone_folder: /var/appveyor/umfrage
 
@@ -35,8 +41,8 @@ after_test:
   - ps: dotnet pack src/Umfrage/Umfrage.csproj --no-restore --no-build -c Release -o ../../publish
   - ps: dotnet pack src/Umfrage.Extensions/Umfrage.Extensions.csproj --no-restore --no-build  -c Release -o ../../publish
   - ps: ls publish
-  - appveyor PushArtifact publish/Umfrage.1.0.0.nupkg
-  - appveyor PushArtifact publish/Umfrage.Extensions.1.0.0.nupkg
+#  - appveyor PushArtifact publish/Umfrage.1.0.0.nupkg
+#  - appveyor PushArtifact publish/Umfrage.Extensions.1.0.0.nupkg
 
 artifacts:
   - path: '**\*.nupkg'
@@ -45,5 +51,12 @@ deploy:
   provider: NuGet
   api_key:
     secure: 1mdi2SiGn3xkp9/LhAaeBi032LeQ2fOuKFNm06P++VhPTcHbbv+AsA73iraxGT2S
+  skip_symbols: false
   artifact: /.*\.nupkg/
 
+
+on_success:
+  - ps: Write-Host "All Done" -ForegroundColor DarkGreen -BackgroundColor White
+    
+#  APPVEYOR_REPO_TAG
+#  APPVEYOR_REPO_TAG_NAME
