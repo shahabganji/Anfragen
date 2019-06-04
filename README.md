@@ -1,4 +1,7 @@
-# Umfrage ( Questonnaire )
+# Umfrage ( Questonnaire )    
+
+[![Build status](https://ci.appveyor.com/api/projects/status/xfq7qatie27311t0?svg=true)](https://ci.appveyor.com/project/shahabganji/umfrage)
+
 
 This is a .Net Core plugin enabling you to have questionnaires or console-like wizards in your applications. 
 
