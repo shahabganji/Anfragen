@@ -8,8 +8,6 @@ platform:
 branches:
   only:
     - /\d*\.\d*\.\d*/
-#    - master
-#    - develop
 
 dotnet_csproj:
   patch: true
