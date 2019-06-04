@@ -5,4 +5,14 @@ configuration: Release
 platform: x64
 init:
   - ps: ls
-  - ps: dotnet nuget http-cache -c
+  - ps: dotnet nuget locals http-cache -c
+before_build:
+  - ps: dotnet restore
+build_script:
+  - ps: ls
+  - ps: dotnet build src/Umfrage.csproj --verbosity m
+  - ps: dotnet build src/Umfrage.Extensions.csproj --verbosity m
+test_script:
+  - ps: ls
+  - ps: dotnet test tests/Umfrage.Test.csproj --verbosity normal
+
