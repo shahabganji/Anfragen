@@ -2,7 +2,10 @@ version: '1.0.0-pre-{build}'
 image: Ubuntu
 skip_branch_with_pr: true
 configuration: Release
-platform: x64
+platform: 
+  - x64
+  - Any CPU
+
 environment:
   NUGET_API_KEY:
     secure: UNhG2ePtkOWC4kyxRzHWPVYv5GM+QgT1/8S3aVsU3Vyrhag1VnzaN7jUe7vxcZZJ
