@@ -7,7 +7,7 @@ platform:
 
 environment:
   NUGET_API_KEY:
-    secure: UNhG2ePtkOWC4kyxRzHWPVYv5GM+QgT1/8S3aVsU3Vyrhag1VnzaN7jUe7vxcZZJ
+    secure: 1mdi2SiGn3xkp9/LhAaeBi032LeQ2fOuKFNm06P++VhPTcHbbv+AsA73iraxGT2S
 branches:
   only:
     - master
@@ -32,11 +32,18 @@ test_script:
   - ps: dotnet test test/Umfrage.Test/Umfrage.Test.csproj --verbosity normal
 
 after_test:
-  - ps: dotnet pack src/Umfrage/Umfrage.csproj -c Release -o publish
-  - ps: dotnet pack src/Umfrage.Extensions/Umfrage.Extensions.csproj -c Release -o publish
+  - ps: dotnet pack src/Umfrage/Umfrage.csproj --no-restore --no-build -c Release -o ../../publish
+  - ps: dotnet pack src/Umfrage.Extensions/Umfrage.Extensions.csproj --no-restore --no-build  -c Release -o ../../publish
+  - ps: ls publish
+  - appveyor PushArtifact publish/Umfrage.1.0.0.nupkg
+  - appveyor PushArtifact publish/Umfrage.Extensions.1.0.0.nupkg
+
+artifacts:
+  - path: '**\*.nupkg'
 
 deploy:
   provider: NuGet
   api_key:
-    secure: UNhG2ePtkOWC4kyxRzHWPVYv5GM+QgT1/8S3aVsU3Vyrhag1VnzaN7jUe7vxcZZJ
+    secure: 1mdi2SiGn3xkp9/LhAaeBi032LeQ2fOuKFNm06P++VhPTcHbbv+AsA73iraxGT2S
   artifact: /.*\.nupkg/
+
