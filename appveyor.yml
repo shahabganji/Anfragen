@@ -3,16 +3,18 @@ image: Visual Studio 2019
 skip_branch_with_pr: true
 configuration: Release
 platform: x64
+environment:
+  my_variable:
+    secure: UNhG2ePtkOWC4kyxRzHWPVYv5GM+QgT1/8S3aVsU3Vyrhag1VnzaN7jUe7vxcZZJ
 init:
-  - ps: ls
+  - ps: dir
   - ps: dotnet nuget locals http-cache -c
 before_build:
   - ps: dotnet restore
 build_script:
-  - ps: ls
-  - ps: dotnet build src/Umfrage.csproj --verbosity m
-  - ps: dotnet build src/Umfrage.Extensions.csproj --verbosity m
+  - ps: dir
+  - ps: dotnet build src/Umfrage/Umfrage.csproj --verbosity m
+  - ps: dotnet build src/Umfrage.Extensions/Umfrage.Extensions.csproj --verbosity m
 test_script:
-  - ps: ls
+  - ps: dir
   - ps: dotnet test tests/Umfrage.Test.csproj --verbosity normal
-
