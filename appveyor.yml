@@ -3,7 +3,6 @@ image: Ubuntu
 skip_branch_with_pr: true
 configuration: Release
 platform:
-  - x64
   - Any CPU
 
 environment:
@@ -14,11 +13,16 @@ branches:
     - master
     - develop
     - /v\d*\.\d*\.\d*/
+
+clone_folder: /var/appveyor/umfrage
+
 init:
-  - sh: dir
+  - git config --global core.autocrlf input
+  - sh: ls
   - sh: dotnet nuget locals http-cache -c
 
 before_build:
+  - sh: ls
   - sh: dotnet restore
 
 build_script:
