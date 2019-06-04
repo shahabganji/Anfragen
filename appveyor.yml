@@ -1,4 +1,4 @@
-version: '1.0.0.{build}'
+version: $(APPVEYOR_REPO_TAG_NAME).{build}
 image: Visual Studio 2017
 #skip_branch_with_pr: true
 configuration: Release
@@ -9,16 +9,16 @@ branches:
   only:
     - master
     - develop
-    - /v\d*\.\d*\.\d*/
+    - /\d*\.\d*\.\d*/
 
 dotnet_csproj:
   patch: true
   file: '**\*.csproj'
-  version: '{version}'
-  package_version: '{version}'
-  assembly_version: '{version}'
-  file_version: '{version}'
-  informational_version: '{version}'
+  version: $(APPVEYOR_REPO_TAG_NAME)
+  package_version: $(APPVEYOR_REPO_TAG_NAME)
+  assembly_version: $(APPVEYOR_REPO_TAG_NAME)
+  file_version: $(APPVEYOR_REPO_TAG_NAME)
+  informational_version: $(APPVEYOR_REPO_TAG_NAME)
 
 #clone_folder: /var/appveyor/umfrage
 
