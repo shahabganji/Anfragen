@@ -1,5 +1,5 @@
 version: '1.0.0-pre-{build}'
-image: Ubuntu
+image: Visual Studio 2017
 skip_branch_with_pr: true
 configuration: Release
 platform:
@@ -14,23 +14,22 @@ branches:
     - develop
     - /v\d*\.\d*\.\d*/
 
-clone_folder: /var/appveyor/umfrage
+#clone_folder: /var/appveyor/umfrage
 
 init:
-  - git config --global core.autocrlf input
-  - ls
-  - dotnet nuget locals http-cache -c
+  - ps: git config --global core.autocrlf input
+  - ps: dotnet nuget locals http-cache -c
 
 before_build:
-  - ls
-  - dotnet restore
+  - ps: ls
+  - ps: dotnet restore
 
 build_script:
-  - dotnet build src/Umfrage/Umfrage.csproj --verbosity m
-  - dotnet build src/Umfrage.Extensions/Umfrage.Extensions.csproj --verbosity m
+  - ps: dotnet build src/Umfrage/Umfrage.csproj --verbosity m
+  - ps: dotnet build src/Umfrage.Extensions/Umfrage.Extensions.csproj --verbosity m
 
 test_script:
-  - dotnet test test/Umfrage.Test/Umfrage.Test.csproj --verbosity normal
+  - ps: dotnet test test/Umfrage.Test/Umfrage.Test.csproj --verbosity normal
 
 deploy:
   provider: NuGet
